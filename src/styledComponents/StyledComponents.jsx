@@ -19,7 +19,7 @@ export const ContentSty = styled.div`
 export const MainSty = styled.main`
     display: flex;
     width: 100%;
-    /* height: 100%; */
+    height: calc(100vh - 4rem);
 `
 
 export const LogoDivSty = styled.div`
