@@ -96,7 +96,6 @@ export const LinkSty = styled(Link)`
     align-items: center;
 
     color: #737791;
-    font-family: Poppins;
     font-size: 2.8rem;
     font-style: normal;
     font-weight: 400;

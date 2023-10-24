@@ -9,6 +9,12 @@ import shop from '../assets/shop.svg'
 import chart from '../assets/chart.svg'
 import sms from '../assets/message.svg'
 import settings from '../assets/settings.svg'
+import SvgStats from '../styledComponents/svg/SvgStats'
+import SvgCart from '../styledComponents/svg/SvgCart'
+import SvgShop from '../styledComponents/svg/SvgShop'
+import SvgChart from '../styledComponents/svg/SvgChart'
+import SvgSms from '../styledComponents/svg/SvgSms'
+import SvgSettings from '../styledComponents/svg/SvgSettings'
 
 const Navigation = () => {
   return (
@@ -19,33 +25,33 @@ const Navigation = () => {
         </DashDivSty>
         <NavDivSty>
             <LinkSty to='/'>
-                <img src={stats} alt="stats" />
-                <p>Liderboard</p>
+                <SvgStats/>
+                <p>ლიდერბორდი</p>
             </LinkSty>
 
             <LinkSty to='/order'>
-                <img src={cart} alt="cart" />
-                <p>Order</p>
+                <SvgCart/>
+                <p>შეკვეთა</p>
             </LinkSty>
 
             <LinkSty to='/products'>
-                <img src={shop} alt="shop" />
-                <p>Products</p>
+                <SvgShop/>
+                <p>პროდუქტები</p>
             </LinkSty>
 
             <LinkSty to='/sales'>
-                <img src={chart} alt="chart" />
-                <p>Sales Report</p>
+                <SvgChart/>
+                <p>რეპორტი</p>
             </LinkSty>
 
             <LinkSty to='/message'>
-                <img src={sms} alt="sms" />
-                <p>Messages</p>
+                <SvgSms/>
+                <p>შეტყობინება</p>
             </LinkSty>
 
             <LinkSty to='/settings'>
-                <img src={settings} alt="settings" />
-                <p>Settings</p>
+                <SvgSettings/>
+                <p>პარამეტრები</p>
             </LinkSty>
             
         </NavDivSty>
