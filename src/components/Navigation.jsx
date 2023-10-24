@@ -15,7 +15,7 @@ const Navigation = () => {
     <div>
         <DashDivSty>
             <img src={graph} alt="graph" />
-            <DashPsty>Dashboard</DashPsty>
+            <DashPsty to='https://oil-mern.vercel.app/login'>განაცხადები</DashPsty>
         </DashDivSty>
         <NavDivSty>
             <LinkSty to='/'>

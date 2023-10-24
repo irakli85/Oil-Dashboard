@@ -50,13 +50,13 @@ export const DashDivSty = styled.div`
     cursor: pointer;
 `
 
-export const DashPsty = styled.p`
+export const DashPsty = styled(Link)`
     color: #FFF;
-    font-family: Poppins;
     font-size: 1.8rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    text-decoration: none
 `
 
 export const NavDivSty = styled.nav`
@@ -84,7 +84,7 @@ export const HeadPsty = styled.p`
 
 export const ContentDivSty = styled.div`
     width: 100%;
-    height: 80%;
+    /* height: 100%; */
     background: #F3E8FF;
     border-radius: 1.5rem;
     padding: 3.2rem;
@@ -103,4 +103,6 @@ export const LinkSty = styled(Link)`
     line-height: normal;
     text-decoration: none;
 `
+
+
 
