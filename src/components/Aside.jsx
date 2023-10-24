@@ -1,7 +1,7 @@
 import React from 'react'
 import { AsideSty, LogoDivSty, Psty } from '../styledComponents/StyledComponents'
 import Logo from '../styledComponents/Logo'
-import SvgCart from '../styledComponents/svg/SvgCart'
+import Navigation from './Navigation'
 
 
 const Aside = () => {
@@ -11,6 +11,7 @@ const Aside = () => {
         <Logo/>
         <Psty>ნავთობი</Psty>
       </LogoDivSty>
+      <Navigation/>
       
     </AsideSty>
   )

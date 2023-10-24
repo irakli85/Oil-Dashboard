@@ -1,24 +1,25 @@
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 export const AsideSty = styled.div`
     width: 22%;
     height: 100%;
     background:  #fff;
     border-radius: 1.5rem  0 0 1.5rem;
-    padding: 5rem;
+    padding: 2rem;
 `
 
 export const ContentSty = styled.div`
     width: 78%;
-    height: 100%;
     background:  #fff;
     border-radius: 0 1.5rem  1.5rem 0;
+    padding: 1rem;
 `
 
 export const MainSty = styled.main`
     display: flex;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 `
 
 export const LogoDivSty = styled.div`
@@ -32,5 +33,74 @@ export const Psty = styled.p`
     font-style: normal;
     font-weight: 600;
     line-height: 150%; /* 45px */
+    padding: 2rem;
+`
+
+export const DashDivSty = styled.div`
+    margin-top: 5rem;
+    display: flex;
+    width: 25.2rem;
+    height: 6.4rem;
+    padding: 1.6rem 2.4rem;
+    align-items: center;
+    gap: 2.4rem;
+    border-radius: 16px;
+    background: #5D5FEF;
+    box-shadow: 0px 20px 50px 0px rgba(55, 69, 87, 0.10);
+    cursor: pointer;
+`
+
+export const DashPsty = styled.p`
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`
+
+export const NavDivSty = styled.nav`
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+`
+
+export const HeadDivSty = styled.header`
+    width: 100%;
+    height: 12rem;
+    background: #fff;
+    padding: 3.5rem 4rem;
+`
+
+export const HeadPsty = styled.p`
+    color: var(--greys-blue-grey-900, #151D48);
+    font-family: Poppins;
+    font-size: 3.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; 
+`
+
+export const ContentDivSty = styled.div`
+    width: 100%;
+    height: 80%;
+    background: #F3E8FF;
+    border-radius: 1.5rem;
+    padding: 3.2rem;
+`
+
+export const LinkSty = styled(Link)`
+    display: flex;
+    gap: 2.4rem;
+    align-items: center;
+
+    color: #737791;
+    font-family: Poppins;
+    font-size: 2.8rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: none;
 `
 
