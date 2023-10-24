@@ -1,5 +1,5 @@
 import React from 'react'
-import { DashDivSty, DashPsty, LinkSty, NavDivSty } from '../styledComponents/StyledComponents'
+import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP } from '../styledComponents/StyledComponents'
 
 import graph from '../assets/graph.svg'
 import SvgStats from '../styledComponents/svg/SvgStats'
@@ -19,32 +19,32 @@ const Navigation = () => {
         <NavDivSty>
             <LinkSty to='/'>
                 <SvgStats/>
-                <p>ლიდერბორდი</p>
+                <NavP text='ლიდერბორდი'/>
             </LinkSty>
 
             <LinkSty to='/order'>
                 <SvgCart/>
-                <p>შეკვეთა</p>
+                <NavP text='შეკვეთა'/>
             </LinkSty>
 
             <LinkSty to='/products'>
                 <SvgShop/>
-                <p>პროდუქტები</p>
+                <NavP text='პროდუქტები'/>
             </LinkSty>
 
             <LinkSty to='/sales'>
                 <SvgChart/>
-                <p>რეპორტი</p>
+                <NavP text='რეპორტი'/>
             </LinkSty>
 
             <LinkSty to='/message'>
                 <SvgSms/>
-                <p>შეტყობინება</p>
+                <NavP text='შეტყობინება'/>
             </LinkSty>
 
             <LinkSty to='/settings'>
                 <SvgSettings/>
-                <p>პარამეტრები</p>
+                <NavP text='პარამეტრები'/>
             </LinkSty>
             
         </NavDivSty>

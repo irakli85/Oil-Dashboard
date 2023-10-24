@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
+import {motion} from 'framer-motion'
+
 
 export const AsideSty = styled.div`
     width: 22%;
@@ -102,6 +104,16 @@ export const LinkSty = styled(Link)`
     line-height: normal;
     text-decoration: none;
 `
+
+export const NavP = ({text}) => {
+    return(
+        <motion.p
+        whileHover={{scale: 1.3, originX: 0, color: '#1aac83'}}
+        transition={{type: 'spring', stifness: 300}}
+        >{text}
+        </motion.p>
+    )
+}
 
 
 
