@@ -7,7 +7,7 @@ const Measurment = () => {
   const [docNum, setDocNum] = useState(1)
   const [realNum, setRealNum] = useState(1)
 
-  let difference = docNum-realNum
+  let difference = (docNum-realNum).toFixed(2)
   let percentage = (((docNum-realNum)/docNum) * 100).toFixed(2)
 
 console.log(percentage, typeof(percentage))
