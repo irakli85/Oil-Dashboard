@@ -8,6 +8,7 @@ import SvgChart from '../styledComponents/svg/SvgChart'
 import SvgSms from '../styledComponents/svg/SvgSms'
 import SvgSettings from '../styledComponents/svg/SvgSettings'
 import SvgMeasure from '../styledComponents/svg/SvgMeasure'
+import SvgStats from '../styledComponents/svg/SvgStats'
 
 const buttonVariants = { 
     hover: {
@@ -34,8 +35,8 @@ const Navigation = () => {
             </LinkSty>
 
             <LinkSty to='/order'>
-                <SvgCart/>
-                <NavP text='შეკვეთა'/>
+                <SvgStats/>
+                <NavP text='სტატისტიკა'/>
             </LinkSty>
 
             <LinkSty to='/products'>
