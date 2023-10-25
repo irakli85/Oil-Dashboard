@@ -34,7 +34,7 @@ export const Psty = styled.p`
     font-size: 3rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 150%; /* 45px */
+    line-height: 150%; 
     padding: 2rem;
 `
 
