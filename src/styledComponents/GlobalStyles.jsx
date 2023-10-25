@@ -24,6 +24,17 @@ const GlobalStyles = createGlobalStyle`
       width: 100%;
       height: 100%
     }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
 `;
 
 export default GlobalStyles;

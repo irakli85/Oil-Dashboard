@@ -27,12 +27,12 @@ console.log(percentage, typeof(percentage))
             <Td>პროცენტულად</Td>
           </Tr>
           <Tr>
-            <Td>
-              <Input type='number' onChange={(e) => setDocNum(e.target.value)} value={docNum}/>
-            </Td>
-            <Td>
-              <Input type='number' onChange={(e) => setRealNum(e.target.value)} value={realNum}/>
-            </Td>
+            <TdInp>
+              <Input type='number' max="10" onChange={(e) => setDocNum(e.target.value)} value={docNum}/>
+            </TdInp>
+            <TdInp>
+              <Input type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum}/>
+            </TdInp>
             <Td>{difference + ' კგ'} </Td>
             <Td>{percentage + '%'}</Td>
           </Tr>
@@ -120,6 +120,7 @@ const H2 = styled.h2`
 
 const Table = styled.table`
   width: 100rem;
+  height: 100%;
   border: solid 2px gray;
   margin-top: 5rem;
 `
@@ -137,6 +138,12 @@ const Td = styled.td`
   padding: 1rem;
 `
 
+const TdInp = styled.td`
+  font-size: 2rem;
+  border: solid 2px gray;
+  text-align: center;  
+`
+
 const TdCond = styled.td`
   font-size: 2rem;
   border: solid 2px gray;
@@ -147,10 +154,18 @@ const TdCond = styled.td`
 
 const Tr = styled.tr`
   border: solid 2px gray;
+  height:100%;
 `
 
 const Input = styled.input`
   font-size: 2rem;
+  font-weight: 900;
+  width: 100%;
+  height: 100%;
+  padding-inline: 5rem;  
+  &:focus{
+    outline: solid 4px #1aac83;
+  }
 `
 
 export default Measurment
