@@ -38,7 +38,7 @@ export const Psty = styled.p`
     padding: 2rem;
 `
 
-export const DashDivSty = styled.div`
+export const DashDivSty = styled(motion.div)`
     margin-top: 5rem;
     display: flex;
     width: 25.2rem;
@@ -58,7 +58,7 @@ export const DashPsty = styled(Link)`
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    text-decoration: none
+    text-decoration: none;   
 `
 
 export const NavDivSty = styled.nav`
@@ -108,12 +108,16 @@ export const LinkSty = styled(Link)`
 export const NavP = ({text}) => {
     return(
         <motion.p
-        whileHover={{scale: 1.3, originX: 0, color: '#1aac83'}}
-        transition={{type: 'spring', stifness: 300}}
-        >{text}
+            whileHover={{scale: 1.3, originX: 0, color: '#1aac83', fontWeight: 900}}
+            transition={{type: 'spring', stifness: 300}}
+            >{text}
         </motion.p>
     )
 }
+
+
+
+
 
 
 

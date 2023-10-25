@@ -2,6 +2,7 @@ import React from 'react'
 import { ContentDivSty, ContentSty } from '../styledComponents/StyledComponents'
 import Header from './Header'
 import {Routes, Route} from 'react-router-dom'
+import Measurment from './Measurment'
 
 
 const Content = () => {
@@ -10,7 +11,7 @@ const Content = () => {
         <Header/>
         <ContentDivSty>
           <Routes>
-            <Route path='/' element={<div>mTavari</div>}/>
+            <Route path='/' element={<Measurment/>}/>
             <Route path='/leaderboard' element={<div>leaderboard</div>}/>
             <Route path='/order' element={<div>order</div>}/>
             <Route path='/products' element={<div>products</div>}/>
