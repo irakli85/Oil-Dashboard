@@ -142,7 +142,7 @@ const TdCond = styled.td`
   border: solid 2px gray;
   text-align: center;
   padding: 1rem;
-  background: ${props => props.norm === true ? 'green' : 'red'};
+  background: ${props => props.norm === true ? '#1aac83' : '#e7195a'};
 `
 
 const Tr = styled.tr`

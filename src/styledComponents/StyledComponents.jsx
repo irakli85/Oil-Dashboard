@@ -16,6 +16,7 @@ export const ContentSty = styled.div`
     background:  #fff;
     border-radius: 0 1.5rem  1.5rem 0;
     padding: 1rem;
+    height: fit-content;
 `
 
 export const MainSty = styled.main`
