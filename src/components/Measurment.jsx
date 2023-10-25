@@ -33,8 +33,8 @@ console.log(percentage, typeof(percentage))
             <TdInp>
               <Input type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum}/>
             </TdInp>
-            <Td>{difference + ' კგ'} </Td>
-            <Td>{percentage + '%'}</Td>
+            <TdRes>{difference + ' კგ'} </TdRes>
+            <TdRes>{percentage + ' %'}</TdRes>
           </Tr>
         </Table>
         <H2>აზომვის მეთოდები</H2>
@@ -136,6 +136,15 @@ const Td = styled.td`
   border: solid 2px gray;
   text-align: center;
   padding: 1rem;
+`
+
+const TdRes = styled.td`
+  font-size: 2rem;
+  border: solid 2px gray;
+  text-align: center;
+  padding: 1rem;
+  color: #1aac83;
+  font-weight: 900;
 `
 
 const TdInp = styled.td`
