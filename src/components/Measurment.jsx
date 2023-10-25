@@ -8,11 +8,10 @@ const Measurment = () => {
   const [realNum, setRealNum] = useState(1)
 
   let difference = docNum-realNum
-  let percentage = ((docNum-realNum)/docNum) * 100
+  let percentage = (((docNum-realNum)/docNum) * 100).toFixed(2)
 
-  let norm = false
-
- 
+console.log(percentage, typeof(percentage))
+   
   return (
     <Container>
         <H2>ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმები</H2>
@@ -45,11 +44,11 @@ const Measurment = () => {
           </Tr>          
           <Tr>
             <Td>100 ტონამდე ნავთობპროდუქტების ნეტო მასის, ასევე ბიტუმების ნეტო მასის გაზომვის ცდომილება</Td>
-            <Td norm={true}>&#xb1;0.5%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.5%</TdCond>
           </Tr>
           <Tr>
             <Td>პლასტიკური საცხების ნეტო მასის გაზომვის ცდომილება</Td>
-            <Td>&#xb1;0.3%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.3%</TdCond>
           </Tr>
         </Table>
         <Table>
@@ -60,39 +59,39 @@ const Measurment = () => {
           <Tr>
             <Td rowSpan={4}>დინამიური მეთოდი</Td>
             <Td>ნავთობის ბრუტო მასის გაზომვის ცდომილება</Td>
-            <Td>&#xb1;0.25%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.25%</TdCond>
           </Tr>
           <Tr>
             <Td>ნავთობის ნეტო მასის გაზომვის ცდომილება</Td>
-            <Td>&#xb1;0.35%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.35%</TdCond>
           </Tr>
           <Tr>
             <Td>ნავთობპროდუქტების ნეტო მასის გაზომვის ცდომილება 100 ტონიდან ზევით</Td>
-            <Td>&#xb1;0.5%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.5%</TdCond>
           </Tr>  
           <Tr>
             <Td>100 ტონამდე ნავთობპროდუქტების და ნარჩენი ნავთობპროდუქტების ნეტო მასის გაზომვის ცდომილება</Td>
-            <Td>&#xb1;0.8%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.8%</TdCond>
           </Tr>
 
           <Tr>
             <Td rowSpan={2}>სტატიკური მეთოდი</Td>
             <Td>ნავთობის, ნავთობპროდუქტების და ბიტუმების ნეტო მასის გაზომვის ცდომილება 100 ტონიდან ზევით</Td>
-            <Td>&#xb1;0.5%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.5%</TdCond>
           </Tr>
           <Tr>
             <Td>100 ტონამდე ნავთობპროდუქტების და ნარჩენი ნავთობპროდუქტების ნეტო მასის გაზომვის ცდომილება</Td>
-            <Td>&#xb1;0.8%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.8%</TdCond>
           </Tr>
 
           <Tr>
             <Td rowSpan={2}>ჰიდროსტატიკური მეთოდი</Td>
             <Td>ნავთობის და ნავთობპროდუქტების ნეტო მასის გაზომვის ცდომილება 100 ტონიდან ზევით</Td>
-            <Td>&#xb1;0.5%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.5%</TdCond>
           </Tr>
           <Tr>
             <Td>100 ტონამდე ნავთობპროდუქტების და ნარჩენი ნავთობპროდუქტების ნეტო მასის გაზომვის ცდომილება</Td>
-            <Td>&#xb1;0.8%</Td>
+            <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.8%</TdCond>
           </Tr>
 
         </Table>
@@ -131,13 +130,19 @@ const Th = styled.th`
   text-align: center;
   padding: 1rem;
 `
-
 const Td = styled.td`
   font-size: 2rem;
   border: solid 2px gray;
   text-align: center;
   padding: 1rem;
-  background: ${props => props.norm === true ? 'red' : null}
+`
+
+const TdCond = styled.td`
+  font-size: 2rem;
+  border: solid 2px gray;
+  text-align: center;
+  padding: 1rem;
+  background: ${props => props.norm === true ? 'green' : 'red'};
 `
 
 const Tr = styled.tr`
