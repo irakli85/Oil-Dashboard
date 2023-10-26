@@ -4,6 +4,7 @@ import Aside from "./components/Aside"
 import Content from "./components/Content"
 import { MainSty } from "./styledComponents/StyledComponents"
 import { BrowserRouter } from "react-router-dom"
+import ScrollToTop from "./components/ScrollToTop"
 
 function App() {
 
@@ -12,7 +13,8 @@ function App() {
       <MainSty>
         <GlobalStyles/>
           <Aside/>
-          <Content/>      
+          <Content/>
+          <ScrollToTop/>      
       </MainSty>
     </BrowserRouter>
   )
