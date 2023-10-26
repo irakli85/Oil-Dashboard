@@ -2,13 +2,12 @@ import React from 'react'
 import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP } from '../styledComponents/StyledComponents'
 
 import graph from '../assets/graph.svg'
-import SvgCart from '../styledComponents/svg/SvgCart'
 import SvgShop from '../styledComponents/svg/SvgShop'
 import SvgChart from '../styledComponents/svg/SvgChart'
 import SvgSms from '../styledComponents/svg/SvgSms'
 import SvgSettings from '../styledComponents/svg/SvgSettings'
 import SvgMeasure from '../styledComponents/svg/SvgMeasure'
-import SvgStats from '../styledComponents/svg/SvgStats'
+import SvgColba from '../styledComponents/svg/SvgColba'
 
 const buttonVariants = { 
     hover: {
@@ -35,7 +34,7 @@ const Navigation = () => {
             </LinkSty>
 
             <LinkSty to='/wastage'>
-                <SvgStats/>
+                <SvgColba/>
                 <NavP text='ბუნებრივი დანაკარგები'/>
             </LinkSty>
 

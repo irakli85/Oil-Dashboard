@@ -104,14 +104,14 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
 
 
 
-const Container = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 `
 
-const H2 = styled.h2`
+export const H2 = styled.h2`
   margin-top: 7rem;
   font-size: 2.4rem;
   font-weight: 800;
