@@ -34,9 +34,9 @@ const Navigation = () => {
                 <NavP text='აზომვის ცდომილება'/>
             </LinkSty>
 
-            <LinkSty to='/order'>
+            <LinkSty to='/wastage'>
                 <SvgStats/>
-                <NavP text='სტატისტიკა'/>
+                <NavP text='ბუნებრივი დანაკარგები'/>
             </LinkSty>
 
             <LinkSty to='/products'>
@@ -51,7 +51,7 @@ const Navigation = () => {
 
             <LinkSty to='/message'>
                 <SvgSms/>
-                <NavP text='შეტყობინება'/>
+                <NavP text='საბაჟო საწყობები'/>
             </LinkSty>
 
             <LinkSty to='/settings'>

@@ -10,6 +10,8 @@ const Measurment = () => {
   let difference = Math.abs(docNum-realNum).toFixed(0)
   let percentage = Math.abs(((docNum-realNum)/docNum) * 100).toFixed(2)
 
+  const handleFocus = (event) => event.target.select();
+
 console.log(percentage, typeof(percentage), difference, typeof(difference))
    
   return (
@@ -28,10 +30,10 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
           </Tr>
           <Tr>
             <TdInp>
-              <Input type='number' max="10" onChange={(e) => setDocNum(e.target.value)} value={docNum}/>
+              <Input type='number' max="10" onChange={(e) => setDocNum(e.target.value)} value={docNum} onFocus={handleFocus}/>
             </TdInp>
             <TdInp>
-              <Input type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum}/>
+              <Input type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum} onFocus={handleFocus}/>
             </TdInp>
             <TdRes norm={percentage < 0.5 ? true : false }>{difference + ' კგ'} </TdRes>
             <TdRes norm={percentage < 0.5 ? true : false }>{isNaN(percentage) ? (0 + '%') : (percentage + ' %')}</TdRes>
