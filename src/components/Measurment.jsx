@@ -120,20 +120,28 @@ export const H2 = styled.h2`
   /* color: #1aac83; */
 `
 
-const Table = styled.table`
+export const H4 = styled.h4`
+  margin-top: 7rem;
+  font-size: 2rem;
+  font-weight: 600;
+  max-width: 125rem;
+  text-align: center;
+`
+
+export const Table = styled.table`
   width: 100rem;
   height: 100%;
   border: solid 2px gray;
   margin-top: 5rem;
 `
 
-const Th = styled.th`
+export const Th = styled.th`
   font-size: 2rem;
   border: solid 2px gray;
   text-align: center;
   padding: 1rem;
 `
-const Td = styled.td`
+export const Td = styled.td`
   font-size: 2rem;
   border: solid 2px gray;
   text-align: center;
@@ -163,7 +171,7 @@ const TdCond = styled.td`
   background: ${props => props.norm === true ? '#1aac83' : '#e7195a'};
 `
 
-const Tr = styled.tr`
+export const Tr = styled.tr`
   border: solid 2px gray;
   height:100%;
 `
