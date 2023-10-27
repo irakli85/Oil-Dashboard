@@ -3,13 +3,13 @@ import { styled } from 'styled-components'
 import arrow from '../assets/white.svg'
 
 
-function DeepDive({text, children}) {
+function DeepDive({text, children, id}) {
   const [clicked, setClicked] = useState(false)
   const [drop, setDrop] = useState(0)
 
   return (
     <DiveDivSt>      
-      <DiveH2St>{text}</DiveH2St>
+      <DiveH2St id={id} >{text}</DiveH2St>
       <DiveBtnSt onClick={() => {setClicked(!clicked); drop === 0 ? setDrop(1) : setDrop(0)}}>
         <div><ConceptImgSt src={arrow} alt="arrow" dropdown={drop}/></div>
         <DiveP>დეტალურად</DiveP>       
