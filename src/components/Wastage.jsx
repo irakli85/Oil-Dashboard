@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, H2, H4, Table, Tr, Th, Td } from './Measurment'
+import { Container, H2, H4, Table, Tr, Th, Td, Hr } from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 
 const Wastage = () => {
@@ -7,6 +7,7 @@ const Wastage = () => {
     <Container>
         <H2>ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები</H2>
         <DeepDive text='ბენზინი'>
+            <Hr/>
             <H4>სეს ესნ კოდები: 2710 12 110, 2710 12 410, 2710 12 450, 2710 12 490</H4>
             <Table>
                 <Tr>
@@ -40,7 +41,8 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ნედლ ნავთობი'>
+        <DeepDive text='ნედლი ნავთობი'>
+            <Hr/>
             <H4>სეს ესნ კოდი: 2709 00 900</H4>
             <Table>
                 <Tr>
@@ -60,6 +62,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='დიზელი'>
+            <Hr/>   
             <H4>სეს ესნ კოდები: 2710 19 430, 2710 19 460, 2710 19 470, 2710 19 480</H4>
             <Table>
                 <Tr>
@@ -89,6 +92,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='ნავთი'>
+            <Hr/> 
             <H4>სეს ესნ კოდები: 2710 19 210, 2710 19 250</H4>
             <Table>
                 <Tr>
@@ -118,6 +122,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='მაზუთი'>
+            <Hr/> 
             <H4>სეს ესნ კოდები: 2710 19 620, 2710 19 640, 2710 19 680</H4>
             <Table>
                 <Tr>
@@ -133,6 +138,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='საპოხი ზეთი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2710 19 990</H4>
             <Table>
                 <Tr>
@@ -148,6 +154,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='ბენზოლი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2902 20 000</H4>
             <Table>
                 <Tr>
@@ -163,6 +170,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='ვაკუუმური გაზოილი'>
+            <Hr/> 
             <H4>სეს ესნ კოდები: 2710 19 310, 2710 19 350</H4>
             <Table>
                 <Tr>
@@ -178,6 +186,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='აირის კონდენსატი ბუნებრივი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2709 00 100</H4>
             <Table>
                 <Tr>
@@ -192,6 +201,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='ნავთობის აირები გათხევადებული'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2711</H4>
             <Table>
                 <Tr>
@@ -210,6 +220,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='ნახშირწყალბადები აცეკლური'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2901</H4>
             <Table>
                 <Tr>
@@ -228,6 +239,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='პროპილისა და იზოპროპილის სპირტი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2905 12</H4>
             <Table>
                 <Tr>
@@ -242,6 +254,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='მეთილის სპირტი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2905 11</H4>
             <Table>
                 <Tr>
@@ -256,6 +269,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='პარაქსილოლი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 2902 43</H4>
             <Table>
                 <Tr>
@@ -270,6 +284,7 @@ const Wastage = () => {
         </DeepDive>
 
         <DeepDive text='პიროლიზური ფისი'>
+            <Hr/> 
             <H4>სეს ესნ კოდი: 3911 90 990</H4>
             <Table>
                 <Tr>

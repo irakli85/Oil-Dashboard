@@ -32,7 +32,7 @@ const DiveDivSt = styled.div`
     background-color: #f3f4fd;
     padding: 3rem;
     border-radius: 1rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #1aac83;
     width: 120rem;
     align-items: center;    
 `

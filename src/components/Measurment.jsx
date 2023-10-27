@@ -121,7 +121,7 @@ export const H2 = styled.h2`
 `
 
 export const H4 = styled.h4`
-  margin-top: 7rem;
+  margin-top: 4rem;
   font-size: 2rem;
   font-weight: 600;
   max-width: 125rem;
@@ -186,5 +186,14 @@ const Input = styled.input`
     outline: solid 4px #1aac83;
   }
 `
+
+export const Hr = styled.hr`
+    margin-top: 3rem;
+    width: 80%;
+    height: 1px;
+    background: #ed5c01;
+    border: none;
+`
+
 
 export default Measurment
