@@ -16,7 +16,7 @@ const pathVariants = {
   }
 
 
-function SvgChart() {
+function SvgChart({isClicked}) {
     return (
       <motion.svg
         width={32}
@@ -29,7 +29,7 @@ function SvgChart() {
         animate='visible'
       >
         <g
-          stroke="#737791"
+          stroke={isClicked ? "#1aac83": "#737791"}
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"

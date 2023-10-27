@@ -102,22 +102,22 @@ const Navigation = () => {
             </LinkSty>
 
             <LinkSty to='/products'>
-                <SvgShop/>
+                <SvgShop isClicked={isClicked3}/>
                 <NavP text='პროდუქტები' onClick={handleClick3} isClicked={isClicked3}/>
             </LinkSty>
 
             <LinkSty to='/sales'>
-                <SvgChart/>
+                <SvgChart isClicked={isClicked4}/>
                 <NavP text='რეპორტი' onClick={handleClick4} isClicked={isClicked4}/>
             </LinkSty>
 
             <LinkSty to='/message'>
-                <SvgSms/>
+                <SvgSms isClicked={isClicked5}/>
                 <NavP text='საბაჟო საწყობები' onClick={handleClick5} isClicked={isClicked5}/>
             </LinkSty>
 
             <LinkSty to='/settings'>
-                <SvgSettings/>
+                <SvgSettings isClicked={isClicked6}/>
                 <NavP text='პარამეტრები' onClick={handleClick6} isClicked={isClicked6}/>
             </LinkSty>
             
