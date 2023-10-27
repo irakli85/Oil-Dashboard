@@ -21,7 +21,7 @@ const ScrollToTop = () => {
             onClick={handleClick}
             whileHover={{ scale: 1.3,
                 textShadow: "0px 0px 8px rgb(255, 255, 255)",
-                boxShadow: "0px 0px 8px #5D5FEF"}}
+                boxShadow: "0px 0px 8px #1aac83"}}
             transition={{type: 'spring', stifness: 300}}
             drag
             dragConstraints={{left: 0, top: 0, right: 0, bottom: 0}}
@@ -43,7 +43,7 @@ const TopBtn = styled(motion.div)`
     border: none;
     cursor: pointer;
     z-index: 1;
-    background: #5D5FEF;
+    background: #1aac83;
     box-shadow: 0px 20px 50px 0px rgba(55, 69, 87, 0.10);
 `
 
