@@ -114,9 +114,11 @@ export const NavP = ({text, onClick, isClicked}) => {
             style={{
                 color: isClicked ? '#1aac83' : '#737791',
                 fontSize: isClicked ? '20px' : '16px',
-                fontWeight: isClicked ? 900 : 400
+                fontWeight: isClicked ? 900 : 400,
+                borderLeft: isClicked ? 'solid 4px #1aac83' : 'none',
+                paddingLeft: isClicked ? '1rem' : 0
             }}         
-            whileHover={{scale: 1.3, originX: 0, color: '#1aac83', fontWeight: 900}}
+            whileHover={{scale: 1.3, originX: 0}}
             transition={{type: 'spring', stifness: 300}}
             >{text}
         </motion.p>
