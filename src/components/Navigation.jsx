@@ -28,6 +28,7 @@ const Navigation = () => {
     const [isClicked5, setIsClicked5] = useState(false)
     const [isClicked6, setIsClicked6] = useState(false)
 
+
     const handleClick1 = () => {
         setIsClicked1(true)
         setIsClicked2 (false)
