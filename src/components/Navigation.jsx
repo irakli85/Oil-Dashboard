@@ -4,10 +4,10 @@ import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP } from '../styledCompone
 import graph from '../assets/graph.svg'
 import SvgShop from '../styledComponents/svg/SvgShop'
 import SvgChart from '../styledComponents/svg/SvgChart'
-import SvgSms from '../styledComponents/svg/SvgSms'
 import SvgSettings from '../styledComponents/svg/SvgSettings'
 import SvgMeasure from '../styledComponents/svg/SvgMeasure'
 import SvgColba from '../styledComponents/svg/SvgColba'
+import SvgTank from '../styledComponents/svg/SvgTank'
 
 const buttonVariants = { 
     hover: {
@@ -111,8 +111,8 @@ const Navigation = () => {
                 <NavP text='რეპორტი' onClick={handleClick4} isClicked={isClicked4}/>
             </LinkSty>
 
-            <LinkSty to='/message'>
-                <SvgSms isClicked={isClicked5}/>
+            <LinkSty to='/terminals'>
+                <SvgTank isClicked={isClicked5}/>
                 <NavP text='საბაჟო საწყობები' onClick={handleClick5} isClicked={isClicked5}/>
             </LinkSty>
 
