@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import { useState } from 'react'
 
 
 export const AsideSty = styled.div`
@@ -106,9 +107,15 @@ export const LinkSty = styled(Link)`
     text-decoration: none;
 `
 
-export const NavP = ({text}) => {
+export const NavP = ({text, onClick, isClicked}) => {   
+    
     return(
-        <motion.p
+        <motion.p  onClick={onClick}
+            style={{
+                color: isClicked ? '#1aac83' : '#737791',
+                fontSize: isClicked ? '20px' : '16px',
+                fontWeight: isClicked ? 900 : 400
+            }}         
             whileHover={{scale: 1.3, originX: 0, color: '#1aac83', fontWeight: 900}}
             transition={{type: 'spring', stifness: 300}}
             >{text}

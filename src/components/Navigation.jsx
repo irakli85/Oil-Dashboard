@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP } from '../styledComponents/StyledComponents'
 
 import graph from '../assets/graph.svg'
@@ -17,7 +17,70 @@ const buttonVariants = {
     }
   }
 
+ 
+
 const Navigation = () => {
+
+    const [isClicked1, setIsClicked1] = useState(false)
+    const [isClicked2, setIsClicked2] = useState(false)
+    const [isClicked3, setIsClicked3] = useState(false)
+    const [isClicked4, setIsClicked4] = useState(false)
+    const [isClicked5, setIsClicked5] = useState(false)
+    const [isClicked6, setIsClicked6] = useState(false)
+
+    const handleClick1 = () => {
+        setIsClicked1(true)
+        setIsClicked2 (false)
+        setIsClicked3 (false)
+        setIsClicked4 (false)
+        setIsClicked5 (false)
+        setIsClicked6 (false)        
+    }
+
+    const handleClick2 = () => {
+        setIsClicked1(false)
+        setIsClicked2 (true)
+        setIsClicked3 (false)
+        setIsClicked4 (false)
+        setIsClicked5 (false)
+        setIsClicked6 (false)        
+    }
+
+    const handleClick3 = () => {
+        setIsClicked1(false)
+        setIsClicked2 (false)
+        setIsClicked3 (true)
+        setIsClicked4 (false)
+        setIsClicked5 (false)
+        setIsClicked6 (false)        
+    }
+
+    const handleClick4 = () => {
+        setIsClicked1(false)
+        setIsClicked2 (false)
+        setIsClicked3 (false)
+        setIsClicked4 (true)
+        setIsClicked5 (false)
+        setIsClicked6 (false)        
+    }
+
+    const handleClick5 = () => {
+        setIsClicked1(false)
+        setIsClicked2 (false)
+        setIsClicked3 (false)
+        setIsClicked4 (false)
+        setIsClicked5 (true)
+        setIsClicked6 (false)        
+    }
+
+    const handleClick6 = () => {
+        setIsClicked1(false)
+        setIsClicked2 (false)
+        setIsClicked3 (false)
+        setIsClicked4 (false)
+        setIsClicked5 (false)
+        setIsClicked6 (true)        
+    }
   return (
     <div>
         <DashDivSty
@@ -30,32 +93,32 @@ const Navigation = () => {
         <NavDivSty>
             <LinkSty to='/'>
                 <SvgMeasure/>
-                <NavP text='აზომვის ცდომილება'/>
+                <NavP text='აზომვის ცდომილება' onClick={handleClick1} isClicked={isClicked1}/>
             </LinkSty>
 
             <LinkSty to='/wastage'>
                 <SvgColba/>
-                <NavP text='ბუნებრივი დანაკარგები'/>
+                <NavP text='ბუნებრივი დანაკარგები' onClick={handleClick2} isClicked={isClicked2}/>
             </LinkSty>
 
             <LinkSty to='/products'>
                 <SvgShop/>
-                <NavP text='პროდუქტები'/>
+                <NavP text='პროდუქტები' onClick={handleClick3} isClicked={isClicked3}/>
             </LinkSty>
 
             <LinkSty to='/sales'>
                 <SvgChart/>
-                <NavP text='რეპორტი'/>
+                <NavP text='რეპორტი' onClick={handleClick4} isClicked={isClicked4}/>
             </LinkSty>
 
             <LinkSty to='/message'>
                 <SvgSms/>
-                <NavP text='საბაჟო საწყობები'/>
+                <NavP text='საბაჟო საწყობები' onClick={handleClick5} isClicked={isClicked5}/>
             </LinkSty>
 
             <LinkSty to='/settings'>
                 <SvgSettings/>
-                <NavP text='პარამეტრები'/>
+                <NavP text='პარამეტრები' onClick={handleClick6} isClicked={isClicked6}/>
             </LinkSty>
             
         </NavDivSty>
