@@ -15,7 +15,7 @@ const pathVariants = {
     }
   }
 
-function SvgMeasure() {
+function SvgMeasure({isClicked}) {
     return (
       <motion.svg
         width="32px"
@@ -27,7 +27,13 @@ function SvgMeasure() {
         animate='visible'        
       >
         <defs>
-          <style>{".cls-1{fill:#737791}.cls-2{fill:#737791}"}</style>
+          {
+            isClicked ? (
+              <style>{".cls-1{fill:#1aac83}.cls-2{fill:#1aac83}"}</style>
+            ) :
+            (<style>{".cls-1{fill:#737791}.cls-2{fill:#737791}"}</style>)
+          }
+          
         </defs>
         <g data-name="19. Ruler and Pencil" id="_19._Ruler_and_Pencil">
           <motion.path

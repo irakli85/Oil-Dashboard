@@ -92,12 +92,12 @@ const Navigation = () => {
         </DashDivSty>
         <NavDivSty>
             <LinkSty to='/'>
-                <SvgMeasure/>
+                <SvgMeasure isClicked={isClicked1}/>
                 <NavP text='აზომვის ცდომილება' onClick={handleClick1} isClicked={isClicked1}/>
             </LinkSty>
 
             <LinkSty to='/wastage'>
-                <SvgColba/>
+                <SvgColba isClicked={isClicked2}/>
                 <NavP text='ბუნებრივი დანაკარგები' onClick={handleClick2} isClicked={isClicked2}/>
             </LinkSty>
 
