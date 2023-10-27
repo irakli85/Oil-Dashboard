@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export const AsideSty = styled.div`
     width: 22%;
-    height: 100%;
+    height: fit-content;
     background:  #fff;
     border-radius: 1.5rem  0 0 1.5rem;
     padding: 2rem;

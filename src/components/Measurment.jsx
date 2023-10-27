@@ -129,7 +129,7 @@ export const H4 = styled.h4`
 `
 
 export const Table = styled.table`
-  width: 100rem;
+  width: 100%;
   height: 100%;
   border: solid 2px gray;
   margin-top: 5rem;

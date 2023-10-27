@@ -33,7 +33,7 @@ const DiveDivSt = styled.div`
     padding: 3rem;
     border-radius: 1rem;
     border: 1px solid #1aac83;
-    width: 120rem;
+    width: 100%;
     align-items: center;    
 `
 
