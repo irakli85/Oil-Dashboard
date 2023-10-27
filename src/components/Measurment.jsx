@@ -191,7 +191,7 @@ export const Hr = styled.hr`
     margin-top: 3rem;
     width: 80%;
     height: 1px;
-    background: #ed5c01;
+    background: #1aac83;
     border: none;
 `
 
