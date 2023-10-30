@@ -1,6 +1,31 @@
 import React from 'react'
 import { Container, H2, H4, Table, Tr, Th, Td, Hr } from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
+import { WastBtn1, WastBtn2, WastBtn3, WastBtn4, WastBtnCont } from '../styledComponents/StyledComponents';
+
+const buttonVariants = { 
+    hover1: {
+        scale: 1.1,
+        textShadow: "0px 0px 8px rgb(255, 255, 255)",
+        boxShadow: "0px 0px 8px #FA5A7D"
+    },
+    hover2: {
+        scale: 1.1,
+        textShadow: "0px 0px 8px rgb(255, 255, 255)",
+        boxShadow: "0px 0px 8px #FF947A"
+      },
+    hover3: {
+        scale: 1.1,
+        textShadow: "0px 0px 8px rgb(255, 255, 255)",
+        boxShadow: "0px 0px 8px #3CD856"
+    },
+    hover4: {
+        scale: 1.1,
+        textShadow: "0px 0px 8px rgb(255, 255, 255)",
+        boxShadow: "0px 0px 8px #BF83FF"
+    }
+  }
+
 
 const Wastage = () => {
     const handleClickScroll1 = () => {
@@ -13,13 +38,142 @@ const Wastage = () => {
         dizel.scrollIntoView({ behavior: 'smooth' });        
       };
 
+      const handleClickScroll3 = () => {
+        const kerosine = document.getElementById('kerosine');        
+        kerosine.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll4 = () => {
+        const fuel = document.getElementById('fuel');        
+        fuel.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll5 = () => {
+        const oil = document.getElementById('oil');        
+        oil.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll6 = () => {
+        const benzol = document.getElementById('benzol');        
+        benzol.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll7 = () => {
+        const vgo = document.getElementById('vgo');        
+        vgo.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll8 = () => {
+        const air = document.getElementById('air');        
+        air.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll9 = () => {
+        const oilair = document.getElementById('oilair');        
+        oilair.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll10 = () => {
+        const aceclic = document.getElementById('aceclic');        
+        aceclic.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll11 = () => {
+        const propil = document.getElementById('propil');        
+        propil.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll12 = () => {
+        const metil = document.getElementById('metil');        
+        metil.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll13 = () => {
+        const paraqsilol = document.getElementById('paraqsilol');        
+        paraqsilol.scrollIntoView({ behavior: 'smooth' });        
+      };
+
+      const handleClickScroll14 = () => {
+        const piroliz = document.getElementById('piroliz');        
+        piroliz.scrollIntoView({ behavior: 'smooth' });        
+      };
+
   return (
-    <Container>
-        {/* <div>
-            <h1 onClick={handleClickScroll1}>crudle oil</h1>
-            <h1 onClick={handleClickScroll2}>dizel</h1>
-        </div> */}
+    <Container>       
         <H2>ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები</H2>
+        <WastBtnCont>
+            <WastBtn1 onClick={handleClickScroll1}
+                variants={buttonVariants}        
+                whileHover="hover1"  
+                >ნედლი ნავთობი</WastBtn1>
+
+            <WastBtn2 onClick={handleClickScroll2}
+                variants={buttonVariants}        
+                whileHover="hover2"  
+                >დიზელი</WastBtn2>
+
+            <WastBtn3 onClick={handleClickScroll3}
+                variants={buttonVariants}        
+                whileHover="hover3"  
+                >ნავთი</WastBtn3>
+
+            <WastBtn4 onClick={handleClickScroll4}
+                variants={buttonVariants}        
+                whileHover="hover4"  
+                >მაზუთი</WastBtn4>
+
+            <WastBtn1 onClick={handleClickScroll5}
+                variants={buttonVariants}        
+                whileHover="hover1"  
+                >საპოხი ზეთი</WastBtn1>
+
+            <WastBtn2 onClick={handleClickScroll6}
+                variants={buttonVariants}        
+                whileHover="hover2"  
+                >ბენზოლი</WastBtn2>
+
+            <WastBtn3 onClick={handleClickScroll7}
+                variants={buttonVariants}        
+                whileHover="hover3"  
+                >ვაკუუმური გაზოილი</WastBtn3>
+                
+            <WastBtn4 onClick={handleClickScroll8}
+                variants={buttonVariants}        
+                whileHover="hover4"  
+                >აირის კონდენსატი ბუნებრივი</WastBtn4>
+
+            <WastBtn1 onClick={handleClickScroll9}
+                variants={buttonVariants}        
+                whileHover="hover1"  
+                >ნავთობის აირები გათხევადებული</WastBtn1>
+                
+            <WastBtn2 onClick={handleClickScroll10}
+                variants={buttonVariants}        
+                whileHover="hover2"  
+                >ნახშირწყალბადები აცეკლური</WastBtn2>
+
+            <WastBtn3 onClick={handleClickScroll11}
+                variants={buttonVariants}        
+                whileHover="hover3"  
+                >პროპილისა და იზოპროპილის სპირტი</WastBtn3>
+
+            <WastBtn4 onClick={handleClickScroll12}
+                variants={buttonVariants}        
+                whileHover="hover4"  
+                >მეთილის სპირტი</WastBtn4>
+
+            <WastBtn1 onClick={handleClickScroll13}
+                variants={buttonVariants}        
+                whileHover="hover1"  
+                >პარაქსილოლი</WastBtn1>
+
+            <WastBtn2 onClick={handleClickScroll14}
+                variants={buttonVariants}        
+                whileHover="hover2"  
+                >პიროლიზური ფისი</WastBtn2>                   
+
+        </WastBtnCont>
+        
         <DeepDive text='ბენზინი' id='gasoline'>
             <Hr/>
             <H4>სეს ესნ კოდები: 2710 12 110, 2710 12 410, 2710 12 450, 2710 12 490</H4>

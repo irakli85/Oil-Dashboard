@@ -125,6 +125,83 @@ export const NavP = ({text, onClick, isClicked}) => {
     )
 }
 
+export const WastBtnCont = styled.div`
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+`
+
+export const WastBtn1 = styled(motion.div)`
+    display: flex;
+    width: 20rem;
+    height: 6.5rem;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #FFE2E5;
+    border: 1px solid #FA5A7D;
+    color: #FA5A7D;
+    font-size: 1.6rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-align: center;
+`
+
+export const WastBtn2 = styled(motion.div)`
+    display: flex;
+    width: 20rem;
+    height: 6.5rem;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #FFF4DE;
+    border: 1px solid #FF947A;
+    color: #FF947A;
+    font-size: 1.6rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-align: center;    
+`
+
+export const WastBtn3 = styled(motion.div)`
+    display: flex;
+    width: 20rem;
+    height: 6.5rem;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #DCFCE7;
+    border: 1px solid #3CD856;
+    color: #3CD856;
+    font-size: 1.6rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-align: center;
+`
+
+export const WastBtn4 = styled(motion.div)`
+    display: flex;
+    width: 20rem;
+    height: 6.5rem;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #F3E8FF;
+    border: 1px solid #BF83FF;
+    color: #BF83FF;
+    font-size: 1.6rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-align: center;
+`
+
 
 
 
