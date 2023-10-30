@@ -6,8 +6,7 @@ const OilPrice = () => {
   return (
     <Container>
         <div>
-            <p><br /></p>
-
+         <H2>ნედლი ნავთობის ფასი</H2>
             <Table
                 width={240}
                 border={1}
@@ -41,20 +40,22 @@ const OilPrice = () => {
                     <p>2709&nbsp;00 </p>
                 </Td>
                 <Td valign="top">
-                    <p>
-                    PeTroleum oils and oils obtained from bituminous minerals, crude
+                    <p >
+                    ნედლი ნავთობი და ნედლი ნავთობპროდუქტები, მიღებული ბიტუმოვანი მინერალებისაგან
                     </p>
                 </Td>
                 <Td valign="top">
                     <p>60 </p>
                 </Td>
                 <Td valign="top">
-                    <p>5&nbsp;December 2022</p>
+                    <p>5&nbsp;დეკემბერი 2022</p>
                 </Td>
                 </Tr>
             </tbody>
             </Table>
         </div>
+
+        <H2>ნავთობპროდუქტების ფასები</H2>
 
         <div >
             <p>
@@ -77,48 +78,42 @@ const OilPrice = () => {
             <tbody>
                 <Tr>
                 <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >CN Code</p>
+                    <p >კოდი</p>
                 </Td>
                 <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >Description</p>
+                    <p >საქონლის აღწერა</p>
                 </Td>
                 <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p className="hd-column">Premium to crude oil/</p>
-                    <p className="hd-column">Discount to crude oil</p>
+                    
                 </Td>
                 <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >Price per barrel (USD)</p>
+                    <p >ერთი ბარელის ფასი (USD)</p>
                 </Td>
                 <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >Date of application</p>
+                    <p >დაწესების თარიღი</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >
-                    PeTroleum oils and oils obtained from bituminous minerals (other
-                    than crude) and preparations not elsewhere specified or included,
-                    containing by weight 70 &nbsp;% or more of peTroleum oils or of
-                    oils obtained from bituminous minerals, these oils being the basic
-                    constituents of the preparations, other than those containing
-                    biodiesel and other than waste oils
+                    <p style={{ fontWeight: "bold" }}>
+                    ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, ნედლის გარდა; პროდუქტები, სხვა ადგილას დაუსახელებელი ან ჩაურთველი, ბიტუმოვანი ქანებისაგან მიღებული ნავთობის ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს; ნამუშევარი ნავთობპროდუქტები:
                     </p>
                 </Td>
                 <Td colSpan={3} rowSpan={2} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p >2710&nbsp;12 </p>
+                    <p ></p>
                 </Td>
                 <Td valign="top">
-                    <p >Light oils and preparations</p>
+                    <p style={{ fontWeight: "bold" }}>მსუბუქი დისტილატები და პროდუქტები</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -126,7 +121,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;11 </p>
                 </Td>
                 <Td valign="top">
-                    <p >For undergoing a specific process</p>
+                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -135,7 +130,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -144,8 +139,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    For undergoing chemical Transformation by a process other than
-                    those specified in respect of subheading&nbsp;2710&nbsp;12&nbsp;11{" "}
+                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 12 110 00 ქვესუბპოზიციაში მითითებულის გარდა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -155,20 +149,20 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >For other purposes</p>
-                    <p >Special spirits</p>
+                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
+                    <p style={{ fontWeight: "bold" }}>სპეციალური ბენზინები</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -177,7 +171,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;21 </p>
                 </Td>
                 <Td valign="top">
-                    <p >White spirit</p>
+                    <p >უაიტ-სპირიტი</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -186,7 +180,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -194,7 +188,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;25 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other</p>
+                    <p >დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -203,20 +197,20 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Other</p>
-                    <p >Motor spirit</p>
+                    <p style={{ fontWeight: "bold" }}>დანარჩენი</p>
+                    <p style={{ fontWeight: "bold" }}>ბენზინები ძრავებისათვის</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -225,7 +219,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;31 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Aviation spirit</p>
+                    <p >საავიაციო ბენზინები</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -234,20 +228,20 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Other, with a lead content</p>
-                    <p >Not exceeding 0,013 &nbsp;g per liTre</p>
+                    <p style={{ fontWeight: "bold" }}>დანარჩენი, ტყვიის შემცველობით </p>
+                    <p style={{ fontWeight: "bold" }}>არა უმეტეს 0,013&nbsp;გ/ლ-ისა</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -257,7 +251,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With an octane number (RON) of less than 95{" "}
+                    ოქტანური რიცხვით (RON) 95-ზე ნაკლები
                     </p>
                 </Td>
                 <Td valign="top">
@@ -267,7 +261,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -276,7 +270,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With an octane number (RON) of 95 &nbsp;or more but less than 98{" "}
+                    ოქტანური რიცხვით (RON)  95 ან მეტი, მაგრამ 98-ზე ნაკლები
                     </p>
                 </Td>
                 <Td valign="top">
@@ -286,7 +280,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -295,7 +289,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With an octane number (RON) of 98 &nbsp;or more
+                    ოქტანური რიცხვით 98 ან მეტი 
                     </p>
                 </Td>
                 <Td valign="top">
@@ -305,7 +299,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -313,7 +307,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;50 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Exceeding 0,013 &nbsp;g per liTre</p>
+                    <p >0,013 გ/ლ-ზე მეტი</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -322,7 +316,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -330,7 +324,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;70 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Spirit type jet fuel</p>
+                    <p >ბენზინის საწვავი რეაქტიული</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -339,7 +333,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -347,7 +341,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;12&nbsp;90 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other light oils</p>
+                    <p >მსუბუქი დისტილატები, დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -356,7 +350,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -364,20 +358,20 @@ const OilPrice = () => {
                     <p >2710&nbsp;19 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other</p>
+                    <p >დანარჩენი</p>
                 </Td>
                 <Td colSpan={3} rowSpan={2} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Medium oils</p>
+                    <p style={{ fontWeight: "bold" }}>საშუალო დისტილატები</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -385,7 +379,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;11 </p>
                 </Td>
                 <Td valign="top">
-                    <p >For undergoing a specific process</p>
+                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -394,7 +388,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -403,8 +397,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    For undergoing chemical Transformation by a process other than
-                    those specified in respect of subheading&nbsp;2710&nbsp;19&nbsp;11{" "}
+                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 110 00 ქვესუბპოზიციაში მითითებულის გარდა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -414,20 +407,20 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >For other purposes</p>
-                    <p >Kerosene</p>
+                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
+                    <p style={{ fontWeight: "bold" }}>ნავთი</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -436,7 +429,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;21 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Jet fuel</p>
+                    <p >რეაქტიული საწვავი</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -445,7 +438,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -453,7 +446,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;25 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other</p>
+                    <p >დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -462,7 +455,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -470,7 +463,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;29 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other</p>
+                    <p >დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -479,20 +472,20 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Heavy oils</p>
-                    <p >Gas oils</p>
+                    <p style={{ fontWeight: "bold" }}>მძიმე დისტილატები</p>
+                    <p style={{ fontWeight: "bold" }}>გაზოილი</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -501,7 +494,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;31 </p>
                 </Td>
                 <Td valign="top">
-                    <p >For undergoing a specific process</p>
+                    <p >გადამუშავების სპეციფიკური პროცესებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -510,7 +503,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -519,8 +512,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    For undergoing chemical Transformation by a process other than
-                    those specified in respect of subheading&nbsp;2710&nbsp;19&nbsp;31{" "}
+                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 310 00 ქვესუბპოზიციაში მითითებულის გარდა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -530,19 +522,19 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >For other purposes</p>
+                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -552,7 +544,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content not exceeding 0,001 &nbsp;% by weight
+                    გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -562,7 +554,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -571,8 +563,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,001 &nbsp;% by weight but not
-                    exceeding 0,002 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.002 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -582,7 +573,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -591,8 +582,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,002 &nbsp;% by weight but not
-                    exceeding 0,1 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,002 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -602,7 +592,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -611,7 +601,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,1 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,1 მას.%-ზე მეტი
                     </p>
                 </Td>
                 <Td valign="top">
@@ -621,19 +611,19 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Fuel oils</p>
+                    <p style={{ fontWeight: "bold" }}>თხევადი საწვავი</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -642,7 +632,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;51 </p>
                 </Td>
                 <Td valign="top">
-                    <p >For undergoing a specific process</p>
+                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -651,7 +641,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -660,8 +650,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    For undergoing chemical Transformation by a process other than
-                    those specified in respect of subheading&nbsp;2710&nbsp;19&nbsp;51{" "}
+                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 510 00 ქვესუბპოზიციაში მითითებულის გარდა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -671,19 +660,19 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >For other purposes</p>
+                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -693,7 +682,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content not exceeding 0,1 &nbsp;% by weight
+                    გოგირდის შემცველობით არა უმეტეს 0,1 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -703,7 +692,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -712,8 +701,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,1 &nbsp;% by weight but not
-                    exceeding 0,5 &nbsp;% by weight
+                    გოგირდის შემცველობით  0,1 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0,5% მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -723,7 +711,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -732,7 +720,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,5 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,5 მას.%-ზე მეტი
                     </p>
                 </Td>
                 <Td valign="top">
@@ -742,19 +730,19 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Lubricating oils; other oils</p>
+                    <p style={{ fontWeight: "bold" }}>საპოხი ზეთები; დანარჩენი ზეთები</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -763,7 +751,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;71 </p>
                 </Td>
                 <Td valign="top">
-                    <p >For undergoing a specific process</p>
+                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Premium to crude oil</p>
@@ -772,7 +760,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -781,8 +769,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    For undergoing chemical Transformation by a process other than
-                    those specified in respect of subheading&nbsp;2710&nbsp;19&nbsp;71{" "}
+                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 710 00 ქვესუბპოზიციაში მითითებულის გარდა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -792,19 +779,19 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >For other purposes</p>
+                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -814,7 +801,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    Motor oils, compressor lube oils, turbine lube oils
+                    ძრავის ზეთები, კომპრესორის საპოხი ზეთი, ტურბინის საპოხი ზეთი
                     </p>
                 </Td>
                 <Td valign="top">
@@ -824,7 +811,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -832,7 +819,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;83 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Hydraulic oils</p>
+                    <p >სითხეები ჰიდრავლიური მიზნებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -841,7 +828,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -849,7 +836,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;85 </p>
                 </Td>
                 <Td valign="top">
-                    <p >White oils, liquid paraffin</p>
+                    <p >ღია ფერის ზეთები, ვაზელინის ზეთი</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -858,7 +845,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -866,7 +853,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;87 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Gear oils and reductor oils</p>
+                    <p >ზეთი კბილანებისათვის და ზეთი რედუქტორებისათვის</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -875,7 +862,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -884,7 +871,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    Metal-working compounds, mould-release oils, anti-corrosion oils
+                    ლითონების დასამუშავებელი შედგენილობები, ფორმების გასაპოხი ზეთები, ანტიკოროზიული ზეთები
                     </p>
                 </Td>
                 <Td valign="top">
@@ -894,7 +881,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -902,7 +889,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;93 </p>
                 </Td>
                 <Td valign="top">
-                    <p >ElecTrical insulating oils</p>
+                    <p >ელექტრული საიზოლაციო ზეთები</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -911,7 +898,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -919,7 +906,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;19&nbsp;99 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other lubricating oils and other oils</p>
+                    <p >დანარჩენი საპოხი ზეთები და ზეთები დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -928,35 +915,30 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p >2710&nbsp;20 </p>
+                    <p > </p>
                 </Td>
                 <Td valign="top">
-                    <p >
-                    PeTroleum oils and oils obtained from bituminous minerals (other
-                    than crude) and preparations not elsewhere specified or included,
-                    containing by weight 70 &nbsp;% or more of peTroleum oils or of
-                    oils obtained from bituminous minerals, these oils being the basic
-                    constituents of the preparations, containing biodiesel, other than
-                    waste oils
+                    <p style={{ fontWeight: "bold" }}>
+                    ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, (ნედლის გარდა) და პროდუქტები, სხვა ადგილას დაუსახელებელი, ან ჩაურთველი ბიტუმოვანი ქანებისაგან მიღებული ნავთობისა ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს, ბიოდიზელის შემცველობით, ნამუშევარი ნავთობპროდუქტების გამოკლებით:
                     </p>
                 </Td>
                 <Td colSpan={3} rowSpan={2} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Gas oils</p>
+                    <p style={{ fontWeight: "bold" }}>გაზოილი</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -965,7 +947,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content not exceeding 0,001 &nbsp;% by weight
+                    გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -975,7 +957,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -984,8 +966,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,001 &nbsp;% by weight but not
-                    exceeding 0,1 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -995,7 +976,7 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -1004,7 +985,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,1 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,1 მას.%-ზე მეტი
                     </p>
                 </Td>
                 <Td valign="top">
@@ -1014,19 +995,19 @@ const OilPrice = () => {
                     <p >100 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Fuel oils</p>
+                    <p style={{ fontWeight: "bold" }}>თხევადი საწვავი:</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -1036,7 +1017,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content not exceeding 0,5 &nbsp;% by weight
+                    გოგირდის შემცველობით არა უმეტეს 0,5 მას.%-ისა
                     </p>
                 </Td>
                 <Td valign="top">
@@ -1046,7 +1027,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -1055,7 +1036,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    With a sulphur content exceeding 0,5 &nbsp;% by weight
+                    გოგირდის შემცველობით 0,5 მას.%-ზე მეტი
                     </p>
                 </Td>
                 <Td valign="top">
@@ -1065,7 +1046,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -1073,7 +1054,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;20&nbsp;90 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other oils</p>
+                    <p >დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -1082,19 +1063,19 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
                 <Td valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 <Td valign="top">
-                    <p >Waste oils</p>
+                    <p style={{ fontWeight: "bold" }}>ნამუშევარი ნავთობპროდუქტები</p>
                 </Td>
                 <Td colSpan={3} valign="top">
-                    <p className="normal">&nbsp;</p>
+                    <p >&nbsp;</p>
                     <div></div>
                 </Td>
                 </Tr>
@@ -1104,8 +1085,7 @@ const OilPrice = () => {
                 </Td>
                 <Td valign="top">
                     <p >
-                    Containing polychlorinated biphenyls (PCBs), polychlorinated
-                    terphenyls (PCTs) or polybrominated biphenyls (PBBs)
+                    პოლიქლორბიფენილების (PCBs), პოლიქლორტრიფენილებისა (PCTs), ან პოლიბრომბიფენილების (PBBs) შემცველობით
                     </p>
                 </Td>
                 <Td valign="top">
@@ -1115,7 +1095,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
                 <Tr>
@@ -1123,7 +1103,7 @@ const OilPrice = () => {
                     <p >2710&nbsp;99 </p>
                 </Td>
                 <Td valign="top">
-                    <p >Other</p>
+                    <p >დანარჩენი</p>
                 </Td>
                 <Td valign="top">
                     <p >Discount to crude oil</p>
@@ -1132,7 +1112,7 @@ const OilPrice = () => {
                     <p >45 </p>
                 </Td>
                 <Td valign="top">
-                    <p className="tbl-left">5&nbsp;February 2023</p>
+                    <p >5&nbsp;დეკემბერი 2023</p>
                 </Td>
                 </Tr>
             </tbody>
