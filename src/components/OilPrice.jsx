@@ -132,25 +132,15 @@ const OilPrice = () => {
                     <Td style={{ fontWeight: "bold" }}>დანარჩენი, ტყვიის შემცველობით არა უმეტეს 0,013&nbsp;გ/ლ-ისა</Td>
                     <Td colSpan={3}></Td>
                 </Tr>
+
                 <Tr>
-                <Td >
-                    2710&nbsp;12&nbsp;41 
-                </Td>
-                <Td >
-                    
-                    ოქტანური რიცხვით (RON) 95-ზე ნაკლები
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
+                    <Td>2710&nbsp;12&nbsp;41</Td>
+                    <Td>ოქტანური რიცხვით (RON) 95-ზე ნაკლები</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
+                {/* ---------აქ გავჩერდი */}
                 <Tr>
                 <Td >
                     2710&nbsp;12&nbsp;45 
