@@ -28,6 +28,7 @@ const buttonVariants = {
 
 
 const Wastage = () => {
+    
     const handleClickScroll1 = () => {
         const crudle = document.getElementById('crudle');        
         crudle.scrollIntoView({ behavior: 'smooth' });        

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP } from '../styledComponents/StyledComponents'
+import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP, NavCont } from '../styledComponents/StyledComponents'
 
 import graph from '../assets/graph.svg'
 import SvgShop from '../styledComponents/svg/SvgShop'
@@ -8,6 +8,7 @@ import SvgSettings from '../styledComponents/svg/SvgSettings'
 import SvgMeasure from '../styledComponents/svg/SvgMeasure'
 import SvgColba from '../styledComponents/svg/SvgColba'
 import SvgTank from '../styledComponents/svg/SvgTank'
+import SvgWorld from '../styledComponents/svg/Svgworld'
 
 const buttonVariants = { 
     hover: {
@@ -83,7 +84,7 @@ const Navigation = () => {
         setIsClicked6 (true)        
     }
   return (
-    <div>
+    <NavCont>
         <DashDivSty
             variants={buttonVariants}        
             whileHover="hover"         
@@ -123,7 +124,8 @@ const Navigation = () => {
             </LinkSty>
             
         </NavDivSty>
-    </div>
+        <SvgWorld/>
+    </NavCont>
   )
 }
 

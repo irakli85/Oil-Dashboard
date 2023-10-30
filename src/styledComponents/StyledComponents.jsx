@@ -202,6 +202,12 @@ export const WastBtn4 = styled(motion.div)`
     text-align: center;
 `
 
+export const NavCont = styled.div`
+    display: flex;    
+    flex-direction: column;
+    gap: 10rem;
+`
+
 
 
 
