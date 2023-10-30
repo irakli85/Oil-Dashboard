@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, H2, H4, Table, Tr, Th, Td, Hr } from './Measurment'
+import { Container, H2,  Table, Tr,  Td } from './Measurment'
 
 
 const OilPrice = () => {
@@ -12,7 +12,6 @@ const OilPrice = () => {
                 border={1}
                 cellPadding={2}
                 cellSpacing={0}
-                className="borderOj"
                 >
             <colgroup>
                 <col width="7%" />
@@ -22,34 +21,17 @@ const OilPrice = () => {
             </colgroup>
             <tbody>
                 <Tr>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>კოდი</p>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>საქონლის აღწერა</p>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>ერთი ბარელის ფასი (USD)</p>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>დაწესების თარიღი</p>
-                </Td>
+                    <Td style={{ fontWeight: "bold" }}>კოდი</Td>                    
+                    <Td style={{ fontWeight: "bold" }}>საქონლის აღწერა</Td>
+                    <Td style={{ fontWeight: "bold" }}>ერთი ბარელის ფასი (USD)</Td>
+                    <Td style={{ fontWeight: "bold" }}>დაწესების თარიღი</Td>
                 </Tr>
+
                 <Tr>
-                <Td valign="top">
-                    <p>2709&nbsp;00 </p>
-                </Td>
-                <Td valign="top">
-                    <p >
-                    ნედლი ნავთობი და ნედლი ნავთობპროდუქტები, მიღებული ბიტუმოვანი მინერალებისაგან
-                    </p>
-                </Td>
-                <Td valign="top">
-                    <p>60 </p>
-                </Td>
-                <Td valign="top">
-                    <p>5&nbsp;დეკემბერი 2022</p>
-                </Td>
+                    <Td>2709&nbsp;00</Td>
+                    <Td>ნედლი ნავთობი და ნედლი ნავთობპროდუქტები, მიღებული ბიტუმოვანი მინერალებისაგან</Td>
+                    <Td style={{ fontWeight: "bold" }}>60</Td>
+                    <Td>5&nbsp;დეკემბერი 2022</Td>
                 </Tr>
             </tbody>
             </Table>
@@ -57,16 +39,12 @@ const OilPrice = () => {
 
         <H2>ნავთობპროდუქტების ფასები</H2>
 
-        <div >
-            <p>
-            <br />
-            </p>
+        <div>            
             <Table
             width={320}
             border={1}
             cellPadding={2}
             cellSpacing={0}
-            className="borderOj"
             >
             <colgroup>
                 <col width="6%" />
@@ -77,1042 +55,951 @@ const OilPrice = () => {
             </colgroup>
             <tbody>
                 <Tr>
-                <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >კოდი</p>
+                    <Td style={{ fontWeight: "bold" }}>კოდი</Td>
+                    <Td style={{ fontWeight: "bold" }}>საქონლის აღწერა</Td>
+                    <Td> </Td>
+                    <Td style={{ fontWeight: "bold" }}>ერთი ბარელის ფასი (USD)</Td>
+                    <Td style={{ fontWeight: "bold" }}>დაწესების თარიღი</Td>
+                </Tr>
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>                        
+                        ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, ნედლის გარდა; პროდუქტები, სხვა ადგილას დაუსახელებელი ან ჩაურთველი, ბიტუმოვანი ქანებისაგან მიღებული ნავთობის ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს; ნამუშევარი ნავთობპროდუქტები
+                        
+                    </Td>
+                    <Td colSpan={3} rowSpan={2}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>მსუბუქი დისტილატები და პროდუქტები</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;11</Td>
+                    <Td>გადამუშავების სპეციფიური პროცესებისათვის</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;15</Td>
+                    <Td>ქიმიური გარდაქმნებისათვის პროცესებში, 2710 12 110 00 ქვესუბპოზიციაში მითითებულის გარდა</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის, სპეციალური ბენზინები</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;21</Td>
+                    <Td>უაიტ-სპირიტი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;25</Td>
+                    <Td>დანარჩენი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>დანარჩენი, ბენზინები ძრავებისათვის</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;31</Td>
+                    <Td>საავიაციო ბენზინები</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>დანარჩენი, ტყვიის შემცველობით არა უმეტეს 0,013&nbsp;გ/ლ-ისა</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;12&nbsp;41 
                 </Td>
-                <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >საქონლის აღწერა</p>
-                </Td>
-                <Td style={{ fontWeight: "bold" }} valign="top">
+                <Td >
+                    
+                    ოქტანური რიცხვით (RON) 95-ზე ნაკლები
                     
                 </Td>
-                <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >ერთი ბარელის ფასი (USD)</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td style={{ fontWeight: "bold" }} valign="top">
-                    <p >დაწესების თარიღი</p>
+                <Td >
+                    100 
                 </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>
-                    ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, ნედლის გარდა; პროდუქტები, სხვა ადგილას დაუსახელებელი ან ჩაურთველი, ბიტუმოვანი ქანებისაგან მიღებული ნავთობის ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს; ნამუშევარი ნავთობპროდუქტები:
-                    </p>
-                </Td>
-                <Td colSpan={3} rowSpan={2} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p ></p>
+                <Td >
+                    2710&nbsp;12&nbsp;45 
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>მსუბუქი დისტილატები და პროდუქტები</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;11 </p>
-                </Td>
-                <Td valign="top">
-                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;15 </p>
-                </Td>
-                <Td valign="top">
-                    <p >
-                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 12 110 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    </p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
-                    <p style={{ fontWeight: "bold" }}>სპეციალური ბენზინები</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;21 </p>
-                </Td>
-                <Td valign="top">
-                    <p >უაიტ-სპირიტი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;25 </p>
-                </Td>
-                <Td valign="top">
-                    <p >დანარჩენი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>დანარჩენი</p>
-                    <p style={{ fontWeight: "bold" }}>ბენზინები ძრავებისათვის</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;31 </p>
-                </Td>
-                <Td valign="top">
-                    <p >საავიაციო ბენზინები</p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>დანარჩენი, ტყვიის შემცველობით </p>
-                    <p style={{ fontWeight: "bold" }}>არა უმეტეს 0,013&nbsp;გ/ლ-ისა</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;41 </p>
-                </Td>
-                <Td valign="top">
-                    <p >
-                    ოქტანური რიცხვით (RON) 95-ზე ნაკლები
-                    </p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     ოქტანური რიცხვით (RON)  95 ან მეტი, მაგრამ 98-ზე ნაკლები
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;49 </p>
+                <Td >
+                    2710&nbsp;12&nbsp;49 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     ოქტანური რიცხვით 98 ან მეტი 
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;50 </p>
-                </Td>
-                <Td valign="top">
-                    <p >0,013 გ/ლ-ზე მეტი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;70 </p>
+                <Td >
+                    2710&nbsp;12&nbsp;50 
                 </Td>
-                <Td valign="top">
-                    <p >ბენზინის საწვავი რეაქტიული</p>
+                <Td >
+                    0,013 გ/ლ-ზე მეტი
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;12&nbsp;90 </p>
-                </Td>
-                <Td valign="top">
-                    <p >მსუბუქი დისტილატები, დანარჩენი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19 </p>
+                <Td >
+                    2710&nbsp;12&nbsp;70 
                 </Td>
-                <Td valign="top">
-                    <p >დანარჩენი</p>
+                <Td >
+                    ბენზინის საწვავი რეაქტიული
                 </Td>
-                <Td colSpan={3} rowSpan={2} valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    Premium to crude oil
+                </Td>
+                <Td >
+                    100 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;12&nbsp;90 
+                </Td>
+                <Td >
+                    მსუბუქი დისტილატები, დანარჩენი
+                </Td>
+                <Td >
+                    Premium to crude oil
+                </Td>
+                <Td >
+                    100 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19 
+                </Td>
+                <Td >
+                    დანარჩენი
+                </Td>
+                <Td colSpan={3} rowSpan={2} >
+                    &nbsp;
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    &nbsp;
                     <div></div>
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>საშუალო დისტილატები</p>
+                <Td >
+                    საშუალო დისტილატები
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;11 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;11 
                 </Td>
-                <Td valign="top">
-                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
+                <Td >
+                    გადამუშავების სპეციფიური პროცესებისათვის
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;15 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;15 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 110 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    &nbsp;
                     <div></div>
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
-                    <p style={{ fontWeight: "bold" }}>ნავთი</p>
+                <Td >
+                    სხვა მიზნებისათვის
+                    ნავთი
                 </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;21 </p>
-                </Td>
-                <Td valign="top">
-                    <p >რეაქტიული საწვავი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;25 </p>
-                </Td>
-                <Td valign="top">
-                    <p >დანარჩენი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;29 </p>
-                </Td>
-                <Td valign="top">
-                    <p >დანარჩენი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >100 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>მძიმე დისტილატები</p>
-                    <p style={{ fontWeight: "bold" }}>გაზოილი</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
+                <Td colSpan={3} >
+                    &nbsp;
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;31 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;21 
                 </Td>
-                <Td valign="top">
-                    <p >გადამუშავების სპეციფიკური პროცესებისათვის</p>
+                <Td >
+                    რეაქტიული საწვავი
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;35 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;25 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    დანარჩენი
+                </Td>
+                <Td >
+                    Premium to crude oil
+                </Td>
+                <Td >
+                    100 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;29 
+                </Td>
+                <Td >
+                    დანარჩენი
+                </Td>
+                <Td >
+                    Premium to crude oil
+                </Td>
+                <Td >
+                    100 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    &nbsp;
+                    <div></div>
+                </Td>
+                <Td >
+                    მძიმე დისტილატები
+                    გაზოილი
+                </Td>
+                <Td colSpan={3} >
+                    &nbsp;
+                    <div></div>
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;31 
+                </Td>
+                <Td >
+                    გადამუშავების სპეციფიკური პროცესებისათვის
+                </Td>
+                <Td >
+                    Premium to crude oil
+                </Td>
+                <Td >
+                    100 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;35 
+                </Td>
+                <Td >
+                    
                     ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 310 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;43 </p>
+                <Td >
+                    &nbsp;
+                    <div></div>
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    სხვა მიზნებისათვის
+                </Td>
+                <Td colSpan={3} >
+                    &nbsp;
+                    <div></div>
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;43 
+                </Td>
+                <Td >
+                    
                     გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;46 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;46 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.002 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;47 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;47 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,002 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;48 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;48 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,1 მას.%-ზე მეტი
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    &nbsp;
                     <div></div>
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>თხევადი საწვავი</p>
+                <Td >
+                    თხევადი საწვავი
                 </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
+                <Td colSpan={3} >
+                    &nbsp;
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;51 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;51 
                 </Td>
-                <Td valign="top">
-                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
+                <Td >
+                    გადამუშავების სპეციფიური პროცესებისათვის
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;55 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;55 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 510 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;62 </p>
+                <Td >
+                    &nbsp;
+                    <div></div>
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    სხვა მიზნებისათვის
+                </Td>
+                <Td colSpan={3} >
+                    &nbsp;
+                    <div></div>
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;62 
+                </Td>
+                <Td >
+                    
                     გოგირდის შემცველობით არა უმეტეს 0,1 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;66 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;66 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით  0,1 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0,5% მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;67 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;67 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,5 მას.%-ზე მეტი
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    &nbsp;
                     <div></div>
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>საპოხი ზეთები; დანარჩენი ზეთები</p>
+                <Td >
+                    საპოხი ზეთები; დანარჩენი ზეთები
                 </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
+                <Td colSpan={3} >
+                    &nbsp;
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;71 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;71 
                 </Td>
-                <Td valign="top">
-                    <p >გადამუშავების სპეციფიური პროცესებისათვის</p>
+                <Td >
+                    გადამუშავების სპეციფიური პროცესებისათვის
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;75 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;75 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 710 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;81 </p>
+                <Td >
+                    &nbsp;
+                    <div></div>
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    სხვა მიზნებისათვის
+                </Td>
+                <Td colSpan={3} >
+                    &nbsp;
+                    <div></div>
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;81 
+                </Td>
+                <Td >
+                    
                     ძრავის ზეთები, კომპრესორის საპოხი ზეთი, ტურბინის საპოხი ზეთი
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;83 </p>
-                </Td>
-                <Td valign="top">
-                    <p >სითხეები ჰიდრავლიური მიზნებისათვის</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;85 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;83 
                 </Td>
-                <Td valign="top">
-                    <p >ღია ფერის ზეთები, ვაზელინის ზეთი</p>
+                <Td >
+                    სითხეები ჰიდრავლიური მიზნებისათვის
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;87 </p>
-                </Td>
-                <Td valign="top">
-                    <p >ზეთი კბილანებისათვის და ზეთი რედუქტორებისათვის</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;91 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;85 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    ღია ფერის ზეთები, ვაზელინის ზეთი
+                </Td>
+                <Td >
+                    Discount to crude oil
+                </Td>
+                <Td >
+                    45 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;87 
+                </Td>
+                <Td >
+                    ზეთი კბილანებისათვის და ზეთი რედუქტორებისათვის
+                </Td>
+                <Td >
+                    Discount to crude oil
+                </Td>
+                <Td >
+                    45 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;19&nbsp;91 
+                </Td>
+                <Td >
+                    
                     ლითონების დასამუშავებელი შედგენილობები, ფორმების გასაპოხი ზეთები, ანტიკოროზიული ზეთები
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;93 </p>
-                </Td>
-                <Td valign="top">
-                    <p >ელექტრული საიზოლაციო ზეთები</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;19&nbsp;99 </p>
+                <Td >
+                    2710&nbsp;19&nbsp;93 
                 </Td>
-                <Td valign="top">
-                    <p >დანარჩენი საპოხი ზეთები და ზეთები დანარჩენი</p>
+                <Td >
+                    ელექტრული საიზოლაციო ზეთები
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p > </p>
+                <Td >
+                    2710&nbsp;19&nbsp;99 
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>
+                <Td >
+                    დანარჩენი საპოხი ზეთები და ზეთები დანარჩენი
+                </Td>
+                <Td >
+                    Discount to crude oil
+                </Td>
+                <Td >
+                    45 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                     
+                </Td>
+                <Td >
+                    
                     ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, (ნედლის გარდა) და პროდუქტები, სხვა ადგილას დაუსახელებელი, ან ჩაურთველი ბიტუმოვანი ქანებისაგან მიღებული ნავთობისა ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს, ბიოდიზელის შემცველობით, ნამუშევარი ნავთობპროდუქტების გამოკლებით:
-                    </p>
+                    
                 </Td>
-                <Td colSpan={3} rowSpan={2} valign="top">
-                    <p >&nbsp;</p>
+                <Td colSpan={3} rowSpan={2} >
+                    &nbsp;
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    &nbsp;
                     <div></div>
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>გაზოილი</p>
+                <Td >
+                    გაზოილი
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;20&nbsp;11 </p>
+                <Td >
+                    2710&nbsp;20&nbsp;11 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;20&nbsp;16 </p>
+                <Td >
+                    2710&nbsp;20&nbsp;16 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;20&nbsp;19 </p>
+                <Td >
+                    2710&nbsp;20&nbsp;19 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,1 მას.%-ზე მეტი
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Premium to crude oil</p>
+                <Td >
+                    Premium to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >100 </p>
+                <Td >
+                    100 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
-                </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>თხევადი საწვავი:</p>
-                </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
-                    <div></div>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;20&nbsp;32 </p>
+                <Td >
+                    &nbsp;
+                    <div></div>
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    თხევადი საწვავი:
+                </Td>
+                <Td colSpan={3} >
+                    &nbsp;
+                    <div></div>
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    2710&nbsp;20&nbsp;32 
+                </Td>
+                <Td >
+                    
                     გოგირდის შემცველობით არა უმეტეს 0,5 მას.%-ისა
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;20&nbsp;38 </p>
+                <Td >
+                    2710&nbsp;20&nbsp;38 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     გოგირდის შემცველობით 0,5 მას.%-ზე მეტი
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;20&nbsp;90 </p>
-                </Td>
-                <Td valign="top">
-                    <p >დანარჩენი</p>
-                </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
-                </Td>
-                <Td valign="top">
-                    <p >45 </p>
-                </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >&nbsp;</p>
+                <Td >
+                    2710&nbsp;20&nbsp;90 
+                </Td>
+                <Td >
+                    დანარჩენი
+                </Td>
+                <Td >
+                    Discount to crude oil
+                </Td>
+                <Td >
+                    45 
+                </Td>
+                <Td >
+                    5&nbsp;თებერვალი 2023
+                </Td>
+                </Tr>
+                <Tr>
+                <Td >
+                    &nbsp;
                     <div></div>
                 </Td>
-                <Td valign="top">
-                    <p style={{ fontWeight: "bold" }}>ნამუშევარი ნავთობპროდუქტები</p>
+                <Td >
+                    ნამუშევარი ნავთობპროდუქტები
                 </Td>
-                <Td colSpan={3} valign="top">
-                    <p >&nbsp;</p>
+                <Td colSpan={3} >
+                    &nbsp;
                     <div></div>
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;91 </p>
+                <Td >
+                    2710&nbsp;91 
                 </Td>
-                <Td valign="top">
-                    <p >
+                <Td >
+                    
                     პოლიქლორბიფენილების (PCBs), პოლიქლორტრიფენილებისა (PCTs), ან პოლიბრომბიფენილების (PBBs) შემცველობით
-                    </p>
+                    
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
                 <Tr>
-                <Td valign="top">
-                    <p >2710&nbsp;99 </p>
+                <Td >
+                    2710&nbsp;99 
                 </Td>
-                <Td valign="top">
-                    <p >დანარჩენი</p>
+                <Td >
+                    დანარჩენი
                 </Td>
-                <Td valign="top">
-                    <p >Discount to crude oil</p>
+                <Td >
+                    Discount to crude oil
                 </Td>
-                <Td valign="top">
-                    <p >45 </p>
+                <Td >
+                    45 
                 </Td>
-                <Td valign="top">
-                    <p >5&nbsp;დეკემბერი 2023</p>
+                <Td >
+                    5&nbsp;თებერვალი 2023
                 </Td>
                 </Tr>
             </tbody>
