@@ -103,9 +103,9 @@ const Navigation = () => {
                 <NavP text='ბუნებრივი დანაკარგები' onClick={handleClick2} isClicked={isClicked2}/>
             </LinkSty>
 
-            <LinkSty to='/products'>
+            <LinkSty to='/oilprice'>
                 <SvgShop isClicked={isClicked3}/>
-                <NavP text='პროდუქტები' onClick={handleClick3} isClicked={isClicked3}/>
+                <NavP text='ფასების კონტროლი' onClick={handleClick3} isClicked={isClicked3}/>
             </LinkSty>
 
             <LinkSty to='/sales'>
