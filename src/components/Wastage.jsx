@@ -155,7 +155,7 @@ const Wastage = () => {
             <WastBtn3 onClick={handleClickScroll11}
                 variants={buttonVariants}        
                 whileHover="hover3"  
-                >პროპილისა და იზოპროპილის სპირტი</WastBtn3>
+                >პროპილისა სპირტი</WastBtn3>
 
             <WastBtn4 onClick={handleClickScroll12}
                 variants={buttonVariants}        
@@ -173,7 +173,7 @@ const Wastage = () => {
                 >პიროლიზური ფისი</WastBtn2>                   
 
         </WastBtnCont>
-        
+
         <DeepDive text='ბენზინი' id='gasoline'>
             <Hr/>
             <H4>სეს ესნ კოდები: 2710 12 110, 2710 12 410, 2710 12 450, 2710 12 490</H4>
