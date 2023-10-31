@@ -140,858 +140,387 @@ const OilPrice = () => {
                     <Td style={{ fontWeight: "bold" }}>100</Td>
                     <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
-                {/* ---------აქ გავჩერდი */}
                 <Tr>
-                <Td >
-                    2710&nbsp;12&nbsp;45 
-                </Td>
-                <Td >
-                    
-                    ოქტანური რიცხვით (RON)  95 ან მეტი, მაგრამ 98-ზე ნაკლები
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
+                    <Td>2710&nbsp;12&nbsp;45</Td>
+                    <Td>ოქტანური რიცხვით (RON)  95 ან მეტი, მაგრამ 98-ზე ნაკლები</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+                
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;49</Td>
+                    <Td>ოქტანური რიცხვით 98 ან მეტი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;50</Td>
+                    <Td>0,013 გ/ლ-ზე მეტი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;70</Td>
+                    <Td>ბენზინის საწვავი რეაქტიული</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;12&nbsp;90</Td>
+                    <Td>მსუბუქი დისტილატები, დანარჩენი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>დანარჩენი</Td>
+                    <Td colSpan={3} rowSpan={2}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>საშუალო დისტილატები</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;11</Td>
+                    <Td>გადამუშავების სპეციფიური პროცესებისათვის</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;15</Td>
+                    <Td>ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 110 00 ქვესუბპოზიციაში მითითებულის გარდა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის<br/>ნავთი</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;21</Td>
+                    <Td>რეაქტიული საწვავი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;25</Td>
+                    <Td>დანარჩენი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;29</Td>
+                    <Td>დანარჩენი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>მძიმე დისტილატები<br/>გაზოილი</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;31</Td>
+                    <Td>გადამუშავების სპეციფიკური პროცესებისათვის</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;35</Td>
+                    <Td>ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 310 00 ქვესუბპოზიციაში მითითებულის გარდა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;43</Td>
+                    <Td>გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;46</Td>
+                    <Td>გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.002 მას.%-ისა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;47</Td>
+                    <Td>გოგირდის შემცველობით 0,002 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;48</Td>
+                    <Td>გოგირდის შემცველობით 0,1 მას.%-ზე მეტი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>თხევადი საწვავი</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;51</Td>
+                    <Td>გადამუშავების სპეციფიური პროცესებისათვის</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;55</Td>
+                    <Td>ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 510 00 ქვესუბპოზიციაში მითითებულის გარდა</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;62</Td>
+                    <Td>გოგირდის შემცველობით არა უმეტეს 0,1 მას.%-ისა</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;66</Td>
+                    <Td>გოგირდის შემცველობით  0,1 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0,5% მას.%-ისა</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;67</Td>
+                    <Td>გოგირდის შემცველობით 0,5 მას.%-ზე მეტი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>საპოხი ზეთები; დანარჩენი ზეთები</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;71</Td>
+                    <Td>გადამუშავების სპეციფიური პროცესებისათვის</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;75</Td>
+                    <Td>ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 710 00 ქვესუბპოზიციაში მითითებულის გარდა</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>სხვა მიზნებისათვის</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;81</Td>
+                    <Td>ძრავის ზეთები, კომპრესორის საპოხი ზეთი, ტურბინის საპოხი ზეთი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;83</Td>
+                    <Td>სითხეები ჰიდრავლიური მიზნებისათვის</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;85</Td>
+                    <Td>ღია ფერის ზეთები, ვაზელინის ზეთი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;87</Td>
+                    <Td>ზეთი კბილანებისათვის და ზეთი რედუქტორებისათვის</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;91</Td>
+                    <Td>ლითონების დასამუშავებელი შედგენილობები, ფორმების გასაპოხი ზეთები, ანტიკოროზიული ზეთები</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;93</Td>
+                    <Td>ელექტრული საიზოლაციო ზეთები</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;19&nbsp;99</Td>
+                    <Td>დანარჩენი საპოხი ზეთები და ზეთები დანარჩენი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>
+                        ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, (ნედლის გარდა) და პროდუქტები, სხვა ადგილას დაუსახელებელი, ან ჩაურთველი ბიტუმოვანი ქანებისაგან მიღებული ნავთობისა ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს, ბიოდიზელის შემცველობით, ნამუშევარი ნავთობპროდუქტების გამოკლებით                       
+                    </Td>
+                    <Td colSpan={3} rowSpan={2}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>გაზოილი</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;20&nbsp;11</Td>
+                    <Td>გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;20&nbsp;16</Td>
+                    <Td>გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;20&nbsp;19</Td>
+                    <Td>გოგირდის შემცველობით 0,1 მას.%-ზე მეტი</Td>
+                    <Td>Premium to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>100</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
+                </Tr>
+
+                <Tr>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>თხევადი საწვავი</Td>
+                    <Td colSpan={3}></Td>
+                </Tr>
+
+                <Tr>
+                    <Td>2710&nbsp;20&nbsp;32</Td>
+                    <Td>გოგირდის შემცველობით არა უმეტეს 0,5 მას.%-ისა</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
                 <Tr>
-                <Td >
-                    2710&nbsp;12&nbsp;49 
-                </Td>
-                <Td >
-                    
-                    ოქტანური რიცხვით 98 ან მეტი 
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
+                    <Td>2710&nbsp;20&nbsp;38</Td>
+                    <Td>გოგირდის შემცველობით 0,5 მას.%-ზე მეტი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
+
                 <Tr>
-                <Td >
-                    2710&nbsp;12&nbsp;50 
-                </Td>
-                <Td >
-                    0,013 გ/ლ-ზე მეტი
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
+                    <Td>2710&nbsp;20&nbsp;90</Td>
+                    <Td>დანარჩენი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
+
                 <Tr>
-                <Td >
-                    2710&nbsp;12&nbsp;70 
-                </Td>
-                <Td >
-                    ბენზინის საწვავი რეაქტიული
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
+                    <Td></Td>
+                    <Td style={{ fontWeight: "bold" }}>ნამუშევარი ნავთობპროდუქტები</Td>
+                    <Td colSpan={3}></Td>
                 </Tr>
+
                 <Tr>
-                <Td >
-                    2710&nbsp;12&nbsp;90 
-                </Td>
-                <Td >
-                    მსუბუქი დისტილატები, დანარჩენი
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
+                    <Td>2710&nbsp;91</Td>
+                    <Td>პოლიქლორბიფენილების (PCBs), პოლიქლორტრიფენილებისა (PCTs), ან პოლიბრომბიფენილების (PBBs) შემცველობით  </Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
+
                 <Tr>
-                <Td >
-                    2710&nbsp;19 
-                </Td>
-                <Td >
-                    დანარჩენი
-                </Td>
-                <Td colSpan={3} rowSpan={2} >
-                    &nbsp;
-                    <div></div>
-                </Td>
+                    <Td>2710&nbsp;99</Td>
+                    <Td>დანარჩენი</Td>
+                    <Td>Discount to crude oil</Td>
+                    <Td style={{ fontWeight: "bold" }}>45</Td>
+                    <Td>5&nbsp;თებერვალი 2023</Td>
                 </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    საშუალო დისტილატები
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;11 
-                </Td>
-                <Td >
-                    გადამუშავების სპეციფიური პროცესებისათვის
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;15 
-                </Td>
-                <Td >
-                    
-                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 110 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    სხვა მიზნებისათვის
-                    ნავთი
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;21 
-                </Td>
-                <Td >
-                    რეაქტიული საწვავი
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;25 
-                </Td>
-                <Td >
-                    დანარჩენი
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;29 
-                </Td>
-                <Td >
-                    დანარჩენი
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    მძიმე დისტილატები
-                    გაზოილი
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;31 
-                </Td>
-                <Td >
-                    გადამუშავების სპეციფიკური პროცესებისათვის
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;35 
-                </Td>
-                <Td >
-                    
-                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 310 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    სხვა მიზნებისათვის
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;43 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;46 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.002 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;47 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,002 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;48 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,1 მას.%-ზე მეტი
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    თხევადი საწვავი
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;51 
-                </Td>
-                <Td >
-                    გადამუშავების სპეციფიური პროცესებისათვის
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;55 
-                </Td>
-                <Td >
-                    
-                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 510 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    სხვა მიზნებისათვის
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;62 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით არა უმეტეს 0,1 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;66 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით  0,1 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0,5% მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;67 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,5 მას.%-ზე მეტი
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    საპოხი ზეთები; დანარჩენი ზეთები
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;71 
-                </Td>
-                <Td >
-                    გადამუშავების სპეციფიური პროცესებისათვის
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;75 
-                </Td>
-                <Td >
-                    
-                    ქიმიური გარდაქმნებისათვის პროცესებში, 2710 19 710 00 ქვესუბპოზიციაში მითითებულის გარდა
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    სხვა მიზნებისათვის
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;81 
-                </Td>
-                <Td >
-                    
-                    ძრავის ზეთები, კომპრესორის საპოხი ზეთი, ტურბინის საპოხი ზეთი
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;83 
-                </Td>
-                <Td >
-                    სითხეები ჰიდრავლიური მიზნებისათვის
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;85 
-                </Td>
-                <Td >
-                    ღია ფერის ზეთები, ვაზელინის ზეთი
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;87 
-                </Td>
-                <Td >
-                    ზეთი კბილანებისათვის და ზეთი რედუქტორებისათვის
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;91 
-                </Td>
-                <Td >
-                    
-                    ლითონების დასამუშავებელი შედგენილობები, ფორმების გასაპოხი ზეთები, ანტიკოროზიული ზეთები
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;93 
-                </Td>
-                <Td >
-                    ელექტრული საიზოლაციო ზეთები
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;19&nbsp;99 
-                </Td>
-                <Td >
-                    დანარჩენი საპოხი ზეთები და ზეთები დანარჩენი
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                     
-                </Td>
-                <Td >
-                    
-                    ნავთობი და ნავთობპროდუქტები, მიღებული ბიტუმოვანი ქანებისაგან, (ნედლის გარდა) და პროდუქტები, სხვა ადგილას დაუსახელებელი, ან ჩაურთველი ბიტუმოვანი ქანებისაგან მიღებული ნავთობისა ან ნავთობპროდუქტების 70 მას.% ან მეტი შემცველობით, ამასთან ეს ნავთობპროდუქტები წარმოადგენენ პროდუქტების ძირითად შემადგენლებს, ბიოდიზელის შემცველობით, ნამუშევარი ნავთობპროდუქტების გამოკლებით:
-                    
-                </Td>
-                <Td colSpan={3} rowSpan={2} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    გაზოილი
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;20&nbsp;11 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით არა უმეტეს 0,001 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;20&nbsp;16 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,001 მას.%-ზე მეტი, მაგრამ არა უმეტეს 0.1 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;20&nbsp;19 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,1 მას.%-ზე მეტი
-                    
-                </Td>
-                <Td >
-                    Premium to crude oil
-                </Td>
-                <Td >
-                    100 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    თხევადი საწვავი:
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;20&nbsp;32 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით არა უმეტეს 0,5 მას.%-ისა
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;20&nbsp;38 
-                </Td>
-                <Td >
-                    
-                    გოგირდის შემცველობით 0,5 მას.%-ზე მეტი
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;20&nbsp;90 
-                </Td>
-                <Td >
-                    დანარჩენი
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                <Td >
-                    ნამუშევარი ნავთობპროდუქტები
-                </Td>
-                <Td colSpan={3} >
-                    &nbsp;
-                    <div></div>
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;91 
-                </Td>
-                <Td >
-                    
-                    პოლიქლორბიფენილების (PCBs), პოლიქლორტრიფენილებისა (PCTs), ან პოლიბრომბიფენილების (PBBs) შემცველობით
-                    
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
-                <Tr>
-                <Td >
-                    2710&nbsp;99 
-                </Td>
-                <Td >
-                    დანარჩენი
-                </Td>
-                <Td >
-                    Discount to crude oil
-                </Td>
-                <Td >
-                    45 
-                </Td>
-                <Td >
-                    5&nbsp;თებერვალი 2023
-                </Td>
-                </Tr>
+                
             </tbody>
             </Table>
         </div>
