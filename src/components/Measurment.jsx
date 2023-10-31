@@ -17,6 +17,7 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
   return (
     <Container>
         <H2>ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმები</H2>
+        <Hr/>
         <Table>
           <Tr>
             <Th colSpan={2}>ნავთობპროდუქტების რაოდენობა</Th>

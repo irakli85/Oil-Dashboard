@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP, NavCont } from '../styledComponents/StyledComponents'
 
 import graph from '../assets/graph.svg'
-import SvgShop from '../styledComponents/svg/SvgShop'
 import SvgChart from '../styledComponents/svg/SvgChart'
 import SvgSettings from '../styledComponents/svg/SvgSettings'
 import SvgMeasure from '../styledComponents/svg/SvgMeasure'
 import SvgColba from '../styledComponents/svg/SvgColba'
 import SvgTank from '../styledComponents/svg/SvgTank'
 import SvgWorld from '../styledComponents/svg/Svgworld'
+import SvgPrice from '../styledComponents/svg/SvgPrice'
+import SvgDocs from '../styledComponents/svg/SvgDocs'
 
 const buttonVariants = { 
     hover: {
@@ -104,13 +105,13 @@ const Navigation = () => {
             </LinkSty>
 
             <LinkSty to='/oilprice'>
-                <SvgShop isClicked={isClicked3}/>
+                <SvgPrice isClicked={isClicked3}/>
                 <NavP text='ფასების კონტროლი' onClick={handleClick3} isClicked={isClicked3}/>
             </LinkSty>
 
-            <LinkSty to='/sales'>
-                <SvgChart isClicked={isClicked4}/>
-                <NavP text='რეპორტი' onClick={handleClick4} isClicked={isClicked4}/>
+            <LinkSty to='/docs'>
+                <SvgDocs isClicked={isClicked4}/>
+                <NavP text='დოკუმენტები' onClick={handleClick4} isClicked={isClicked4}/>
             </LinkSty>
 
             <LinkSty to='/terminals'>

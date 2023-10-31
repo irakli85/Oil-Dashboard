@@ -16,7 +16,7 @@ const Content = () => {
             <Route path='/' element={<Measurment/>}/>
             <Route path='/wastage' element={<Wastage/>}/>
             <Route path='/oilprice' element={<OilPrice/>}/>
-            <Route path='/products' element={<div>products</div>}/>
+            <Route path='/docs' element={<div>products</div>}/>
             <Route path='/sales' element={<div>sales</div>}/>
             <Route path='/terminals' element={<div>message</div>}/>
             <Route path='/settings' element={<div>settings</div>}/>

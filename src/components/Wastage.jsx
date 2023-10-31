@@ -102,6 +102,7 @@ const Wastage = () => {
   return (
     <Container>       
         <H2>ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები</H2>
+        <Hr/>
         <WastBtnCont>
             <WastBtn1 onClick={handleClickScroll1}
                 variants={buttonVariants}        
