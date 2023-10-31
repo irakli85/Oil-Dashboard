@@ -10,6 +10,8 @@ const PriceCalc = () => {
     let calculation1 = ((density1*1000) / 159)*45
     let calculation2 = ((density2*1000) / 159)*60
     let calculation3 = ((density3*1000) / 159)*100
+
+    const handleFocus = (event) => event.target.select();
     
   return (
     <Container>
@@ -21,7 +23,12 @@ const PriceCalc = () => {
           </Tr>
           <Tr>
             <TdInp>
-                <Input type="number" onChange={(e) => setDensity1(e.target.value) } value={density1}/>
+                <Input 
+                    type="number" 
+                    onChange={(e) => setDensity1(e.target.value) } 
+                    value={density1} 
+                    onFocus={handleFocus}
+                />
             </TdInp>
             <Td>45 $</Td>
             <Td>{calculation1.toFixed(2) + ' $'}</Td>
@@ -29,7 +36,12 @@ const PriceCalc = () => {
 
           <Tr>
             <TdInp>
-                <Input type="number" onChange={(e) => setDensity2(e.target.value) } value={density2}/>
+                <Input 
+                    type="number" 
+                    onChange={(e) => setDensity2(e.target.value) } 
+                    value={density2}
+                    onFocus={handleFocus}
+                />                
             </TdInp>
             <Td>60 $</Td>
             <Td>{calculation2.toFixed(2) + ' $'}</Td>
@@ -37,7 +49,12 @@ const PriceCalc = () => {
 
           <Tr>
             <TdInp>
-                <Input type="number" onChange={(e) => setDensity3(e.target.value) } value={density3}/>
+                <Input 
+                    type="number" 
+                    onChange={(e) => setDensity3(e.target.value) } 
+                    value={density3}
+                    onFocus={handleFocus}
+                />
             </TdInp>
             <Td>100 $</Td>
             <Td>{calculation3.toFixed(2) + ' $'}</Td>
