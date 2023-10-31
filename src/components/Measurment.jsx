@@ -157,7 +157,7 @@ const TdRes = styled.td`
   font-weight: 900;
 `
 
-const TdInp = styled.td`
+export const TdInp = styled.td`
   font-size: 2rem;
   border: solid 2px gray;
   text-align: center;  
@@ -176,7 +176,7 @@ export const Tr = styled.tr`
   height:100%;
 `
 
-const Input = styled.input`
+export const Input = styled.input`
   font-size: 2rem;
   font-weight: 900;
   width: 100%;

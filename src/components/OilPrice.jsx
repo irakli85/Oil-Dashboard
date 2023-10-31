@@ -1,11 +1,13 @@
 import React from 'react'
 import { Container, H2,  Table, Tr,  Td } from './Measurment'
+import PriceCalc from './PriceCalc'
 
 
 const OilPrice = () => {
   return (
     <Container>
         <div>
+            <PriceCalc/>
          <H2>ნედლი ნავთობის ფასი</H2>
             <Table
                 width={240}
