@@ -60,7 +60,7 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
           </Tr>
           
           <Tr>
-            <Td rowSpan={4}>დინამიური მეთოდი</Td>
+            <Td rowSpan={4} style={{fontWeight: 700}}>დინამიური მეთოდი</Td>
             <Td>ნავთობის ბრუტო მასის გაზომვის ცდომილება</Td>
             <TdCond norm={percentage < 0.25 ? true : false }>&#xb1;0.25%</TdCond>
           </Tr>
@@ -78,7 +78,7 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
           </Tr>
 
           <Tr>
-            <Td rowSpan={2}>სტატიკური მეთოდი</Td>
+            <Td rowSpan={2} style={{fontWeight: 700}}>სტატიკური მეთოდი</Td>
             <Td>ნავთობის, ნავთობპროდუქტების და ბიტუმების ნეტო მასის გაზომვის ცდომილება 100 ტონიდან ზევით</Td>
             <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.5%</TdCond>
           </Tr>
@@ -88,7 +88,7 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
           </Tr>
 
           <Tr>
-            <Td rowSpan={2}>ჰიდროსტატიკური მეთოდი</Td>
+            <Td rowSpan={2} style={{fontWeight: 700}}>ჰიდროსტატიკური მეთოდი</Td>
             <Td>ნავთობის და ნავთობპროდუქტების ნეტო მასის გაზომვის ცდომილება 100 ტონიდან ზევით</Td>
             <TdCond norm={percentage < 0.5 ? true : false }>&#xb1;0.5%</TdCond>
           </Tr>
