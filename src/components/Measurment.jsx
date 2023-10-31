@@ -184,6 +184,7 @@ export const Input = styled.input`
   padding-inline: 5rem;  
   &:focus{
     outline: solid 4px #1aac83;
+    background: #FFE2E5;
   }
 `
 
