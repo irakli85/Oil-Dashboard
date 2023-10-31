@@ -1,20 +1,26 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Container, Table, Tr, Th, Td, Input, TdInp } from './Measurment'
+import { Container, Table, Tr, Th, Td, Input, TdInp, H2, H4, Hr } from './Measurment'
+import Pitfall from './Pitfall'
 
 const PriceCalc = () => {
     const [density1, setDensity1]=useState(0.85)
     const [density2, setDensity2]=useState(0.85)
     const [density3, setDensity3]=useState(0.85)
 
-    let calculation1 = ((density1*1000) / 159)*45
-    let calculation2 = ((density2*1000) / 159)*60
-    let calculation3 = ((density3*1000) / 159)*100
+
+    let barrel = 159
+    let tonnes = 1000
+    let calculation1 = ((tonnes/density1) / barrel)*45
+    let calculation2 = ((tonnes/density2) / barrel)*60
+    let calculation3 = ((tonnes/density3) / barrel)*100
 
     const handleFocus = (event) => event.target.select();
     
   return (
     <Container>
+        <H2>ნავთობპროდუქტების ფასის ზედა ზღვარის კალკულატორი</H2>
+        <Hr/>
         <Table>
           <Tr>
             <Th>სიმკვრივე</Th>
@@ -31,7 +37,7 @@ const PriceCalc = () => {
                 />
             </TdInp>
             <Td>45 $</Td>
-            <Td>{calculation1.toFixed(2) + ' $'}</Td>
+            <Td style={{color: '#1aac83', fontWeight: 900}}>{calculation1.toFixed(2) + ' $'}</Td>
           </Tr>
 
           <Tr>
@@ -44,7 +50,7 @@ const PriceCalc = () => {
                 />                
             </TdInp>
             <Td>60 $</Td>
-            <Td>{calculation2.toFixed(2) + ' $'}</Td>
+            <Td style={{color: '#1aac83', fontWeight: 900}}>{calculation2.toFixed(2) + ' $'}</Td>
           </Tr>
 
           <Tr>
@@ -57,15 +63,27 @@ const PriceCalc = () => {
                 />
             </TdInp>
             <Td>100 $</Td>
-            <Td>{calculation3.toFixed(2) + ' $'}</Td>
+            <Td style={{color: '#1aac83', fontWeight: 900}}>{calculation3.toFixed(2) + ' $'}</Td>
           </Tr> 
-        </Table>       
+        </Table>
+        <Pitfall text='დათვლის მეთოდი'>
+            <PriceDiv>
+                <H4 style={{fontWeight: 800}}>ბარელზე 45$ ზღვრული ფასის შემთხვევაში:</H4>
+                <PriceP>ნავთობპროდუქტების საშუალო სიმკვრივე - 0.85</PriceP>
+                <PriceP>1 ბარელი (US oil) = 159 ლ</PriceP>
+                <PriceP>1 ტონა ნავთობის კონვერტაცია ლიტრში 0.85 სიმკვრივის შემთხვევაში - 1000 / 0.85 = 1176 ლ</PriceP> 
+                <PriceP>ბარელის გამოთვლა 1176 ლიტრიდან - 1176 / 159 = 7.399 ბარელი</PriceP> 
+                <PriceP>ფასის მაქსიმუმი ტონაზე  - 7.399 * 45$ = 332.96$</PriceP>
+            </PriceDiv>           
+        </Pitfall>       
     </Container>
   )
 }
 
 const PriceDiv = styled.div`
-    display: flex
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;    
 `
 
 const PriceInp = styled.input`
@@ -81,6 +99,7 @@ const PriceStrong = styled.strong`
 const PriceP = styled.p`
     font-size: 1.6rem;
     padding: 5px;
+    font-weight: 700;
 `
 
 export default PriceCalc

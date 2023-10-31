@@ -190,7 +190,7 @@ export const Input = styled.input`
 export const Hr = styled.hr`
     margin-top: 3rem;
     width: 80%;
-    height: 1px;
+    height: 3px;
     background: #1aac83;
     border: none;
 `
