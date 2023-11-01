@@ -7,6 +7,7 @@ const Docs = () => {
   return (
     <Container>
         <Img src={customs} alt="customs" />
+        <Img src={customs} alt="customs" />
     </Container>
   )
 }
