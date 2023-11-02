@@ -5,122 +5,7 @@ import styled from 'styled-components'
 import pdf from '../assets/pdf.svg'
 import { Link } from 'react-router-dom'
 
-const Docs = () => {
-  const data = {
-    item1: {
-      url: '../src/assets/docs/3376.pdf',
-      name: '3376 - ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმების დამტკიცების შესახებ.pdf'
-    },
-    item2: {
-      url: '../src/assets/docs/20839.pdf',
-      name: '20839 - ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის ნორმების დამტკიცების შესახებ.pdf'
-    },
-    item3: {
-      url: '../src/assets/docs/22970.pdf',
-      name: '22970 - ცალკეულ საქონელზე ბუნებრივი დანაკარგის ნორმების დამტკიცების შესახებ.pdf'
-    },
-    item4: {
-      url: '../src/assets/docs/kodex.pdf',
-      name: 'საბაჟო კოდექსი.pdf'
-    },
-    item5: {
-      url: '../src/assets/docs/257.pdf',
-      name: '257 - საქართველოს საბაჟო ტერიტორიაზე საქონლის გადაადგილებისა და გაფორმების შესახებ ინსტრუქციების დამტკიცების თაობაზე.pdf'
-    },
-    item6: {
-      url: '../src/assets/docs/455.pdf',
-      name: '455 - საბაჟო საწყობისა და თავისუფალი ვაჭრობის პუნქტის საქმიანობის ნებართვების გაცემის წესებისა და პირობების შესახებ ინსტრუქციის დამტკიცების თაობაზე.pdf'
-    },
-    item7: {
-      url: '../src/assets/docs/275.pdf',
-      name: '275 - საგარეო-ეკონომიკური საქმიანობის ეროვნული სასაქონლო ნომენკლატურის (სეს ესნ) დამტკიცების თაობაზე.pdf'
-    },
-    item8: {
-      url: '../src/assets/docs/24.pdf',
-      name: '24 - ნავსადგურის წესების დამტკიცების შესახებ.pdf'
-    }
-
-  }
-
-   const onButtonClick1 = () => {
-        const pdfUrl = data.item1.url;
-        const link = document.createElement("a");
-        link.href = pdfUrl;
-        link.download = data.item1.name; // specify the filename
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
-    const onButtonClick2 = () => {
-      const pdfUrl = data.item2.url;
-      const link = document.createElement("a");
-      link.href = pdfUrl;
-      link.download = data.item2.name; // specify the filename
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-  };
-
-  const onButtonClick3 = () => {
-    const pdfUrl = data.item3.url;
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.download = data.item3.name; // specify the filename
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-};
-
-const onButtonClick4 = () => {
-  const pdfUrl = data.item4.url;
-  const link = document.createElement("a");
-  link.href = pdfUrl;
-  link.download = data.item4.name; // specify the filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-const onButtonClick5 = () => {
-  const pdfUrl = data.item5.url;
-  const link = document.createElement("a");
-  link.href = pdfUrl;
-  link.download = data.item5.name; // specify the filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-const onButtonClick6 = () => {
-  const pdfUrl = data.item6.url;
-  const link = document.createElement("a");
-  link.href = pdfUrl;
-  link.download = data.item6.name; // specify the filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-const onButtonClick7 = () => {
-  const pdfUrl = data.item7.url;
-  const link = document.createElement("a");
-  link.href = pdfUrl;
-  link.download = data.item7.name; // specify the filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-const onButtonClick8 = () => {
-  const pdfUrl = data.item8.url;
-  const link = document.createElement("a");
-  link.href = pdfUrl;
-  link.download = data.item8.name; // specify the filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+const Docs = () => {  
     
   return (
     <Container>
@@ -136,7 +21,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick1}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/3376.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -146,7 +31,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick2}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/20839.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -156,7 +41,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick3}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/22970.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -166,7 +51,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick4}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/kodex.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -176,7 +61,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick5}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/257.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -186,7 +71,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick6}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/455.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -196,7 +81,7 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick7}>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/275.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem>
@@ -206,10 +91,8 @@ const onButtonClick8 = () => {
               <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn onClick={onButtonClick8}>გადმოწერა</ItemBtn>
-        </DivItem>
-        <Link to="/24.pdf" target="_blank" download>Download</Link>
-        
+          <ItemBtn to="/docs/24.pdf" target="_blank" download>გადმოწერა</ItemBtn>
+        </DivItem>        
 
       </DivBody>        
     </Container>
@@ -261,7 +144,7 @@ const Pitem = styled.p`
   font-weight: 700;
   max-width: 90rem;
 `
-const ItemBtn = styled.button`
+const ItemBtn = styled(Link)`
   background: #fff;
   width: 20rem;
   height: 5rem;
@@ -277,6 +160,8 @@ const ItemBtn = styled.button`
   transition: all 0.5s ease-in-out;
   padding: 1rem;
   justify-self: end;
+  text-decoration: none;
+  text-align: center;
 `
 
 const Span = styled.span`
