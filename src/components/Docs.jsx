@@ -4,6 +4,38 @@ import customs from '../assets/Customs.svg'
 import styled from 'styled-components'
 import pdf from '../assets/pdf.svg'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+    x: '-100vw'
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: 'spring',
+      mass: 0.4,
+      damping: 8,
+      when: 'beforeChildren',
+      staggerChildren: 0.8
+    }
+  }
+}
+
+const childrenVariants = {
+  hidden: {
+    opacity: 0,
+    x:'-100vw'
+  },
+  visible: {
+    opacity: 1,
+    x: 0
+  }
+}
+
+
 
 const Docs = () => {  
     
@@ -13,8 +45,12 @@ const Docs = () => {
         <Img src={customs} alt="customs" />
         <P>კანონმდებლობა და სხვა სასარგებლო რესურსები</P>
       </DivHead>
-      <DivBody>
-        <DivItem>
+      <DivBody 
+        variants={containerVariants}
+        initial='hidden'
+        animate='visible'
+      >
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№3376 - ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმების დამტკიცების შესახებ
@@ -24,7 +60,7 @@ const Docs = () => {
           <ItemBtn to="/docs/3376.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№20839 - ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის ნორმების დამტკიცების შესახებ
@@ -34,7 +70,7 @@ const Docs = () => {
           <ItemBtn to="/docs/20839.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№22970 - ცალკეულ საქონელზე ბუნებრივი დანაკარგის ნორმების დამტკიცების შესახებ
@@ -44,7 +80,7 @@ const Docs = () => {
           <ItemBtn to="/docs/22970.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>საქართველოს საბაჟო კოდექსი
@@ -54,7 +90,7 @@ const Docs = () => {
           <ItemBtn to="/docs/kodex.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№257 - საქართველოს საბაჟო ტერიტორიაზე საქონლის გადაადგილებისა და გაფორმების შესახებ ინსტრუქციების დამტკიცების თაობაზე
@@ -64,7 +100,7 @@ const Docs = () => {
           <ItemBtn to="/docs/257.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№455 - საბაჟო საწყობისა და თავისუფალი ვაჭრობის პუნქტის საქმიანობის ნებართვების გაცემის წესებისა და პირობების შესახებ ინსტრუქციის დამტკიცების თაობაზე
@@ -74,7 +110,7 @@ const Docs = () => {
           <ItemBtn to="/docs/455.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№275 - საგარეო-ეკონომიკური საქმიანობის ეროვნული სასაქონლო ნომენკლატურის (სეს ესნ) დამტკიცების თაობაზე
@@ -84,7 +120,7 @@ const Docs = () => {
           <ItemBtn to="/docs/275.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
-        <DivItem>
+        <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№24 - ნავსადგურის წესების დამტკიცების შესახებ
@@ -108,7 +144,7 @@ const DivHead = styled.div`
   position: relative;
 `
 
-const DivBody = styled.div`
+const DivBody = styled(motion.div)`
   margin-top: 5rem;
   display: flex;
   flex-direction: column;
@@ -128,7 +164,7 @@ const P = styled.p`
   left: 50%;
   transform: translate(-50%, -50%);
 `
-const DivItem = styled.div`
+const DivItem = styled(motion.div)`
   display: flex;
   gap: 2rem;
   align-items: center;

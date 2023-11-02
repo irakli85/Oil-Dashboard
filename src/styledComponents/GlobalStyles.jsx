@@ -18,6 +18,7 @@ const GlobalStyles = createGlobalStyle`
       justify-content: center;
       align-items: center;
       padding: 20px;
+      overflow-x: hidden;
     }
     
     #root{ 
