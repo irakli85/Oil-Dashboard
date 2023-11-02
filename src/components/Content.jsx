@@ -6,6 +6,7 @@ import Measurment from './Measurment'
 import Wastage from './Wastage'
 import OilPrice from './OilPrice'
 import Docs from './Docs'
+import Terminals from './Terminals'
 
 
 const Content = () => {
@@ -18,8 +19,7 @@ const Content = () => {
             <Route path='/wastage' element={<Wastage/>}/>
             <Route path='/oilprice' element={<OilPrice/>}/>
             <Route path='/docs' element={<Docs/>}/>
-            <Route path='/sales' element={<div>sales</div>}/>
-            <Route path='/terminals' element={<div>message</div>}/>
+            <Route path='/terminals' element={<Terminals/>}/>
             <Route path='/settings' element={<div>settings</div>}/>
           </Routes>
         </ContentDivSty>

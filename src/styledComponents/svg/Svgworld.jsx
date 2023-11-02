@@ -18,7 +18,7 @@ import {motion} from 'framer-motion'
 function SvgWorld() {
   return (
     <motion.svg
-      width={380}
+      width='100%'
       height={229}
       viewBox="0 0 380 229"
       fill="none"
