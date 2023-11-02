@@ -3,6 +3,7 @@ import { Container } from './Measurment'
 import customs from '../assets/Customs.svg'
 import styled from 'styled-components'
 import pdf from '../assets/pdf.svg'
+import { Link } from 'react-router-dom'
 
 const Docs = () => {
   const data = {
@@ -207,6 +208,8 @@ const onButtonClick8 = () => {
           </DivItem1>          
           <ItemBtn onClick={onButtonClick8}>გადმოწერა</ItemBtn>
         </DivItem>
+        <Link to="/24.pdf" target="_blank" download>Download</Link>
+        
 
       </DivBody>        
     </Container>
