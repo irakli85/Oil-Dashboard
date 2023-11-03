@@ -70,10 +70,13 @@ export const NavDivSty = styled(motion.nav)`
 `
 
 export const HeadDivSty = styled.header`
+    display: flex;
     width: 100%;
     height: 12rem;
     background: #fff;
     padding: 3.5rem 4rem;
+    align-items: center;
+    justify-content: space-between;
 `
 
 export const HeadPsty = styled.p`

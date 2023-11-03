@@ -196,6 +196,4 @@ export const Hr = styled.hr`
     background: #1aac83;
     border: none;
 `
-
-
 export default Measurment
