@@ -48,12 +48,12 @@ const Input = styled.input`
   height: 6rem;
   padding: 0.2rem 3.2rem 0.2rem 6.4rem;
   border-radius: 1.6rem;
-  background: #F9FAFB;
+  background-color: #F9FAFB;
   font-size: 1.6rem;
   &:focus{
     outline: solid 3px #5D5FEF; 
   }
-  background-image: url('../../public/search.svg');
+  background-image: url('../src/assets/search.svg');
   background-repeat: no-repeat;
   background-position: top 1.5rem  left 2rem;
 `
