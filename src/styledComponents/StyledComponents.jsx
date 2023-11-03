@@ -63,7 +63,7 @@ export const DashPsty = styled(Link)`
     text-decoration: none;   
 `
 
-export const NavDivSty = styled.nav`
+export const NavDivSty = styled(motion.nav)`
     margin-top: 5rem;
     display: flex;
     flex-direction: column;
