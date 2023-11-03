@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <HeadDivSty>
         <HeadPsty>Dashboard</HeadPsty>
-        <Input type='text' placeholder='ძებნა'/>
+        <Input type='text' placeholder='ძებნა...'/>
         <Div>
           <Select>
             <Option value="geo">
