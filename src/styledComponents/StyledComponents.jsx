@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
-import { useState } from 'react'
 
 
 export const AsideSty = styled.div`
