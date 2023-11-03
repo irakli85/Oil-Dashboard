@@ -121,7 +121,7 @@ const Navigation = () => {
             whileHover="hover"         
         >
             <img src={graph} alt="graph" />
-            <DashPsty to='https://oil-mern.vercel.app/login' >განაცხადები</DashPsty>
+            <DashPsty to='https://oil-mern.vercel.app/login'>განაცხადები</DashPsty>
         </DashDivSty>
         <NavDivSty
             variants={containerVariants}
