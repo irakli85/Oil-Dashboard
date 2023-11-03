@@ -5,6 +5,7 @@ import geo from '../assets/geo.svg'
 import usa from '../assets/usa.svg'
 import bell from '../assets/bell.svg'
 import user from '../assets/user.svg'
+import search from '../assets/search.svg'
 
 const Header = () => {
 
@@ -53,7 +54,7 @@ const Input = styled.input`
   &:focus{
     outline: solid 3px #5D5FEF; 
   }
-  background-image: url('../assets/search.svg');
+  background-image: url(${search});
   background-repeat: no-repeat;
   background-position: top 1.5rem  left 2rem;
 `
