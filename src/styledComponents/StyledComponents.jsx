@@ -63,7 +63,6 @@ export const DashPsty = styled(Link)`
 `
 
 export const NavDivSty = styled(motion.nav)`
-    margin-top: 5rem;
     display: flex;
     flex-direction: column;
     gap: 5rem;

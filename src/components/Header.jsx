@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { HeadDivSty, HeadPsty } from '../styledComponents/StyledComponents'
 import styled from 'styled-components'
 import geo from '../assets/geo.svg'
@@ -8,7 +8,11 @@ import user from '../assets/user.svg'
 import search from '../assets/search.svg'
 
 const Header = () => {
-
+  const [count, setCount] = useState(0)
+  
+  const handleClick = () => {
+    setCount(count+1)
+  }
 
 
   return (
@@ -26,8 +30,9 @@ const Header = () => {
               <Span>Eng(US)</Span>
             </Option>
           </Select>
-          <Div2>
+          <Div2 onClick={handleClick}>
               <img src={bell} alt="bell" />
+              <Strong>{count}</Strong>
           </Div2>
           <Div3>
             <img src={user} alt="user" />
@@ -36,8 +41,6 @@ const Header = () => {
               <P1>admin</P1>
             </div>
           </Div3>
-          
-
         </Div>
     </HeadDivSty>
   )
@@ -92,6 +95,7 @@ const Div2 = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
 `
 
 const Div3 = styled.div`
@@ -114,6 +118,13 @@ const P1 = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 2rem; /* 142.857% */
+`
+const Strong = styled.strong`
+  color: #EB5757;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1px;
+  right: 5px;
 `
 
 export default Header
