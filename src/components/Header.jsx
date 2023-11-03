@@ -44,7 +44,6 @@ const Header = () => {
 }
 
 const Input = styled.input`
-  margin-left: 20rem;
   width: 51.3rem;
   height: 6rem;
   padding: 0.2rem 3.2rem 0.2rem 6.4rem;
