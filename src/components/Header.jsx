@@ -53,7 +53,7 @@ const Input = styled.input`
   &:focus{
     outline: solid 3px #5D5FEF; 
   }
-  background-image: url('../src/assets/search.svg');
+  background-image: url('../assets/search.svg');
   background-repeat: no-repeat;
   background-position: top 1.5rem  left 2rem;
 `
