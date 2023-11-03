@@ -210,6 +210,14 @@ export const NavCont = styled.div`
     gap: 10rem;
 `
 
+export const CopyRight = styled.p`
+    margin: 3rem;
+    font-size: 1.6rem;
+    font-weight: 600;    
+    color: #5D5FEF;    
+    cursor: pointer;
+`
+
 
 
 

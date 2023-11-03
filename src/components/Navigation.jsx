@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP, NavCont } from '../styledComponents/StyledComponents'
+import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP, NavCont, CopyRight } from '../styledComponents/StyledComponents'
 import { motion } from 'framer-motion';
 
 
@@ -171,6 +171,7 @@ const Navigation = () => {
             </motion.div>            
         </NavDivSty>
         <SvgWorld/>
+        <CopyRight>2023 © All Rights Reserved </CopyRight>
     </NavCont>
   )
 }
