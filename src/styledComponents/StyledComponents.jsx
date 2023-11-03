@@ -79,12 +79,13 @@ export const HeadDivSty = styled.header`
 `
 
 export const HeadPsty = styled.p`
-    color: var(--greys-blue-grey-900, #151D48);
+    color: #151D48;
     font-family: Poppins;
     font-size: 3.6rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 140%; 
+    line-height: 140%;
+    opacity: 0; 
 `
 
 export const ContentDivSty = styled.div`
