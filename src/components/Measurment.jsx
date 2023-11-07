@@ -191,9 +191,9 @@ export const Input = styled.input`
 
 export const Hr = styled.hr`
     margin-top: 3rem;
-    width: 80%;
+    width: 100%;    
+    border: 0;
     height: 3px;
-    background: #1aac83;
-    border: none;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(26, 172, 131), rgba(0, 0, 0, 0));
 `
 export default Measurment
