@@ -77,7 +77,8 @@ const TabBtn = styled.button`
     gap: 0.5rem;
     cursor: pointer;    
     padding: 1rem;
-    border-bottom: 3px solid #1aac83;  
+    border-bottom: 3px solid #1aac83;
+    background-color: transparent;  
 `
 
 const Img = styled.img`
