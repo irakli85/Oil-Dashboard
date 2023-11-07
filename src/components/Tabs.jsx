@@ -26,9 +26,10 @@ function Tabs() {
           Vibro Diagnostik
         </TabButton>
         <TabButton index={2} activeTab={activeTab} onClick={handleTabClick}>
-        <Img src={ter1} alt="terminal1" />
-          Terminal 1
-        </TabButton> 
+          <Img src={ter1} alt="terminal1" />
+            Terminal 1
+        </TabButton>
+        <EmptyDiv/> 
       </TabBtnDiv>
 
       <div>
@@ -75,4 +76,10 @@ const TabBtn = styled.button`
 const Img = styled.img`
     width: 4rem;
     height: 4rem;
+`
+
+const EmptyDiv = styled.div`
+  min-width: 20rem;
+  border-bottom: 3px solid #1aac83;
+  flex-grow: 1;
 `

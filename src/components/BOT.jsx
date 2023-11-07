@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const BOT = () => {
   return (
-    <Div>BOT</Div>
+    <Div>lorem*4000</Div>
   )
 }
 
