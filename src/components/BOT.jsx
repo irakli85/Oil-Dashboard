@@ -19,11 +19,11 @@ const BOT = () => {
                     <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
                 </Tr>
                 
-                    {data.map( (item) => {
+                    {data.baseOne.map( (item) => {
                         return(
                             <Tr>
                                 <Td>{item.count}</Td>
-                                <Td>{item.tank}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
                                 <Td>{item.year}</Td>
                                 <Td>{item.vol}</Td>
                             </Tr>
@@ -38,7 +38,7 @@ const BOT = () => {
 
 const Div = styled.div`
     width: 100%;
-    height: 100rem;
+    height: auto;
     border: 3px solid #1aac83;
     border-top: none;
     background-color: #fff;
