@@ -19,18 +19,55 @@ const BOT = () => {
                     <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
                 </Tr>
                 
-                    {data.baseOne.map( (item) => {
+                {
+                    data.baseOne.map( (item) => {
                         return(
                             <Tr>
                                 <Td>{item.count}</Td>
                                 <Td style={{fontWeight: 900}}>{item.tank}</Td>
                                 <Td>{item.year}</Td>
-                                <Td>{item.vol}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
                             </Tr>
                         )
-                    })}
-                
+                    })
+                }
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>50 000 მ<sup>3</sup></Td>
+                </Tr>                
             </Table>
+        </DeepDive>
+
+        <DeepDive text='ნავთისა და ავტობენზინის მიღებისა და გადატვირთვის სადგური'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseTwo.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>37 900 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
         </DeepDive>
     </Div>
   )

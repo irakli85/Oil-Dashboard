@@ -110,7 +110,86 @@ const data = {
             tank: 10,
             year: 1895,
             vol: '1 000'
+        }
+    ],
+
+    baseTwo: [
+        {
+            count : 1,
+            tank: 1,
+            year: 1899,
+            vol: '4 000'
         },
+
+        {
+            count : 2,
+            tank: 55,
+            year: 1895,
+            vol: '4 500'
+        },
+
+        {
+            count : 3,
+            tank: 56,
+            year: 1895,
+            vol: '3 000'
+        },
+
+        {
+            count : 4,
+            tank: 58,
+            year: 1895,
+            vol: '3 000'
+        },
+
+        {
+            count : 5,
+            tank: 60,
+            year: 1895,
+            vol: '3 000'
+        },
+
+        {
+            count : 6,
+            tank: 161,
+            year: 1964,
+            vol: '5 000'
+        },
+
+        {
+            count : 7,
+            tank: 162,
+            year: 1964,
+            vol: '5 000'
+        },
+
+        {
+            count : 8,
+            tank: 163,
+            year: 1964,
+            vol: '5 000'
+        },
+
+        {
+            count : 9,
+            tank: 164,
+            year: 1964,
+            vol: '5 000'
+        },
+
+        {
+            count : 10,
+            tank: 240,
+            year: 2002,
+            vol: '200'
+        },
+
+        {
+            count : 11,
+            tank: 241,
+            year: 2002,
+            vol: '200'
+        }
     ]
 }
 
