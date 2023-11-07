@@ -40,8 +40,8 @@ const GlobalStyles = createGlobalStyle`
     .active{
     border: 3px solid #1aac83;
     border-radius: 5px 5px 0 0;
-    border-bottom: none;
-    background-color: #fff;
+    border-bottom: none !important;
+    background-color: #fff !important;
 }
 
 `;
