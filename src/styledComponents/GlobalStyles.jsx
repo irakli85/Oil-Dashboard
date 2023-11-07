@@ -36,6 +36,16 @@ const GlobalStyles = createGlobalStyle`
     input[type=number] {
       -moz-appearance: textfield;
     }
+
+    .active{
+    border: 3px solid #1aac83;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none;
+    background-color: #fff;
+}
+
 `;
+
+
 
 export default GlobalStyles;
