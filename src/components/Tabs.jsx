@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import bot from '../assets/bot.png'
 import vibro from '../assets/vibro.png'
 import ter1 from '../assets/ter1.png'
+import BOT from './BOT';
+import Vibro from './Vibro';
+import Terminal1 from './Terminal1';
 
 function Tabs() {
   const [activeTab, setActiveTab] = useState(0);
@@ -48,18 +51,6 @@ function TabButton({ index, activeTab, onClick, children }) {
     </TabBtn>
   );
 }
-
-function BOT() {
-  return <div>Lorem</div>;
-}
-
-function Vibro() {
-  return <div>Tab 2 Content</div>;
-}
-
-function Terminal1() {
-    return <div>Tab 3 Content</div>;
-  }
 
 export default Tabs;
 
