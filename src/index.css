@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@600&display=swap');
 
 .active{
-    border-bottom: none;
+    border: 3px solid #1aac83;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none !important;
+    background-color: #fff;
 }

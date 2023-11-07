@@ -65,7 +65,6 @@ export default Tabs;
 
 const TabBtnDiv = styled.div`
     display: flex;
-    gap: 0.5rem;
     margin-top: 3rem;
 `
 
@@ -76,10 +75,9 @@ const TabBtn = styled.button`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
-    border: 3px solid gray;
-    border-radius: 5px 5px 0 0;
-    padding: 1rem;  
+    cursor: pointer;    
+    padding: 1rem;
+    border-bottom: 3px solid #1aac83;  
 `
 
 const Img = styled.img`
