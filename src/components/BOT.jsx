@@ -3,12 +3,15 @@ import styled from 'styled-components'
 import {Th, Td, Tr} from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import data from '../../data'
+import plan from '../../public/docs/plan.pdf'
 
 const BOT = () => {
   return (
     <Div>
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;საბაჟო კონტროლის ზონად <Str>შპს "ბათუმის ნავთობტერმინალი"-ს (ს/ნ 245432544)</Str> საბაჟო საწყობის საქმიანობისთვის განსაზღვრულია ქ. ბათუმი, მაიაკოვსკის ქ. №4-ში მდებარე <Str>79 3262 ჰა</Str> ფართის ტეროტორია, რომელზეც განთავსებულია საერთო ტექნოლოგიური ხაზით ერთმანეთთან დაკავშირებული <Str>152 ცალი</Str> სტაციონალური ვერტიკალური რეზერვუარი - მთლიანი მოცულობით <Str>646 785 მ<sup>3</sup></Str> შესაბამის ინფრასტრუქტურასთან ერთად.</P>
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ბათუმის ნავთობტერმინალის ძირითადი ტერიტორია მოიცავს <Str>5</Str> სარეზერვუარო პარკს, სადაც მოქმედებს <Str>6</Str> ჩამოსასხმელი სარკინიგზო ესტაკადა, რომელთა მეშვეობით შესაძლებელია ერთდროულად <Str>180</Str> ვაგონ-ცისტერნის ან დღე-ღამეში <Str>410</Str> ვაგონ-ცისტერნის დატვირთვა/დაცლა.</P>
+
+        <Iframe src={plan} />
 
         <DeepDive text='დიზელის საწვავისა და ნავთის მიღებისა და გადატვირთვის სადგური'>
             <Table>
@@ -338,6 +341,13 @@ const Table = styled.table`
     margin-top: 3rem;
     border: solid 1px gray;
     align-self: center;
+`
+
+const Iframe = styled.iframe`
+    margin-top: 3rem;
+    width: 100%;
+    height: 600px;
+    object-fit: fill;
 `
 
 
