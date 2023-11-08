@@ -13,7 +13,7 @@ const BOT = () => {
 
         <Iframe src={plan} />
 
-        <DeepDive text='დიზელის საწვავისა და ნავთის მიღებისა და გადატვირთვის სადგური'>
+        <DeepDive text='დიზელის საწვავისა და ნავთის მიღებისა და გადატვირთვის სადგური' id='baseOne'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -43,7 +43,7 @@ const BOT = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ნავთისა და ავტობენზინის მიღებისა და გადატვირთვის სადგური'>
+        <DeepDive text='ნავთისა და ავტობენზინის მიღებისა და გადატვირთვის სადგური' id='baseTwo'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -73,7 +73,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>       
 
-        <DeepDive text='ნედლი ნავთობის შენახვისა და გადატვირთვის სადგური "ხოლოდნაია სლობოდა"'>
+        <DeepDive text='ნედლი ნავთობის შენახვისა და გადატვირთვის სადგური "ხოლოდნაია სლობოდა"' id='baseFour'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -103,7 +103,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>
 
-        <DeepDive text='ნედლი ნავთობის შენახვისა და გადატვირთვის სადგური "კაპრეშუმი"'>
+        <DeepDive text='ნედლი ნავთობის შენახვისა და გადატვირთვის სადგური "კაპრეშუმი"' id='baseFive'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -133,7 +133,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>
 
-        <DeepDive text='გათხევადებული ნავთობის აირების მიღებისა და გადატვირთვის სადგური'>
+        <DeepDive text='გათხევადებული ნავთობის აირების მიღებისა და გადატვირთვის სადგური' id='baseEight'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -163,7 +163,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>
 
-        <DeepDive text='მუქი ნავთობპროდუცტების მიღებისა და გადატვირთვის საამქრო'>
+        <DeepDive text='მუქი ნავთობპროდუცტების მიღებისა და გადატვირთვის საამქრო' id='baseThree'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -193,7 +193,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>
 
-        <DeepDive text='ნავთობპროდუქტების საზღვაო ტრანსპორტით მიღებისა და დატვირთვის საამქრო'>
+        <DeepDive text='ნავთობპროდუქტების საზღვაო ტრანსპორტით მიღებისა და დატვირთვის საამქრო' id='baseSix'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -223,7 +223,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>
 
-        <DeepDive text='იმპორტირებადი ნავთობპროდუქტების მიღებისა და განაწილების საამქრო'>
+        <DeepDive text='იმპორტირებადი ნავთობპროდუქტების მიღებისა და განაწილების საამქრო' id='baseSeven'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -253,7 +253,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>       
 
-        <DeepDive text='წყლისა და ქაფის რეზერვუარები'>
+        <DeepDive text='წყლისა და ქაფის რეზერვუარები' id='baseWater' id='baseWater'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -264,7 +264,7 @@ const BOT = () => {
                 {
                     data.baseWater.map( (item) => {
                         return(
-                            <Tr>
+                            <Tr >
                                 <Td>{item.count}</Td>
                                 <Td style={{fontWeight: 900}}>{item.tank}</Td>
                                 <Td>{item.year}</Td>
@@ -283,7 +283,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>
 
-        <DeepDive text='შლამსაცავი'>
+        <DeepDive text='შლამსაცავი' id='baseOther'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -312,7 +312,6 @@ const BOT = () => {
                 </Tr>                 
             </Table>    
         </DeepDive>
-
 
     </Div>
   )
