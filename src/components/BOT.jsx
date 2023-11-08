@@ -68,7 +68,249 @@ const BOT = () => {
                     <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>37 900 მ<sup>3</sup></Td>
                 </Tr>                 
             </Table>    
+        </DeepDive>       
+
+        <DeepDive text='ნედლი ნავთობის შენახვისა და გადატვირთვის სადგური "ხოლოდნაია სლობოდა"'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseFour.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>60 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
         </DeepDive>
+
+        <DeepDive text='ნედლი ნავთობის შენახვისა და გადატვირთვის სადგური "კაპრეშუმი"'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseFive.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>162 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>
+
+        <DeepDive text='გათხევადებული ნავთობის აირების მიღებისა და გადატვირთვის სადგური'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseEight.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>5 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>
+
+        <DeepDive text='მუქი ნავთობპროდუცტების მიღებისა და გადატვირთვის საამქრო'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseThree.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>214 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>
+
+        <DeepDive text='ნავთობპროდუქტების საზღვაო ტრანსპორტით მიღებისა და დატვირთვის საამქრო'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseSix.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>30 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>
+
+        <DeepDive text='იმპორტირებადი ნავთობპროდუქტების მიღებისა და განაწილების საამქრო'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseSeven.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>46 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>       
+
+        <DeepDive text='წყლისა და ქაფის რეზერვუარები'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseWater.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>32 885 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>
+
+        <DeepDive text='შლამსაცავი'>
+            <Table>
+                <Tr>
+                    <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
+                    <Th style={{width: '10rem'}}>რეზ-რის №</Th>
+                    <Th>რეზ-რის აშენების წელი</Th>    
+                    <Th>რეზ-რის მოცულობა, მ<sup>3</sup></Th>    
+                </Tr>
+                {
+                    data.baseOther.map( (item) => {
+                        return(
+                            <Tr>
+                                <Td>{item.count}</Td>
+                                <Td style={{fontWeight: 900}}>{item.tank}</Td>
+                                <Td>{item.year}</Td>
+                                <Td style={{fontWeight: 900}}>{item.vol}</Td>
+                            </Tr>
+                        )
+                    })
+                }
+                
+                <Tr>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{border: 'none'}}></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>9 000 მ<sup>3</sup></Td>
+                </Tr>                 
+            </Table>    
+        </DeepDive>
+
+
     </Div>
   )
 }
