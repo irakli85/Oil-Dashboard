@@ -345,7 +345,7 @@ const Table = styled.table`
 const Iframe = styled.iframe`
     margin-top: 3rem;
     width: 100%;
-    height: 600px;
+    height: 94rem;
     object-fit: fill;
 `
 
