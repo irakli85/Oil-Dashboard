@@ -1082,6 +1082,76 @@ const data = {
             year: 1901,
             vol: '5 000'
         }
+    ],
+
+    vibroLight: [
+        {
+            count : 1,
+            tank: 20,
+            vol: '2 000'
+        },
+
+        {
+            count : 2,
+            tank: 21,
+            vol: '2 000'
+        },
+
+        {
+            count : 3,
+            tank: 22,
+            vol: '400'
+        },
+
+        {
+            count : 4,
+            tank: 23,
+            vol: '1 000'
+        },
+
+        {
+            count : 5,
+            tank: 24,
+            vol: '1 000'
+        },
+
+        {
+            count : 6,
+            tank: 25,
+            vol: '1 000'
+        },
+
+        {
+            count : 7,
+            tank: 26,
+            vol: '1 000'
+        },
+
+        {
+            count : 8,
+            tank: 27,
+            vol: '2 000'
+        }        
+    ],
+
+    vibroDark: [
+        {
+            count : 1,
+            tank: 252,
+            vol: '12 000'
+        },
+
+        {
+            count : 2,
+            tank: 253,
+            vol: '12 000'
+        },
+
+        {
+            count : 3,
+            tank: 254,
+            vol: '12 000'
+        }
     ]
 }
 
