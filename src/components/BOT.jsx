@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Th, Td, Tr, H4, H2} from './Measurment'
+import {Th, Td, Tr, H4, H2, Hr} from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import data from '../../data'
 import plan from '../../public/docs/plan.pdf'
@@ -12,8 +12,10 @@ const BOT = () => {
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ბათუმის ნავთობტერმინალის ძირითადი ტერიტორია მოიცავს <Str>5</Str> სარეზერვუარო პარკს, სადაც მოქმედებს <Str>6</Str> ჩამოსასხმელი სარკინიგზო ესტაკადა, რომელთა მეშვეობით შესაძლებელია ერთდროულად <Str>180</Str> ვაგონ-ცისტერნის ან დღე-ღამეში <Str>410</Str> ვაგონ-ცისტერნის დატვირთვა/დაცლა.</P>
 
         <H4>სიტუაციური გეგმა</H4>
+        <Hr/>
         <Iframe src={plan} />
         <H2>რეზერვუარები</H2>
+        <Hr/>
 
         <DeepDive text='დიზელის საწვავისა და ნავთის მიღებისა და გადატვირთვის სადგური' id='baseOne'>
             <Table>
