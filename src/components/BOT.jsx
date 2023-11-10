@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Th, Td, Tr, H4, H2, Hr} from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import data from '../../data'
-import plan from '../../public/docs/plan.pdf'
+import bot from '../../public/docs/bot.pdf'
 
 const BOT = () => {
   return (
@@ -13,7 +13,7 @@ const BOT = () => {
 
         <H4>სიტუაციური გეგმა</H4>
         <Hr/>
-        <Iframe src={plan} />
+        <Iframe src={bot} />
         <H2>რეზერვუარები</H2>
         <Hr/>
 
