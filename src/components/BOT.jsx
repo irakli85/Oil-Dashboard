@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Th, Td, Tr} from './Measurment'
+import {Th, Td, Tr, H4, H2} from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import data from '../../data'
 import plan from '../../public/docs/plan.pdf'
@@ -11,7 +11,9 @@ const BOT = () => {
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;საბაჟო კონტროლის ზონად <Str>შპს "ბათუმის ნავთობტერმინალი"-ს (ს/ნ 245432544)</Str> საბაჟო საწყობის საქმიანობისთვის განსაზღვრულია ქ. ბათუმი, მაიაკოვსკის ქ. №4-ში მდებარე <Str>79 3262 ჰა</Str> ფართის ტეროტორია, რომელზეც განთავსებულია საერთო ტექნოლოგიური ხაზით ერთმანეთთან დაკავშირებული <Str>152 ცალი</Str> სტაციონალური ვერტიკალური რეზერვუარი - მთლიანი მოცულობით <Str>646 785 მ<sup>3</sup></Str> შესაბამის ინფრასტრუქტურასთან ერთად.</P>
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ბათუმის ნავთობტერმინალის ძირითადი ტერიტორია მოიცავს <Str>5</Str> სარეზერვუარო პარკს, სადაც მოქმედებს <Str>6</Str> ჩამოსასხმელი სარკინიგზო ესტაკადა, რომელთა მეშვეობით შესაძლებელია ერთდროულად <Str>180</Str> ვაგონ-ცისტერნის ან დღე-ღამეში <Str>410</Str> ვაგონ-ცისტერნის დატვირთვა/დაცლა.</P>
 
+        <H4>სიტუაციური გეგმა</H4>
         <Iframe src={plan} />
+        <H2>რეზერვუარები</H2>
 
         <DeepDive text='დიზელის საწვავისა და ნავთის მიღებისა და გადატვირთვის სადგური' id='baseOne'>
             <Table>
@@ -253,7 +255,7 @@ const BOT = () => {
             </Table>    
         </DeepDive>       
 
-        <DeepDive text='წყლისა და ქაფის რეზერვუარები' id='baseWater' id='baseWater'>
+        <DeepDive text='წყლისა და ქაფის რეზერვუარები' id='baseWater'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
