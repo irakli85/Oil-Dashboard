@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Th, Td, Tr, H4, H2, Hr} from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import data from '../../data'
-import vibro from '../../public/docs/vibro.pdf#zoom=FitH'
+import vibro from '../../public/docs/vibro.pdf'
 
 const Terminal1 = () => {
   return (
