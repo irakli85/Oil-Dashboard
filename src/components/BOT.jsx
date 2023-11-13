@@ -11,6 +11,26 @@ const BOT = () => {
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;საბაჟო კონტროლის ზონად <Str>შპს "ბათუმის ნავთობტერმინალი"-ს (ს/ნ 245432544)</Str> საბაჟო საწყობის საქმიანობისთვის განსაზღვრულია ქ. ბათუმი, მაიაკოვსკის ქ. №4-ში მდებარე <Str>79 3262 ჰა</Str> ფართის ტეროტორია, რომელზეც განთავსებულია საერთო ტექნოლოგიური ხაზით ერთმანეთთან დაკავშირებული <Str>152 ცალი</Str> სტაციონალური ვერტიკალური რეზერვუარი - მთლიანი მოცულობით <Str>646 785 მ<sup>3</sup></Str> (GEO20) შესაბამის ინფრასტრუქტურასთან ერთად.</P>
         <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ბათუმის ნავთობტერმინალის ძირითადი ტერიტორია მოიცავს <Str>5</Str> სარეზერვუარო პარკს, სადაც მოქმედებს <Str>6</Str> ჩამოსასხმელი სარკინიგზო ესტაკადა, რომელთა მეშვეობით შესაძლებელია ერთდროულად <Str>180</Str> ვაგონ-ცისტერნის ან დღე-ღამეში <Str>410</Str> ვაგონ-ცისტერნის დატვირთვა/დაცლა.</P>
 
+        
+        <div>
+            <P>Batumi Oil Terminal ensures that all the loading/unloading operations, whether it is related to Vessel or Rail tanks, are performed intime so to avoid any demurrages.</P>
+            <P>The rates are following:</P>
+            <P>→ Tankers loadings per product:</P>
+            <ul>
+                <li>Naphtha 350 t/h</li>
+                <li>Gasoline 350 t/h</li>
+                <li>Kerosene 600 t/h</li>
+                <li>Gasoil 700 t/h</li>
+                <li>Fuel Oil 1000-2000 t/h</li>
+                <li>Crude Oil <u>1000-2500</u>t/h</li>
+            </ul>
+            <P>→ Tankers discharging per products:</P>
+            <ul>
+                <li>Petrol 150-300 t/h</li>
+                <li>Diesel fuel 150-400 t/h</li>
+            </ul>
+        </div>        
+
         <H4>სიტუაციური გეგმა</H4>
         <Hr/>
         <Iframe src={bot} />
