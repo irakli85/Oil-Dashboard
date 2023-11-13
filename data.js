@@ -1152,6 +1152,32 @@ const data = {
             tank: 254,
             vol: '12 000'
         }
+    ],
+
+    terminal1: [
+        {
+            count : 1,
+            tank: 302,
+            vol: '2 000'
+        },
+
+        {
+            count : 2,
+            tank: '',
+            vol: '2 000'
+        },
+
+        {
+            count : 3,
+            tank: '',
+            vol: '2 000'
+        },
+
+        {
+            count : 4,
+            tank: '',
+            vol: '1 000'
+        }
     ]
 }
 

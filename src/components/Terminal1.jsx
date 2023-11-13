@@ -16,7 +16,7 @@ const Terminal1 = () => {
         <H2>რეზერვუარები</H2>
         <Hr/>
 
-        <DeepDive text='ნათელი ნავთობპროდუქტების უბანი' id='vibroLight'>
+        <DeepDive text='სარეზერვუარო პარკი' id='terminal1'>
             <Table>
                 <Tr>
                     <Th style={{width: '11rem'}}>რეზ-ბის რაოდ.</Th>
@@ -26,7 +26,7 @@ const Terminal1 = () => {
                 </Tr>
                 
                 {
-                    data.vibroLight.map( (item) => {
+                    data.terminal1.map( (item) => {
                         return(
                             <Tr>
                                 <Td>{item.count}</Td>
@@ -39,7 +39,7 @@ const Terminal1 = () => {
                 <Tr>
                     <Td style={{border: 'none'}}></Td>
                     <Td style={{border: 'none'}}></Td>                    
-                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>10 400 მ<sup>3</sup></Td>
+                    <Td style={{color: '#1aac83', fontWeight: 900, border: 'none'}}>7 000 მ<sup>3</sup></Td>
                 </Tr>                
             </Table>
         </DeepDive>      
