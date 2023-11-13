@@ -13,22 +13,22 @@ const BOT = () => {
 
         
         <div>
-            <P>Batumi Oil Terminal ensures that all the loading/unloading operations, whether it is related to Vessel or Rail tanks, are performed intime so to avoid any demurrages.</P>
-            <P>The rates are following:</P>
-            <P>→ Tankers loadings per product:</P>
-            <ul>
-                <li>Naphtha 350 t/h</li>
-                <li>Gasoline 350 t/h</li>
-                <li>Kerosene 600 t/h</li>
-                <li>Gasoil 700 t/h</li>
-                <li>Fuel Oil 1000-2000 t/h</li>
-                <li>Crude Oil <u>1000-2500</u>t/h</li>
-            </ul>
-            <P>→ Tankers discharging per products:</P>
-            <ul>
-                <li>Petrol 150-300 t/h</li>
-                <li>Diesel fuel 150-400 t/h</li>
-            </ul>
+                
+            <P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ბათუმის ნავთობტერმინალში სხვადასხვა ნავთობპროდუქტების ტანკერში დატვირთვის და დაცლის მიახლოებითი სიჩქარეები:</P>
+            <P style={{fontWeight: 700}}>→ ტანკერების დატვირთვის სიჩქარე პროდუქტების მიხედვით:</P>
+            <Ul>
+                <Li>ნაფტა 350 ტ/ს</Li>
+                <Li>ბენზინი 350 ტ/ს</Li>
+                <Li>ნავთი 600 ტ/ს</Li>
+                <Li>დიზელი 700 ტ/ს</Li>
+                <Li>მაზუთი 1000-2000 ტ/ს</Li>
+                <Li>ნედლი ნავთობი 1000-2500 ტ/ს</Li>
+            </Ul>
+            <P style={{fontWeight: 700}}>→ ტანკერების დაცლის სიჩქარე ნავთობპროდუქტების მიხედვით:</P>
+            <Ul>
+                <Li>ბენზინი 150-300 ტ/ს</Li>
+                <Li>დიზელი 150-400 ტ/ს</Li>
+            </Ul>
         </div>        
 
         <H4>სიტუაციური გეგმა</H4>
@@ -371,6 +371,14 @@ const Iframe = styled.iframe`
     width: 100%;
     height: 94rem;
     object-fit: fill;
+`
+const Ul = styled.ul`
+    margin-top: 2rem;
+`
+
+const Li = styled.li`
+    font-size: 1.6rem;
+    margin-left: 6rem;
 `
 
 
