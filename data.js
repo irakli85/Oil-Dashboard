@@ -1157,25 +1157,25 @@ const data = {
     terminal1: [
         {
             count : 1,
-            tank: 302,
+            tank: 101,
             vol: '2 000'
         },
 
         {
             count : 2,
-            tank: '',
+            tank: 201,
             vol: '2 000'
         },
 
         {
             count : 3,
-            tank: '',
+            tank: 301,
             vol: '2 000'
         },
 
         {
             count : 4,
-            tank: '',
+            tank: 302,
             vol: '1 000'
         }
     ]
