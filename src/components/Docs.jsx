@@ -94,7 +94,7 @@ const Docs = () => {
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№257 - საქართველოს საბაჟო ტერიტორიაზე საქონლის გადაადგილებისა და გაფორმების შესახებ ინსტრუქციების დამტკიცების თაობაზე
-              <Span>*განახლებულია - 02.11.2023</Span>
+              <Span>*განახლებულია - 29.11.2023</Span>
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/257.pdf" target="_blank" download>გადმოწერა</ItemBtn>
@@ -114,7 +114,7 @@ const Docs = () => {
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№275 - საგარეო-ეკონომიკური საქმიანობის ეროვნული სასაქონლო ნომენკლატურის (სეს ესნ) დამტკიცების თაობაზე
-              <Span>*განახლებულია - 29.11.2023</Span>
+              <Span>*განახლებულია - 02.11.2023</Span>
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/275.pdf" target="_blank" download>გადმოწერა</ItemBtn>
