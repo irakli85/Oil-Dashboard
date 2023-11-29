@@ -138,7 +138,17 @@ const Docs = () => {
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/124.pdf" target="_blank" download>გადმოწერა</ItemBtn>
-        </DivItem>        
+        </DivItem>
+
+        <DivItem variants={childrenVariants}>
+          <DivItem1>
+            <img src={pdf} alt="pdf" />
+            <Pitem>№238 - დიზელის საწვავის შემადგენლობის ნორმების, ანალიზის მეთოდებისა და მათი დანერგვის ღონისძიებათა შესახებ
+              <Span>*განახლებულია - 29.11.2023</Span>
+            </Pitem>
+          </DivItem1>          
+          <ItemBtn to="/docs/238.pdf" target="_blank" download>გადმოწერა</ItemBtn>
+        </DivItem>                
 
       </DivBody>        
     </Container>
