@@ -148,7 +148,17 @@ const Docs = () => {
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/238.pdf" target="_blank" download>გადმოწერა</ItemBtn>
-        </DivItem>                
+        </DivItem>
+
+        <DivItem variants={childrenVariants}>
+          <DivItem1>
+            <img src={pdf} alt="pdf" />
+            <Pitem>React
+              <Span>*განახლებულია - 29.11.2023</Span>
+            </Pitem>
+          </DivItem1>          
+          <ItemBtn to="/docs/react.pdf" target="_blank" download>გადმოწერა</ItemBtn>
+        </DivItem>                 
 
       </DivBody>        
     </Container>
