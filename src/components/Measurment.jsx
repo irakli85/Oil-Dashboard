@@ -1,18 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 
 const Measurment = () => {
-
   const [docNum, setDocNum] = useState(null)
   const [realNum, setRealNum] = useState(null)
+
+  const inputEl1 = useRef(null)
+  const inputEl2 = useRef(null)
 
   let difference = Math.abs(docNum-realNum).toFixed(0)
   let percentage = Math.abs(((docNum-realNum)/docNum) * 100).toFixed(2)
 
   const handleFocus = (event) => event.target.select();
 
-console.log(percentage, typeof(percentage), difference, typeof(difference))
+  useEffect( () => {
+    const callback = (e) => {
+      // if(document.activeElement === inputEl1.current) return
+      // if(document.activeElement === inputEl2.current) return
+      if(e.code ===  'ArrowRight'){
+        inputEl2.current.focus()
+        setRealNum('')
+      }
+      if(e.code ===  'ArrowLeft'){
+        inputEl1.current.focus()
+        setDocNum('')
+      }
+    }
+    document.addEventListener('keydown', callback)
+    return () => document.addEventListener('keydown', callback)
+  },[])  
+
    
   return (
     <Container>
@@ -31,10 +49,10 @@ console.log(percentage, typeof(percentage), difference, typeof(difference))
           </Tr>
           <Tr>
             <TdInp>
-              <Input type='number' max="10" onChange={(e) => setDocNum(e.target.value)} value={docNum} onFocus={handleFocus}/>
+              <Input ref={inputEl1} type='number' max="10" onChange={(e) => setDocNum(e.target.value)} value={docNum} onFocus={handleFocus}/>
             </TdInp>
             <TdInp>
-              <Input type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum} onFocus={handleFocus}/>
+              <Input ref={inputEl2} type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum} onFocus={handleFocus}/>
             </TdInp>
             <TdRes norm={percentage < 0.5 ? true : false }>{difference + ' კგ'} </TdRes>
             <TdRes norm={percentage < 0.5 ? true : false }>{isNaN(percentage) ? (0 + '%') : (percentage + ' %')}</TdRes>
