@@ -94,7 +94,7 @@ const Docs = () => {
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№257 - საქართველოს საბაჟო ტერიტორიაზე საქონლის გადაადგილებისა და გაფორმების შესახებ ინსტრუქციების დამტკიცების თაობაზე
-              <Span>*განახლებულია - 02.11.2023</Span>
+              <Span>*განახლებულია - 29.11.2023</Span>
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/257.pdf" target="_blank" download>გადმოწერა</ItemBtn>
@@ -128,7 +128,27 @@ const Docs = () => {
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/24.pdf" target="_blank" download>გადმოწერა</ItemBtn>
-        </DivItem>        
+        </DivItem>
+
+        <DivItem variants={childrenVariants}>
+          <DivItem1>
+            <img src={pdf} alt="pdf" />
+            <Pitem>№124 - საავტომობილო ბენზინის ხარისხობრივი ნორმების შესახებ
+              <Span>*განახლებულია - 29.11.2023</Span>
+            </Pitem>
+          </DivItem1>          
+          <ItemBtn to="/docs/124.pdf" target="_blank" download>გადმოწერა</ItemBtn>
+        </DivItem>
+
+        <DivItem variants={childrenVariants}>
+          <DivItem1>
+            <img src={pdf} alt="pdf" />
+            <Pitem>№238 - დიზელის საწვავის შემადგენლობის ნორმების, ანალიზის მეთოდებისა და მათი დანერგვის ღონისძიებათა შესახებ
+              <Span>*განახლებულია - 29.11.2023</Span>
+            </Pitem>
+          </DivItem1>          
+          <ItemBtn to="/docs/238.pdf" target="_blank" download>გადმოწერა</ItemBtn>
+        </DivItem>                
 
       </DivBody>        
     </Container>
