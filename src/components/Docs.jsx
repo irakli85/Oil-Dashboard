@@ -64,7 +64,7 @@ const Docs = () => {
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№20839 - ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის ნორმების დამტკიცების შესახებ
-              <Span>*განახლებულია - 02.11.2023</Span>
+              <Span>*განახლებულია - 05.04.2024</Span>
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/20839.pdf" target="_blank" download>გადმოწერა</ItemBtn>
@@ -74,7 +74,7 @@ const Docs = () => {
           <DivItem1>
             <img src={pdf} alt="pdf" />
             <Pitem>№22970 - ცალკეულ საქონელზე ბუნებრივი დანაკარგის ნორმების დამტკიცების შესახებ
-              <Span>*განახლებულია - 02.11.2023</Span>
+              <Span>*განახლებულია - 05.04.2024</Span>
             </Pitem>
           </DivItem1>          
           <ItemBtn to="/docs/22970.pdf" target="_blank" download>გადმოწერა</ItemBtn>
