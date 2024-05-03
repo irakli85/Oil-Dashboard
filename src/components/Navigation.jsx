@@ -166,7 +166,7 @@ const Navigation = () => {
             <motion.div variants={childrenVariants}>
                 <LinkSty to='/settings'>
                     <SvgSettings isClicked={isClicked6}/>
-                    <NavP text='პარამეტრები' onClick={handleClick6} isClicked={isClicked6}/>
+                    <NavP text='გემები' onClick={handleClick6} isClicked={isClicked6}/>
                 </LinkSty>
             </motion.div>            
         </NavDivSty>
