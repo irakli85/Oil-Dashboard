@@ -162,7 +162,7 @@ const Wastage = () => {
             <WastBtn3 onClick={handleClickScroll11}
                 variants={buttonVariants}        
                 whileHover="hover3"  
-                >პროპილისა სპირტი</WastBtn3>
+                >პროპილის სპირტი</WastBtn3>
 
             <WastBtn4 onClick={handleClickScroll12}
                 variants={buttonVariants}        
