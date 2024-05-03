@@ -50,7 +50,9 @@ const Content = styled.div`
     height: 100vh;
     background-color: gainsboro;
     img{
+        width: 100%;
         height: 100%;
+        object-fit: cover;
     }
 `
 
