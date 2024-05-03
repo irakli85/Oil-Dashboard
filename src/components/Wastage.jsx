@@ -99,6 +99,11 @@ const Wastage = () => {
         piroliz.scrollIntoView({ behavior: 'smooth' });        
       };
 
+      const handleClickScroll15 = () => {
+        const mtbe = document.getElementById('mtbe');        
+        mtbe.scrollIntoView({ behavior: 'smooth' });        
+      };
+
   return (
     <Container>       
         <H2>ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები</H2>
@@ -172,7 +177,12 @@ const Wastage = () => {
             <WastBtn2 onClick={handleClickScroll14}
                 variants={buttonVariants}        
                 whileHover="hover2"  
-                >პიროლიზური ფისი</WastBtn2>                   
+                >პიროლიზური ფისი</WastBtn2> 
+
+            <WastBtn3 onClick={handleClickScroll15}
+            variants={buttonVariants}        
+            whileHover="hover3"  
+            >მეთილ-ტრეტ ეთერი</WastBtn3>                  
 
         </WastBtnCont>
 
@@ -293,7 +303,7 @@ const Wastage = () => {
 
         <DeepDive text='მაზუთი' id='fuel'>
             <Hr/> 
-            <H4>სეს ესნ კოდები: 2710 19 620, 2710 19 640, 2710 19 680</H4>
+            <H4>სეს ესნ კოდები: 2710 19 620, 2710 19 660, 2710 19 670</H4>
             <Table>
                 <Tr>
                     <Th>ოპერაციების დასახელება</Th>
@@ -302,6 +312,10 @@ const Wastage = () => {
                 <Tr>
                     <Td>სარკინიგზო გადაზიდვები</Td>
                     <Td>1.05 %</Td>                
+                </Tr>
+                <Tr>
+                    <Td>შენახვა</Td>
+                    <Td>0.97 %</Td>                
                 </Tr>
                           
             </Table>
@@ -318,6 +332,17 @@ const Wastage = () => {
                 <Tr>
                     <Td>სარკინიგზო გადაზიდვები</Td>
                     <Td>0.1 %</Td>                
+                </Tr>                          
+            </Table>
+            <H4>სეს ესნ კოდი: 2710 19 710</H4>
+            <Table>
+                <Tr>
+                    <Th>ოპერაციების დასახელება</Th>
+                    <Th>დანაკარგები წონიდან %-ში</Th>
+                </Tr>
+                <Tr>
+                    <Td>სარკინიგზო გადაზიდვები</Td>
+                    <Td>0.98 %</Td>                
                 </Tr>
                           
             </Table>
@@ -349,7 +374,11 @@ const Wastage = () => {
                 </Tr>
                 <Tr>
                     <Td>სარკინიგზო გადაზიდვები</Td>
-                    <Td>0.6 %</Td>                
+                    <Td>0.60 %</Td>                
+                </Tr>              
+                <Tr>
+                    <Td>შენახვა</Td>
+                    <Td>0.56 %</Td>                
                 </Tr>
                           
             </Table>
@@ -464,6 +493,21 @@ const Wastage = () => {
                 <Tr>
                     <Td>სარკინიგზო გადაზიდვები</Td>
                     <Td>1.00 %</Td>                
+                </Tr>                                         
+            </Table>
+        </DeepDive>
+
+        <DeepDive text='მეთილ-ტრეტ ბუტილეთინის ეთერი' id='mtbe'>
+            <Hr/> 
+            <H4>სეს ესნ კოდი: 2909 19 90</H4>
+            <Table>
+                <Tr>
+                    <Th>ოპერაციების დასახელება</Th>
+                    <Th>დანაკარგები წონიდან %-ში</Th>
+                </Tr>
+                <Tr>
+                    <Td>სარკინიგზო გადაზიდვები</Td>
+                    <Td>0.39 %</Td>                
                 </Tr>                                         
             </Table>
         </DeepDive>
