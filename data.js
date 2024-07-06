@@ -1158,7 +1158,7 @@ const data = {
         {
             count : 1,
             tank: 101,
-            vol: '2 000'
+            vol: '1 000'
         },
 
         {
@@ -1170,14 +1170,24 @@ const data = {
         {
             count : 3,
             tank: 301,
-            vol: '2 000'
+            vol: '3 000'
         },
 
         {
             count : 4,
             tank: 302,
-            vol: '1 000'
-        }
+            vol: '3 000'
+        },
+        {
+            count : 5,
+            tank: 40,
+            vol: '40'
+        },
+        {
+            count : 6,
+            tank: 50,
+            vol: '50'
+        },
     ]
 }
 
