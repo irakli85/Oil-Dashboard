@@ -113,11 +113,11 @@ const Docs = () => {
         <DivItem variants={childrenVariants}>
           <DivItem1>
             <img src={pdf} alt="pdf" />
-            <Pitem>№275 - საგარეო-ეკონომიკური საქმიანობის ეროვნული სასაქონლო ნომენკლატურის (სეს ესნ) დამტკიცების თაობაზე
-              <Span>*განახლებულია - 02.11.2023</Span>
+            <Pitem>№21 - საგარეო-ეკონომიკური საქმიანობის ეროვნული სასაქონლო ნომენკლატურის (სეს ესნ) დამტკიცების თაობაზე
+              <Span>*განახლებულია - 06.07.2024</Span>
             </Pitem>
           </DivItem1>          
-          <ItemBtn to="/docs/275.pdf" target="_blank" download>გადმოწერა</ItemBtn>
+          <ItemBtn to="/docs/21.pdf" target="_blank" download>გადმოწერა</ItemBtn>
         </DivItem>
 
         <DivItem variants={childrenVariants}>
