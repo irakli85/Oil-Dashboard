@@ -34,7 +34,7 @@ const OilPrice = () => {
                 <Tr>
                     <Td>2709&nbsp;00</Td>
                     <Td>ნედლი ნავთობი და ნედლი ნავთობპროდუქტები, მიღებული ბიტუმოვანი მინერალებისაგან</Td>
-                    <Td style={{ fontWeight: "bold" }}>60</Td>
+                    <Td style={{ fontWeight: "bold" }}>47.6</Td>
                     <Td>5&nbsp;დეკემბერი 2022</Td>
                 </Tr>
             </tbody>
