@@ -59,60 +59,77 @@ const Navigation = () => {
     const [isClicked4, setIsClicked4] = useState(false)
     const [isClicked5, setIsClicked5] = useState(false)
     const [isClicked6, setIsClicked6] = useState(false)
+    const [isClicked7, setIsClicked7] = useState(false)
 
 
     const handleClick1 = () => {
         setIsClicked1(true)
-        setIsClicked2 (false)
-        setIsClicked3 (false)
-        setIsClicked4 (false)
-        setIsClicked5 (false)
-        setIsClicked6 (false)        
+        setIsClicked2(false)
+        setIsClicked3(false)
+        setIsClicked4(false)
+        setIsClicked5(false)
+        setIsClicked6(false)
+        setIsClicked7(false)
     }
 
     const handleClick2 = () => {
         setIsClicked1(false)
-        setIsClicked2 (true)
-        setIsClicked3 (false)
-        setIsClicked4 (false)
-        setIsClicked5 (false)
-        setIsClicked6 (false)        
+        setIsClicked2(true)
+        setIsClicked3(false)
+        setIsClicked4(false)
+        setIsClicked5(false)
+        setIsClicked6(false)
+        setIsClicked7(false)
     }
 
     const handleClick3 = () => {
         setIsClicked1(false)
-        setIsClicked2 (false)
-        setIsClicked3 (true)
-        setIsClicked4 (false)
-        setIsClicked5 (false)
-        setIsClicked6 (false)        
+        setIsClicked2(false)
+        setIsClicked3(true)
+        setIsClicked4(false)
+        setIsClicked5(false)
+        setIsClicked6(false)
+        setIsClicked7(false)
     }
 
     const handleClick4 = () => {
         setIsClicked1(false)
-        setIsClicked2 (false)
-        setIsClicked3 (false)
-        setIsClicked4 (true)
-        setIsClicked5 (false)
-        setIsClicked6 (false)        
+        setIsClicked2(false)
+        setIsClicked3(false)
+        setIsClicked4(true)
+        setIsClicked5(false)
+        setIsClicked6(false)
+        setIsClicked7(false)
     }
 
     const handleClick5 = () => {
         setIsClicked1(false)
-        setIsClicked2 (false)
-        setIsClicked3 (false)
-        setIsClicked4 (false)
-        setIsClicked5 (true)
-        setIsClicked6 (false)        
+        setIsClicked2(false)
+        setIsClicked3(false)
+        setIsClicked4(false)
+        setIsClicked5(true)
+        setIsClicked6(false)
+        setIsClicked7(false)
     }
 
     const handleClick6 = () => {
         setIsClicked1(false)
-        setIsClicked2 (false)
-        setIsClicked3 (false)
-        setIsClicked4 (false)
-        setIsClicked5 (false)
-        setIsClicked6 (true)        
+        setIsClicked2(false)
+        setIsClicked3(false)
+        setIsClicked4(false)
+        setIsClicked5(false)
+        setIsClicked6(true)
+        setIsClicked7(false)
+    }
+
+    const handleClick7 = () => {
+        setIsClicked1(false)
+        setIsClicked2(false)
+        setIsClicked3(false)
+        setIsClicked4(false)
+        setIsClicked5(false)
+        setIsClicked6(false)
+        setIsClicked7(true)
     }
   return (
     <NavCont>
@@ -164,11 +181,18 @@ const Navigation = () => {
             </motion.div>
 
             <motion.div variants={childrenVariants}>
-                <LinkSty to='/settings'>
+                <LinkSty to='/sanctioned-vessels'>
                     <SvgSettings isClicked={isClicked6}/>
-                    <NavP text='გემები' onClick={handleClick6} isClicked={isClicked6}/>
+                    <NavP text='სანქცირებული გემები' onClick={handleClick6} isClicked={isClicked6}/>
                 </LinkSty>
-            </motion.div>            
+            </motion.div>
+
+            <motion.div variants={childrenVariants}>
+                <LinkSty to='/settings'>
+                    <SvgSettings isClicked={isClicked7}/>
+                    <NavP text='გემები' onClick={handleClick7} isClicked={isClicked7}/>
+                </LinkSty>
+            </motion.div>
         </NavDivSty>
         <SvgWorld/>
         <CopyRight>2023 © All Rights Reserved </CopyRight>

@@ -7,6 +7,7 @@ import Wastage from './Wastage'
 import OilPrice from './OilPrice'
 import Docs from './Docs'
 import Terminals from './Terminals'
+import SanctionedVessels from './SanctionedVessels'
 import Map from './Map'
 
 
@@ -21,6 +22,7 @@ const Content = () => {
             <Route path='/oilprice' element={<OilPrice/>}/>
             <Route path='/docs' element={<Docs/>}/>
             <Route path='/terminals' element={<Terminals/>}/>
+            <Route path='/sanctioned-vessels' element={<SanctionedVessels/>}/>
             <Route path='/settings' element={<Map/>}/>
           </Routes>
         </ContentDivSty>

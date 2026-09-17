@@ -14,22 +14,21 @@ const Measurment = () => {
 
   const handleFocus = (event) => event.target.select();
 
-  useEffect( () => {
+  useEffect(() => {
     const callback = (e) => {
-      // if(document.activeElement === inputEl1.current) return
-      // if(document.activeElement === inputEl2.current) return
-      if(e.code ===  'ArrowRight'){
-        inputEl2.current.focus()
+      if (e.code === 'ArrowRight') {
+        inputEl2.current?.focus()
         setRealNum('')
       }
-      if(e.code ===  'ArrowLeft'){
-        inputEl1.current.focus()
+      if (e.code === 'ArrowLeft') {
+        inputEl1.current?.focus()
         setDocNum('')
       }
     }
+
     document.addEventListener('keydown', callback)
-    return () => document.addEventListener('keydown', callback)
-  },[])  
+    return () => document.removeEventListener('keydown', callback)
+  }, [])
 
    
   return (
