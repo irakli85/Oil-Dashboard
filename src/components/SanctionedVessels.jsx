@@ -18,10 +18,15 @@ const SanctionedVessels = () => {
     })
   }, [nameQuery, imoQuery])
 
+  const hasResults = filteredShips.length > 0
+
   return (
     <Container>
       <Header>
-        <H2st>სანქცირებული გემები</H2st>
+        <HeaderContent>
+          <H2st>სანქცირებული გემები</H2st>
+          <HeaderBadge>{sanctioned.length} ჩანაწერი</HeaderBadge>
+        </HeaderContent>
       </Header>
       <Hr />
 
@@ -48,7 +53,10 @@ const SanctionedVessels = () => {
       </SearchPanel>
 
       <ResultMeta>
-        {filteredShips.length} შედეგი
+        <span>{filteredShips.length} შედეგი</span>
+        <ClearButton type='button' onClick={() => { setNameQuery(''); setImoQuery('') }}>
+          გასუფთავება
+        </ClearButton>
       </ResultMeta>
 
       <TableWrapper>
@@ -61,7 +69,7 @@ const SanctionedVessels = () => {
             </Tr>
           </thead>
           <tbody>
-            {filteredShips.length > 0 ? (
+            {hasResults ? (
               filteredShips.map((ship, index) => (
                 <Tr key={`${ship.imo}-${index}`}>
                   <Td>{ship.name}</Td>
@@ -92,10 +100,28 @@ const Header = styled.div`
   padding: 3rem;
 `
 
+const HeaderContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+`
+
 const H2st = styled(H2)`
   color: #fff;
   font-size: 3.2rem;
   margin-top: 0;
+`
+
+const HeaderBadge = styled.span`
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 `
 
 const SearchPanel = styled.div`
@@ -125,16 +151,40 @@ const Input = styled.input`
   padding: 1rem 1.5rem;
   font-size: 1.8rem;
   background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
   &:focus {
-    outline: solid 3px #1aac83;
+    outline: none;
+    border-color: #1aac83;
+    box-shadow: 0 0 0 4px rgba(26, 172, 131, 0.14);
   }
 `
 
-const ResultMeta = styled.p`
+const ResultMeta = styled.div`
   margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
   font-size: 1.6rem;
   font-weight: 700;
   color: #1aac83;
+`
+
+const ClearButton = styled.button`
+  background: transparent;
+  border: 1px solid rgba(26, 172, 131, 0.32);
+  color: #1aac83;
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(26, 172, 131, 0.08);
+  }
 `
 
 const TableWrapper = styled.div`
