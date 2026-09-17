@@ -12,6 +12,26 @@ import SvgWorld from '../styledComponents/svg/Svgworld'
 import SvgPrice from '../styledComponents/svg/SvgPrice'
 import SvgDocs from '../styledComponents/svg/SvgDocs'
 
+const ShipNavIcon = ({ isClicked }) => (
+  <ShipIconWrapper isClicked={isClicked} viewBox='0 0 120 120' aria-hidden='true'>
+    <defs>
+      <linearGradient id='shipNavGradient' x1='0%' y1='0%' x2='100%' y2='100%'>
+        <stop offset='0%' stopColor={isClicked ? '#1aac83' : '#737791'} stopOpacity='1' />
+        <stop offset='100%' stopColor={isClicked ? '#0d8261' : '#5d6477'} stopOpacity='1' />
+      </linearGradient>
+    </defs>
+    <circle cx='60' cy='60' r='52' fill={isClicked ? 'rgba(26,172,131,0.12)' : 'rgba(115,119,145,0.10)'} />
+    <path d='M24 67L52 33H96L102 51L92 67H24Z' fill='url(#shipNavGradient)' opacity='0.98' />
+    <path d='M48 33V18H69V33' fill='none' stroke={isClicked ? '#1aac83' : '#737791'} strokeWidth='5' strokeLinecap='round' strokeLinejoin='round' />
+    <path d='M60 18V53' fill='none' stroke={isClicked ? '#1aac83' : '#737791'} strokeWidth='5' strokeLinecap='round' />
+    <path d='M49 53H90' fill='none' stroke={isClicked ? '#1aac83' : '#737791'} strokeWidth='5' strokeLinecap='round' />
+    <path d='M34 71H96' fill='none' stroke={isClicked ? '#1aac83' : '#737791'} strokeWidth='4' strokeLinecap='round' opacity='0.8' />
+    <path d='M30 79C42 76 49 75 60 75C73 75 82 77 90 79' fill='none' stroke={isClicked ? '#1aac83' : '#737791'} strokeWidth='4' strokeLinecap='round' opacity='0.8' />
+    <path d='M16 87C28 82 39 80 52 80C60 80 67 81 75 83C82 85 89 87 96 87C101 87 105 88 108 90V92H16V87Z' fill={isClicked ? 'rgba(26,172,131,0.18)' : 'rgba(115,119,145,0.12)'} />
+    <path d='M20 94H100' fill='none' stroke={isClicked ? 'rgba(26,172,131,0.45)' : 'rgba(115,119,145,0.38)'} strokeWidth='3' strokeLinecap='round' />
+  </ShipIconWrapper>
+)
+
 const buttonVariants = { 
     hover: {
       scale: 1.1,
@@ -50,6 +70,19 @@ const buttonVariants = {
   }
 
  
+
+const ShipIconWrapper = ({ isClicked, ...props }) => (
+  <svg
+    {...props}
+    style={{
+      width: '2.6rem',
+      height: '2.6rem',
+      flexShrink: 0,
+      display: 'block',
+      filter: isClicked ? 'drop-shadow(0 2px 6px rgba(26,172,131,0.18))' : 'drop-shadow(0 2px 6px rgba(115,119,145,0.10))'
+    }}
+  />
+)
 
 const Navigation = () => {
 
@@ -182,7 +215,7 @@ const Navigation = () => {
 
             <motion.div variants={childrenVariants}>
                 <LinkSty to='/sanctioned-vessels'>
-                    <SvgSettings isClicked={isClicked6}/>
+                    <ShipNavIcon isClicked={isClicked6} />
                     <NavP text='სანქცირებული გემები' onClick={handleClick6} isClicked={isClicked6}/>
                 </LinkSty>
             </motion.div>
