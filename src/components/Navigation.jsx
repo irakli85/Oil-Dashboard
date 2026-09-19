@@ -84,7 +84,7 @@ const ShipIconWrapper = ({ isClicked, ...props }) => (
   />
 )
 
-const Navigation = () => {
+const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
 
     const [isClicked1, setIsClicked1] = useState(true)
     const [isClicked2, setIsClicked2] = useState(false)
@@ -94,6 +94,9 @@ const Navigation = () => {
     const [isClicked6, setIsClicked6] = useState(false)
     const [isClicked7, setIsClicked7] = useState(false)
 
+    const closeMenu = () => {
+        if (onLinkClick) onLinkClick()
+    }
 
     const handleClick1 = () => {
         setIsClicked1(true)
@@ -103,6 +106,7 @@ const Navigation = () => {
         setIsClicked5(false)
         setIsClicked6(false)
         setIsClicked7(false)
+        closeMenu()
     }
 
     const handleClick2 = () => {
@@ -113,6 +117,7 @@ const Navigation = () => {
         setIsClicked5(false)
         setIsClicked6(false)
         setIsClicked7(false)
+        closeMenu()
     }
 
     const handleClick3 = () => {
@@ -123,6 +128,7 @@ const Navigation = () => {
         setIsClicked5(false)
         setIsClicked6(false)
         setIsClicked7(false)
+        closeMenu()
     }
 
     const handleClick4 = () => {
@@ -133,6 +139,7 @@ const Navigation = () => {
         setIsClicked5(false)
         setIsClicked6(false)
         setIsClicked7(false)
+        closeMenu()
     }
 
     const handleClick5 = () => {
@@ -143,6 +150,7 @@ const Navigation = () => {
         setIsClicked5(true)
         setIsClicked6(false)
         setIsClicked7(false)
+        closeMenu()
     }
 
     const handleClick6 = () => {
@@ -153,6 +161,7 @@ const Navigation = () => {
         setIsClicked5(false)
         setIsClicked6(true)
         setIsClicked7(false)
+        closeMenu()
     }
 
     const handleClick7 = () => {
@@ -163,9 +172,10 @@ const Navigation = () => {
         setIsClicked5(false)
         setIsClicked6(false)
         setIsClicked7(true)
+        closeMenu()
     }
   return (
-    <NavCont>
+    <NavCont $isOpen={isMenuOpen}>
         <DashDivSty
             variants={buttonVariants}        
             whileHover="hover"         

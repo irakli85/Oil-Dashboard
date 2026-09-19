@@ -171,11 +171,15 @@ const DivBody = styled(motion.div)`
   gap: 5rem;
   width: 100%;
   margin-bottom: 10rem;
+
+  @media (max-width: 768px) {
+    gap: 2.5rem;
+  }
 `
 
 const P = styled.p`
-  width: 100rem;
-  font-size: 3.8rem;
+  width: min(100%, 100rem);
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
   color: #fff;
   font-weight: 900;
   position: absolute;
@@ -183,27 +187,44 @@ const P = styled.p`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 0 1.5rem;
 `
 const DivItem = styled(motion.div)`
   display: flex;
   gap: 2rem;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 `
 const DivItem1 = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
+  flex: 1;
+
+  @media (max-width: 560px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 `
 const Pitem = styled.p`
   font-size: 1.8rem;
   font-weight: 700;
   max-width: 90rem;
+  line-height: 1.6;
+
+  @media (max-width: 560px) {
+    font-size: 1.6rem;
+  }
 `
 const ItemBtn = styled(Link)`
   background: #fff;
   width: 20rem;
-  height: 5rem;
+  min-height: 5rem;
   color: #507C5C;
   font-size: 1.6rem;
   font-weight: 700;
@@ -218,6 +239,13 @@ const ItemBtn = styled(Link)`
   justify-self: end;
   text-decoration: none;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 const Span = styled.span`

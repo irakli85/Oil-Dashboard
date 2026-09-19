@@ -148,9 +148,15 @@ export const H4 = styled.h4`
 
 export const Table = styled.table`
   width: 100%;
+  min-width: 64rem;
   height: 100%;
   border: solid 2px gray;
   margin-top: 5rem;
+  border-collapse: collapse;
+
+  @media (max-width: 640px) {
+    min-width: 52rem;
+  }
 `
 
 export const Th = styled.th`

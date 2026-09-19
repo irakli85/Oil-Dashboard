@@ -47,8 +47,8 @@ const Header = () => {
 }
 
 const Input = styled.input`
-  width: 51.3rem;
-  height: 6rem;
+  width: min(51.3rem, 100%);
+  min-height: 6rem;
   padding: 0.2rem 3.2rem 0.2rem 6.4rem;
   border-radius: 1.6rem;
   background-color: #F9FAFB;
@@ -59,13 +59,25 @@ const Input = styled.input`
   background-image: url(${search});
   background-repeat: no-repeat;
   background-position: top 1.5rem  left 2rem;
+
+  @media (max-width: 760px) {
+    width: 100%;
+  }
 `
 
 const Div = styled.div`
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 2.4rem;
     margin-left: 4rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 760px) {
+      width: 100%;
+      margin-left: 0;
+      justify-content: center;
+    }
 `
 
 const Select = styled.select`

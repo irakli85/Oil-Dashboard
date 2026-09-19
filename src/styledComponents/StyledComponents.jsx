@@ -4,25 +4,43 @@ import {motion} from 'framer-motion'
 
 
 export const AsideSty = styled.div`
-    width: 22%;
-    height: fit-content;
+    width: 28rem;
+    min-width: 28rem;
     background:  #fff;
     border-radius: 1.5rem  0 0 1.5rem;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 980px) {
+        width: 100%;
+        min-width: 0;
+        border-radius: 1.5rem 1.5rem 0 0;
+    }
 `
 
 export const ContentSty = styled.div`
-    width: 78%;
+    flex: 1;
     background:  #fff;
     border-radius: 0 1.5rem  1.5rem 0;
     padding: 1rem;
-    height: fit-content;
+    min-width: 0;
+
+    @media (max-width: 980px) {
+        width: 100%;
+        border-radius: 0 0 1.5rem 1.5rem;
+    }
 `
 
 export const MainSty = styled.main`
     display: flex;
     width: 100%;
-    height: calc(100vh - 4rem);
+    min-height: calc(100vh - 4rem);
+
+    @media (max-width: 980px) {
+        flex-direction: column;
+        min-height: auto;
+    }
 `
 
 export const LogoDivSty = styled.div`
@@ -66,16 +84,27 @@ export const NavDivSty = styled(motion.nav)`
     display: flex;
     flex-direction: column;
     gap: 5rem;
+
+    @media (max-width: 980px) {
+        gap: 2.4rem;
+    }
 `
 
 export const HeadDivSty = styled.header`
     display: flex;
     width: 100%;
-    height: 12rem;
+    min-height: 12rem;
     background: #fff;
     padding: 3.5rem 4rem;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    @media (max-width: 760px) {
+        padding: 2rem 1.5rem;
+        justify-content: center;
+    }
 `
 
 export const HeadPsty = styled.p`
@@ -100,6 +129,7 @@ export const LinkSty = styled(Link)`
     display: flex;
     gap: 2.4rem;
     align-items: center;
+    width: 100%;
 
     color: #737791;
     font-size: 2.8rem;
@@ -107,6 +137,10 @@ export const LinkSty = styled(Link)`
     font-weight: 400;
     line-height: normal;
     text-decoration: none;
+
+    @media (max-width: 560px) {
+        gap: 1.2rem;
+    }
 `
 
 export const NavP = ({text, onClick, isClicked}) => {   
@@ -208,6 +242,11 @@ export const NavCont = styled.div`
     display: flex;    
     flex-direction: column;
     gap: 10rem;
+
+    @media (max-width: 980px) {
+        gap: 2.2rem;
+        display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+    }
 `
 
 export const CopyRight = styled.p`
