@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP, NavCont, CopyRight } from '../styledComponents/StyledComponents'
 import { motion } from 'framer-motion';
 
@@ -11,6 +12,7 @@ import SvgTank from '../styledComponents/svg/SvgTank'
 import SvgWorld from '../styledComponents/svg/Svgworld'
 import SvgPrice from '../styledComponents/svg/SvgPrice'
 import SvgDocs from '../styledComponents/svg/SvgDocs'
+import SvgShop from '../styledComponents/svg/SvgShop'
 
 const ShipNavIcon = ({ isClicked }) => (
   <ShipIconWrapper isClicked={isClicked} viewBox='0 0 120 120' aria-hidden='true'>
@@ -84,6 +86,38 @@ const ShipIconWrapper = ({ isClicked, ...props }) => (
   />
 )
 
+const ExportNavItem = styled.div`
+  width: 100%;
+`
+
+const ExportNavHeader = styled.div`
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+
+  @media (max-width: 560px) {
+    gap: 1.2rem;
+  }
+`
+
+const ExportChevron = styled.span`
+  color: #737791;
+  font-size: 1.6rem;
+  margin-left: auto;
+  transition: transform 0.2s ease;
+  transform: rotate(${({ $isOpen }) => ($isOpen ? '180deg' : '0deg')});
+`
+
+const ExportSubMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-top: 1.6rem;
+  padding-left: 5rem;
+`
+
 const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
 
     const [isClicked1, setIsClicked1] = useState(true)
@@ -93,85 +127,92 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
     const [isClicked5, setIsClicked5] = useState(false)
     const [isClicked6, setIsClicked6] = useState(false)
     const [isClicked7, setIsClicked7] = useState(false)
+    const [isClicked8, setIsClicked8] = useState(false)
+    const [isClicked9, setIsClicked9] = useState(false)
+    const [isClicked10, setIsClicked10] = useState(false)
+    const [isExportOpen, setIsExportOpen] = useState(false)
+
+    const resetClicks = () => {
+        setIsClicked1(false)
+        setIsClicked2(false)
+        setIsClicked3(false)
+        setIsClicked4(false)
+        setIsClicked5(false)
+        setIsClicked6(false)
+        setIsClicked7(false)
+        setIsClicked8(false)
+        setIsClicked9(false)
+        setIsClicked10(false)
+    }
 
     const closeMenu = () => {
         if (onLinkClick) onLinkClick()
     }
 
     const handleClick1 = () => {
+        resetClicks()
         setIsClicked1(true)
-        setIsClicked2(false)
-        setIsClicked3(false)
-        setIsClicked4(false)
-        setIsClicked5(false)
-        setIsClicked6(false)
-        setIsClicked7(false)
         closeMenu()
     }
 
     const handleClick2 = () => {
-        setIsClicked1(false)
+        resetClicks()
         setIsClicked2(true)
-        setIsClicked3(false)
-        setIsClicked4(false)
-        setIsClicked5(false)
-        setIsClicked6(false)
-        setIsClicked7(false)
         closeMenu()
     }
 
     const handleClick3 = () => {
-        setIsClicked1(false)
-        setIsClicked2(false)
+        resetClicks()
         setIsClicked3(true)
-        setIsClicked4(false)
-        setIsClicked5(false)
-        setIsClicked6(false)
-        setIsClicked7(false)
         closeMenu()
     }
 
     const handleClick4 = () => {
-        setIsClicked1(false)
-        setIsClicked2(false)
-        setIsClicked3(false)
+        resetClicks()
         setIsClicked4(true)
-        setIsClicked5(false)
-        setIsClicked6(false)
-        setIsClicked7(false)
         closeMenu()
     }
 
     const handleClick5 = () => {
-        setIsClicked1(false)
-        setIsClicked2(false)
-        setIsClicked3(false)
-        setIsClicked4(false)
+        resetClicks()
         setIsClicked5(true)
-        setIsClicked6(false)
-        setIsClicked7(false)
         closeMenu()
     }
 
     const handleClick6 = () => {
-        setIsClicked1(false)
-        setIsClicked2(false)
-        setIsClicked3(false)
-        setIsClicked4(false)
-        setIsClicked5(false)
+        resetClicks()
         setIsClicked6(true)
-        setIsClicked7(false)
         closeMenu()
     }
 
     const handleClick7 = () => {
-        setIsClicked1(false)
-        setIsClicked2(false)
-        setIsClicked3(false)
-        setIsClicked4(false)
-        setIsClicked5(false)
-        setIsClicked6(false)
+        resetClicks()
         setIsClicked7(true)
+        closeMenu()
+    }
+
+    const toggleExport = () => {
+        setIsExportOpen((prev) => !prev)
+    }
+
+    const handleClick8 = () => {
+        resetClicks()
+        setIsClicked8(true)
+        setIsExportOpen(true)
+        closeMenu()
+    }
+
+    const handleClick9 = () => {
+        resetClicks()
+        setIsClicked9(true)
+        setIsExportOpen(true)
+        closeMenu()
+    }
+
+    const handleClick10 = () => {
+        resetClicks()
+        setIsClicked10(true)
+        setIsExportOpen(true)
         closeMenu()
     }
   return (
@@ -228,6 +269,29 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                     <ShipNavIcon isClicked={isClicked6} />
                     <NavP text='სანქცირებული გემები' onClick={handleClick6} isClicked={isClicked6}/>
                 </LinkSty>
+            </motion.div>
+
+            <motion.div variants={childrenVariants}>
+                <ExportNavItem $isOpen={isExportOpen}>
+                    <ExportNavHeader onClick={toggleExport}>
+                        <SvgShop isClicked={isClicked8 || isClicked9 || isClicked10}/>
+                        <NavP text='ექსპორტი' isClicked={isClicked8 || isClicked9 || isClicked10}/>
+                        <ExportChevron $isOpen={isExportOpen}>▾</ExportChevron>
+                    </ExportNavHeader>
+                    {isExportOpen && (
+                        <ExportSubMenu>
+                            <LinkSty to='/export'>
+                                <NavP text='მიმდინარე' onClick={handleClick8} isClicked={isClicked8} noScale/>
+                            </LinkSty>
+                            <LinkSty to='/export/archived'>
+                                <NavP text='გასული' onClick={handleClick9} isClicked={isClicked9} noScale/>
+                            </LinkSty>
+                            <LinkSty to='/export/settings'>
+                                <NavP text='ინფორმაციის დამატება' onClick={handleClick10} isClicked={isClicked10} noScale/>
+                            </LinkSty>
+                        </ExportSubMenu>
+                    )}
+                </ExportNavItem>
             </motion.div>
 
             <motion.div variants={childrenVariants}>

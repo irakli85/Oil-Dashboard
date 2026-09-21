@@ -1,8 +1,18 @@
 import express from 'express';
 import WebSocket from 'ws';
+import {
+  listItems,
+  createItem,
+  updateItem,
+  getOptions,
+  addOption,
+  removeOption,
+} from './export-routes.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
+
+app.use(express.json());
 
 const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0';
 const clients = new Set();
@@ -264,6 +274,15 @@ app.get('/api/ais/batumi/stream', (req, res) => {
     clients.delete(res);
   });
 });
+
+app.get('/api/export/items', listItems);
+app.post('/api/export/items', createItem);
+app.patch('/api/export/items/:id', (req, res) => updateItem(req, res, req.params.id));
+app.get('/api/export/options', getOptions);
+app.post('/api/export/options', addOption);
+app.delete('/api/export/options/:category/:value', (req, res) =>
+  removeOption(req, res, req.params.category, req.params.value)
+);
 
 connectAISStream();
 

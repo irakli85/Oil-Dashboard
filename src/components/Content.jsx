@@ -9,6 +9,7 @@ import Docs from './Docs'
 import Terminals from './Terminals'
 import SanctionedVessels from './SanctionedVessels'
 import Map from './Map'
+import ExportModule from './ExportModule'
 
 
 const Content = () => {
@@ -23,6 +24,9 @@ const Content = () => {
             <Route path='/docs' element={<Docs/>}/>
             <Route path='/terminals' element={<Terminals/>}/>
             <Route path='/sanctioned-vessels' element={<SanctionedVessels/>}/>
+            <Route path='/export' element={<ExportModule tab='active'/>}/>
+            <Route path='/export/archived' element={<ExportModule tab='archived'/>}/>
+            <Route path='/export/settings' element={<ExportModule tab='settings'/>}/>
             <Route path='/settings' element={<Map/>}/>
           </Routes>
         </ContentDivSty>

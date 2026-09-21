@@ -143,7 +143,7 @@ export const LinkSty = styled(Link)`
     }
 `
 
-export const NavP = ({text, onClick, isClicked}) => {   
+export const NavP = ({text, onClick, isClicked, noScale}) => {   
     
     return(
         <motion.p  onClick={onClick}
@@ -154,7 +154,7 @@ export const NavP = ({text, onClick, isClicked}) => {
                 borderLeft: isClicked ? 'solid 4px #1aac83' : 'none',
                 paddingLeft: isClicked ? '1rem' : 0
             }}         
-            whileHover={{scale: 1.3, originX: 0}}
+            whileHover={noScale ? undefined : {scale: 1.3, originX: 0}}
             transition={{type: 'spring', stifness: 300}}
             >{text}
         </motion.p>
