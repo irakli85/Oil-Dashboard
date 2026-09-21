@@ -4,7 +4,7 @@ import { DEFAULT_DROPDOWNS, VALID_CATEGORIES } from './export-memory.js'
 let pool = null
 let initPromise = null
 
-const SCHEMA_SQL = `
+const CREATE_ITEMS_SQL = `
 CREATE TABLE IF NOT EXISTS export_items (
   id BIGSERIAL PRIMARY KEY,
   exporter TEXT NOT NULL DEFAULT '',
@@ -21,38 +21,25 @@ CREATE TABLE IF NOT EXISTS export_items (
   departure_date TEXT NOT NULL DEFAULT '',
   note TEXT NOT NULL DEFAULT '',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
+)`
 
+const CREATE_OPTIONS_SQL = `
 CREATE TABLE IF NOT EXISTS export_options (
   id BIGSERIAL PRIMARY KEY,
   category TEXT NOT NULL CHECK (category IN ('exporters', 'declarants', 'goods')),
   value TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (category, value)
-);
-`
+)`
 
-const SEED_SQL = `
+const SEED_ITEMS_SQL = `
 INSERT INTO export_items (
   exporter, declarant, goods, code, reg_date, declaration_num, days, exp_date, weight, status, ship_name, departure_date, note
 )
 SELECT 'შპს ტრანს ლოჯისტიკი', 'შპს გლობალ ფორვარდინგი', 'ფეროშენადნობი', 'C-102938',
        '2026-09-21', '10293847', 30, '2026-10-21', '24,500.00', 'active', '', '',
        'ტვირთი მზად არის საექსპორტო პროცედურისთვის'
-WHERE NOT EXISTS (SELECT 1 FROM export_items);
-
-INSERT INTO export_options (category, value)
-SELECT 'exporters', value FROM unnest($1::text[]) AS value
-ON CONFLICT (category, value) DO NOTHING;
-
-INSERT INTO export_options (category, value)
-SELECT 'declarants', value FROM unnest($2::text[]) AS value
-ON CONFLICT (category, value) DO NOTHING;
-
-INSERT INTO export_options (category, value)
-SELECT 'goods', value FROM unnest($3::text[]) AS value
-ON CONFLICT (category, value) DO NOTHING;
-`
+WHERE NOT EXISTS (SELECT 1 FROM export_items)`
 
 function rowToItem(row) {
   return {
@@ -80,12 +67,17 @@ export function createPgStore(connectionString) {
     }
     if (!initPromise) {
       initPromise = (async () => {
-        await pool.query(SCHEMA_SQL)
-        await pool.query(SEED_SQL, [
-          DEFAULT_DROPDOWNS.exporters,
-          DEFAULT_DROPDOWNS.declarants,
-          DEFAULT_DROPDOWNS.goods,
-        ])
+        await pool.query(CREATE_ITEMS_SQL)
+        await pool.query(CREATE_OPTIONS_SQL)
+        await pool.query(SEED_ITEMS_SQL)
+        for (const category of VALID_CATEGORIES) {
+          for (const value of DEFAULT_DROPDOWNS[category]) {
+            await pool.query(
+              'INSERT INTO export_options (category, value) VALUES ($1, $2) ON CONFLICT (category, value) DO NOTHING',
+              [category, value]
+            )
+          }
+        }
       })()
     }
     await initPromise
