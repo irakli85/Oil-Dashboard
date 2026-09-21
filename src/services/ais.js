@@ -50,25 +50,24 @@ export async function fetchBatumiVessels(radiusKm = 20) {
 }
 
 export function subscribeToBatumiVessels(radiusKm = 20, onUpdate, onError) {
-  const source = new EventSource(`${'/api/ais/batumi/stream'}?radiusKm=${radiusKm}`);
+  let cancelled = false
+  let timer = null
 
-  source.onmessage = (event) => {
-    try {
-      const payload = JSON.parse(event.data);
-      if (payload?.vessels) {
-        onUpdate(payload.vessels);
-      }
-    } catch (error) {
-      console.error('AIS stream parse error:', error);
+  const poll = async () => {
+    if (cancelled) return
+    const vessels = await fetchBatumiVessels(radiusKm)
+    if (!cancelled) {
+      onUpdate(vessels)
+      timer = setTimeout(poll, 20000)
     }
-  };
+  }
 
-  source.onerror = () => {
-    if (onError) {
-      onError();
-    }
-    source.close();
-  };
+  poll()
 
-  return source;
+  return {
+    close() {
+      cancelled = true
+      if (timer) clearTimeout(timer)
+    },
+  }
 }
