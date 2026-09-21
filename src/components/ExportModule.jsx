@@ -308,7 +308,7 @@ const ExportModule = ({ tab = 'active' }) => {
         <HeaderContent>
           <HeaderIcon>📦</HeaderIcon>
           <div>
-            <H2st>{currentTab === 'archived' ? 'გასული ექსპორტი' : 'მიმდინარე ექსპორტი'}</H2st>
+            <H2st>{currentTab === 'archived' ? 'გასული ექსპორტი' : currentTab === 'settings' ? 'ინფორმაციის დამატება' : 'მიმდინარე ექსპორტი'}</H2st>
             <HeaderSub>საექსპორტო განაცხადები, დასაწყობების ვადები</HeaderSub>
           </div>
         </HeaderContent>
