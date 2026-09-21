@@ -192,7 +192,7 @@ function connectAISStream() {
         BoundingBoxes: [
           [
             [41.2, 41.2],
-            [42.0, 42.0],
+            [42.1, 42.1],
           ],
         ],
         FilterMessageTypes: ['PositionReport'],

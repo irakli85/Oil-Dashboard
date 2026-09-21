@@ -5,7 +5,8 @@ export const config = {
 }
 
 const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0'
-const COLLECT_WINDOW_MS = 12000
+const EARLY_WINDOW_MS = 12000
+const MAX_WINDOW_MS = 35000
 
 const BATUMI_PORT = {
   lat: 41.65,
@@ -117,12 +118,21 @@ function collectVessels(radiusKm) {
       resolve([...vessels.values()])
     }
 
+    const earlyTimer = setTimeout(() => {
+      if (vessels.size > 0) {
+        try {
+          socket.terminate()
+        } catch {}
+        finish()
+      }
+    }, EARLY_WINDOW_MS)
+
     const timer = setTimeout(() => {
       try {
         socket.terminate()
       } catch {}
       finish()
-    }, COLLECT_WINDOW_MS)
+    }, MAX_WINDOW_MS)
 
     const socket = new WebSocket('wss://stream.aisstream.io/v0/stream', {
       handshakeTimeout: 10000,
@@ -135,7 +145,7 @@ function collectVessels(radiusKm) {
           BoundingBoxes: [
             [
               [41.2, 41.2],
-              [42.0, 42.0],
+              [42.1, 42.1],
             ],
           ],
           FilterMessageTypes: ['PositionReport'],
@@ -162,11 +172,13 @@ function collectVessels(radiusKm) {
       if (settled) return
       settled = true
       clearTimeout(timer)
+      clearTimeout(earlyTimer)
       reject(error)
     })
 
     socket.on('close', () => {
       clearTimeout(timer)
+      clearTimeout(earlyTimer)
       finish()
     })
   })
