@@ -34,6 +34,7 @@ const ARCHIVED_COLUMNS = [
   { key: 'code', label: '4. C-ნომერი', width: 120 },
   { key: 'regDate', label: '5. რეგ. თარიღი', width: 120 },
   { key: 'declarationNum', label: '6. დეკლარაცია №', width: 130 },
+  { key: 'days', label: '7. ვადა (დღე)', width: 110 },
   { key: 'expDate', label: '8. ვადის გასვლა', width: 130 },
   { key: 'weight', label: '9. წონა (კგ)', width: 120 },
   { key: 'shipName', label: '🚢 გემის სახელი', width: 170 },
