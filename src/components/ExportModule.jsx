@@ -67,6 +67,14 @@ const calculateExpiry = (regDate, days) => {
   return `${year}-${month}-${day}`
 }
 
+const formatCode = (value) => {
+  const code = String(value || '').trim()
+  if (!code || code === '-') return '-'
+  if (/^C-/i.test(code)) return code
+  if (/^C/i.test(code)) return `C-${code.slice(1).replace(/^-/, '')}`
+  return `C-${code}`
+}
+
 const ExportModule = ({ tab = 'active' }) => {
   const [currentTab, setCurrentTab] = useState(tab)
   const [items, setItems] = useState([])
@@ -282,6 +290,7 @@ const ExportModule = ({ tab = 'active' }) => {
 
   const renderCell = (item, column, index) => {
     if (column.key === 'num') return index + 1
+    if (column.key === 'code') return formatCode(item.code)
     if (column.key === 'status') {
       return (
         <StatusSelect
