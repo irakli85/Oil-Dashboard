@@ -47,6 +47,9 @@ async function ensureReady() {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (category, value)
       )`)
+      await pool.query(`CREATE TABLE IF NOT EXISTS export_options_meta (
+        id SMALLINT PRIMARY KEY CHECK (id = 1)
+      )`)
       await pool.query(
         `INSERT INTO export_items (
           exporter, declarant, goods, code, reg_date, declaration_num, days, exp_date, weight, status, ship_name, departure_date, note
@@ -56,12 +59,25 @@ async function ensureReady() {
                'ტვირთი მზად არის საექსპორტო პროცედურისთვის'
         WHERE NOT EXISTS (SELECT 1 FROM export_items)`
       )
-      for (const category of VALID_CATEGORIES) {
-        for (const value of DEFAULT_DROPDOWNS[category]) {
-          await pool.query(
-            'INSERT INTO export_options (category, value) VALUES ($1, $2) ON CONFLICT (category, value) DO NOTHING',
-            [category, value]
-          )
+      const { rows: metaRows } = await pool.query(
+        'SELECT id FROM export_options_meta WHERE id = 1 LIMIT 1'
+      )
+      if (metaRows.length === 0) {
+        const { rows: optionRows } = await pool.query(
+          'SELECT 1 FROM export_options LIMIT 1'
+        )
+        await pool.query(
+          'INSERT INTO export_options_meta (id) VALUES (1) ON CONFLICT (id) DO NOTHING'
+        )
+        if (optionRows.length === 0) {
+          for (const category of VALID_CATEGORIES) {
+            for (const value of DEFAULT_DROPDOWNS[category]) {
+              await pool.query(
+                'INSERT INTO export_options (category, value) VALUES ($1, $2) ON CONFLICT (category, value) DO NOTHING',
+                [category, value]
+              )
+            }
+          }
         }
       }
     })()
