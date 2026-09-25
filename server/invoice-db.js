@@ -229,6 +229,15 @@ export const invoiceDb = {
     return rowToVessel(rows[0])
   },
 
+  async deleteVessel(vesselId) {
+    const database = await ensureReady()
+    const { rows } = await database.query(
+      'DELETE FROM invoice_vessels WHERE id = $1 RETURNING id',
+      [Number(vesselId)]
+    )
+    if (rows.length === 0) throw validationError('გემი ვერ მოიძებნა', 'NOT_FOUND')
+  },
+
   async createInvoice(vesselId, data) {
     const database = await ensureReady()
     const quantity = requireQuantity(data.totalQty)

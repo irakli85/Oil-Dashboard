@@ -29,6 +29,10 @@ export async function createVessel(vessel) {
   return data.vessel
 }
 
+export async function deleteVessel(vesselId) {
+  return request(`/vessels/${vesselId}`, { method: 'DELETE' })
+}
+
 export async function createInvoice(vesselId, invoice) {
   const data = await request(`/vessels/${vesselId}/invoices`, {
     method: 'POST',

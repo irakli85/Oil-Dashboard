@@ -71,6 +71,13 @@ export default async function invoiceRoutes(req, res) {
       return
     }
 
+    const vesselDelete = route.match(/^\/vessels\/(\d+)$/)
+    if (req.method === 'DELETE' && vesselDelete) {
+      await invoiceDb.deleteVessel(vesselDelete[1])
+      sendJson(res, 200, { deleted: true })
+      return
+    }
+
     const invoiceCreate = route.match(/^\/vessels\/(\d+)\/invoices$/)
     if (req.method === 'POST' && invoiceCreate) {
       const invoice = await invoiceDb.createInvoice(invoiceCreate[1], await readBody(req))

@@ -6,6 +6,7 @@ import {
   createVessel,
   deleteClearance,
   deleteInvoice,
+  deleteVessel,
   fetchVessels,
 } from '../services/invoiceApi'
 
@@ -127,18 +128,44 @@ const VesselGrid = styled.div`
   gap: 1.2rem;
 `
 
-const VesselCard = styled.button`
+const VesselCard = styled.article`
   width: 100%;
-  padding: 1.6rem;
   border: 1px solid #dce7e4;
   border-radius: .8rem;
   background: #fff;
   color: inherit;
-  text-align: left;
-  cursor: pointer;
+  overflow: hidden;
   transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
   &:hover { transform: translateY(-2px); border-color: #86b9a7; box-shadow: 0 8px 24px #1c57421a; }
-  &:focus-visible { outline: 3px solid var(--invoice-green); outline-offset: 3px; }
+`
+
+const VesselOpenButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 1.6rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  &:focus-visible { outline: 3px solid var(--invoice-green); outline-offset: -3px; }
+`
+
+const VesselDeleteRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: .8rem 1.6rem 1.2rem;
+  border-top: 1px solid #edf1ef;
+`
+
+const VesselDeleteButton = styled(Button)`
+  min-height: 3.6rem;
+  padding: .5rem .8rem;
+  background: transparent;
+  color: #a33a35;
+  font-size: 1.3rem;
+  &:hover:not(:disabled) { background: #fff0ee; }
 `
 
 const CardHead = styled.div`
@@ -329,6 +356,10 @@ const today = () => {
 }
 
 const number = (value) => Number(value || 0).toLocaleString('en-US', { maximumFractionDigits: 2 })
+const formatDate = (value) => {
+  const parts = String(value || '').slice(0, 10).match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  return parts ? `${parts[3]}.${parts[2]}.${parts[1]}` : value
+}
 const sumInvoices = (vessel) => vessel.invoices.reduce((sum, invoice) => sum + invoice.totalQty, 0)
 const sumClearances = (invoice) => invoice.clearances.reduce((sum, clearance) => sum + clearance.qty, 0)
 
@@ -356,9 +387,15 @@ const InvoiceManagement = () => {
   useEffect(() => { loadVessels() }, [])
 
   const selectedVessel = vessels.find((vessel) => vessel.id === selectedVesselId)
+  const vesselToDelete = vessels.find((vessel) => vessel.id === modal?.vesselId)
   const openModal = (type, invoiceId) => {
     setFormError('')
     setModal({ type, invoiceId })
+  }
+
+  const openVesselDeleteModal = (vesselId) => {
+    setFormError('')
+    setModal({ type: 'delete-vessel', vesselId })
   }
 
   const submit = async (event) => {
@@ -386,6 +423,22 @@ const InvoiceManagement = () => {
     try {
       await deleteInvoice(modal.invoiceId)
       setModal(null)
+      await loadVessels()
+    } catch (error) {
+      setFormError(error.message)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const removeVessel = async () => {
+    if (saving) return
+    setSaving(true)
+    setFormError('')
+    try {
+      await deleteVessel(modal.vesselId)
+      setModal(null)
+      if (selectedVesselId === modal.vesselId) setSelectedVesselId(null)
       await loadVessels()
     } catch (error) {
       setFormError(error.message)
@@ -438,16 +491,21 @@ const InvoiceManagement = () => {
               {filteredVessels.map((vessel) => {
                 const invoiced = sumInvoices(vessel)
                 return (
-                  <VesselCard key={vessel.id} onClick={() => setSelectedVesselId(vessel.id)}>
-                    <CardHead>
-                      <div><h2>{vessel.name}</h2><p>რეგისტრაცია: {vessel.date}</p></div>
-                      <Tag>{vessel.goods}</Tag>
-                    </CardHead>
-                    <MetricList>
-                      <MetricLine><span>სრული ტვირთი</span><span>{number(vessel.totalQty)} კგ</span></MetricLine>
-                      <MetricLine $color="#2167a5"><span>გაწერილი ინვოისები</span><span>{number(invoiced)} კგ</span></MetricLine>
-                      <MetricLine $color="#087b58"><span>თავისუფალი ნაშთი</span><span>{number(vessel.totalQty - invoiced)} კგ</span></MetricLine>
-                    </MetricList>
+                  <VesselCard key={vessel.id}>
+                    <VesselOpenButton type="button" onClick={() => setSelectedVesselId(vessel.id)} aria-label={`${vessel.name}-ის დეტალების ნახვა`}>
+                      <CardHead>
+                        <div><h2>{vessel.name}</h2><p>რეგისტრაცია: {formatDate(vessel.date)}</p></div>
+                        <Tag>{vessel.goods}</Tag>
+                      </CardHead>
+                      <MetricList>
+                        <MetricLine><span>სრული ტვირთი</span><span>{number(vessel.totalQty)} კგ</span></MetricLine>
+                        <MetricLine $color="#2167a5"><span>გაწერილი ინვოისები</span><span>{number(invoiced)} კგ</span></MetricLine>
+                        <MetricLine $color="#087b58"><span>თავისუფალი ნაშთი</span><span>{number(vessel.totalQty - invoiced)} კგ</span></MetricLine>
+                      </MetricList>
+                    </VesselOpenButton>
+                    <VesselDeleteRow>
+                      <VesselDeleteButton type="button" $tone="danger" onClick={() => openVesselDeleteModal(vessel.id)}>გემის წაშლა</VesselDeleteButton>
+                    </VesselDeleteRow>
                   </VesselCard>
                 )
               })}
@@ -461,7 +519,7 @@ const InvoiceManagement = () => {
             const cleared = selectedVessel.invoices.reduce((sum, invoice) => sum + sumClearances(invoice), 0)
             return (
               <StatGrid>
-                <Stat><p>გემის დასახელება</p><strong>{selectedVessel.name}</strong><small>რეგ. თარიღი: {selectedVessel.date}</small></Stat>
+                <Stat><p>გემის დასახელება</p><strong>{selectedVessel.name}</strong><small>რეგ. თარიღი: {formatDate(selectedVessel.date)}</small></Stat>
                 <Stat><p>სრული ტვირთი</p><strong>{number(selectedVessel.totalQty)} კგ</strong><small>{selectedVessel.goods}</small></Stat>
                 <Stat $color="#2167a5"><p>გაწერილი ინვოისები</p><strong>{number(invoiced)} კგ</strong><small>ინვოისების ჯამი</small></Stat>
                 <Stat $color="#087b58"><p>დარჩენილი ტვირთი</p><strong>{number(selectedVessel.totalQty - invoiced)} კგ</strong><small>განაშთულია {number(cleared)} კგ</small></Stat>
@@ -508,7 +566,7 @@ const InvoiceManagement = () => {
         </>
       )}
 
-      {modal && modal.type !== 'history' && modal.type !== 'delete' && (
+      {modal && modal.type !== 'history' && modal.type !== 'delete' && modal.type !== 'delete-vessel' && (
         <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget && !saving) setModal(null) }}>
           <Dialog role="dialog" aria-modal="true" aria-labelledby="invoice-dialog-title">
             <h2 id="invoice-dialog-title">{modal.type === 'vessel' ? 'ახალი გემის რეგისტრაცია' : modal.type === 'invoice' ? 'ინვოისის დამატება' : 'ინვოისის განაშთვა'}</h2>
@@ -556,6 +614,20 @@ const InvoiceManagement = () => {
             <p>ნამდვილად გსურთ {selectedInvoice.num}-ის წაშლა? მასთან დაკავშირებული საბაჟო ჩამოწერებიც წაიშლება.</p>
             {formError && <Message $error>{formError}</Message>}
             <FormActions><Button disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button $tone="danger" disabled={saving} onClick={removeInvoice}>{saving ? 'იშლება...' : 'წაშლა'}</Button></FormActions>
+          </Dialog>
+        </Overlay>
+      )}
+
+      {modal?.type === 'delete-vessel' && vesselToDelete && (
+        <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget && !saving) setModal(null) }}>
+          <Dialog role="alertdialog" aria-modal="true" aria-labelledby="vessel-delete-title">
+            <h2 id="vessel-delete-title">გემის წაშლა</h2>
+            <p>ნამდვილად გსურთ „{vesselToDelete.name}“-ის წაშლა? მასთან დაკავშირებული ყველა ინვოისი და საბაჟო ჩამოწერა სამუდამოდ წაიშლება.</p>
+            {formError && <Message $error>{formError}</Message>}
+            <FormActions>
+              <Button disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button>
+              <Button $tone="danger" disabled={saving} onClick={removeVessel}>{saving ? 'იშლება...' : 'გემის წაშლა'}</Button>
+            </FormActions>
           </Dialog>
         </Overlay>
       )}
