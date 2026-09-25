@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { DashDivSty, DashPsty, LinkSty, NavDivSty, NavP, NavCont, CopyRight } from '../styledComponents/StyledComponents'
 import { motion } from 'framer-motion';
@@ -119,6 +120,7 @@ const ExportSubMenu = styled.div`
 `
 
 const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
+  const { pathname } = useLocation()
 
     const [isClicked1, setIsClicked1] = useState(true)
     const [isClicked2, setIsClicked2] = useState(false)
@@ -130,6 +132,7 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
     const [isClicked8, setIsClicked8] = useState(false)
     const [isClicked9, setIsClicked9] = useState(false)
     const [isClicked10, setIsClicked10] = useState(false)
+    const [isClicked11, setIsClicked11] = useState(false)
     const [isExportOpen, setIsExportOpen] = useState(false)
 
     const resetClicks = () => {
@@ -143,6 +146,7 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
         setIsClicked8(false)
         setIsClicked9(false)
         setIsClicked10(false)
+        setIsClicked11(false)
     }
 
     const closeMenu = () => {
@@ -215,6 +219,20 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
         setIsExportOpen(true)
         closeMenu()
     }
+
+    const handleClick11 = () => {
+      resetClicks()
+      setIsClicked11(true)
+      closeMenu()
+    }
+
+    React.useEffect(() => {
+      if (pathname === '/invoices') {
+        resetClicks()
+        setIsClicked11(true)
+        setIsExportOpen(true)
+      }
+    }, [pathname])
   return (
     <NavCont $isOpen={isMenuOpen}>
         <DashDivSty
@@ -293,6 +311,13 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                     )}
                 </ExportNavItem>
             </motion.div>
+
+                    <motion.div variants={childrenVariants}>
+                      <LinkSty to='/invoices'>
+                        <SvgDocs isClicked={isClicked11}/>
+                        <NavP text='ინვოისების მართვა' onClick={handleClick11} isClicked={isClicked11}/>
+                      </LinkSty>
+                    </motion.div>
 
             <motion.div variants={childrenVariants}>
                 <LinkSty to='/settings'>

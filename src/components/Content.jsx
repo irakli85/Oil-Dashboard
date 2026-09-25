@@ -10,6 +10,7 @@ import Terminals from './Terminals'
 import SanctionedVessels from './SanctionedVessels'
 import Map from './Map'
 import ExportModule from './ExportModule'
+import InvoiceManagement from './InvoiceManagement'
 
 
 const Content = () => {
@@ -27,6 +28,7 @@ const Content = () => {
             <Route path='/export' element={<ExportModule tab='active'/>}/>
             <Route path='/export/archived' element={<ExportModule tab='archived'/>}/>
             <Route path='/export/settings' element={<ExportModule tab='settings'/>}/>
+            <Route path='/invoices' element={<InvoiceManagement/>}/>
             <Route path='/settings' element={<Map/>}/>
           </Routes>
         </ContentDivSty>

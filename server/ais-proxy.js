@@ -1,5 +1,6 @@
 import express from 'express';
 import WebSocket from 'ws';
+import { loadEnv } from 'vite';
 import {
   listItems,
   createItem,
@@ -8,11 +9,17 @@ import {
   addOption,
   removeOption,
 } from './export-routes.js';
+import invoiceRoutes from './invoice-routes.js';
+
+for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
+  process.env[key] ??= value;
+}
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use('/api/invoices', invoiceRoutes);
 
 const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0';
 const clients = new Set();
