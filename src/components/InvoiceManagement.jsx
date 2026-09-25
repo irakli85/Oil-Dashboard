@@ -37,6 +37,7 @@ const Banner = styled.header`
   justify-content: space-between;
   align-items: center;
   gap: 1.6rem;
+  min-height: 20rem;
   padding: 2.2rem 2.6rem;
   color: white;
   background: linear-gradient(112deg, #075f46, #0b8960 70%, #2a9a70);
