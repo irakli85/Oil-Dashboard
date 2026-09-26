@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import * as XLSX from 'xlsx'
 import {
   createClearance,
   createInvoice,
@@ -247,6 +248,15 @@ const PanelHead = styled.div`
   @media (max-width: 600px) { align-items: flex-start; flex-direction: column; }
 `
 
+const PanelActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: .7rem;
+  flex: 0 0 auto;
+  @media (max-width: 600px) { align-self: flex-end; }
+`
+
 const TableWrap = styled.div`overflow-x: auto;`
 
 const Table = styled.table`
@@ -276,7 +286,12 @@ const Progress = styled.div`
   gap: .6rem;
   min-width: 9rem;
   div { height: .7rem; flex: 1; overflow: hidden; border-radius: 1rem; background: #e9efec; }
-  i { display: block; height: 100%; border-radius: inherit; background: var(--invoice-green); }
+  i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: ${({ $tone }) => $tone === 'done' ? '#0f9f95' : $tone === 'partial' ? '#d69418' : '#e06758'};
+  }
   span { color: #5f7076; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
 `
 
@@ -284,8 +299,8 @@ const Badge = styled.span`
   display: inline-block;
   padding: .5rem .75rem;
   border-radius: 2rem;
-  background: ${({ $tone }) => $tone === 'done' ? '#dff2e8' : $tone === 'partial' ? '#fff1d6' : '#edf1f1'};
-  color: ${({ $tone }) => $tone === 'done' ? '#146344' : $tone === 'partial' ? '#8c5d00' : '#56666b'};
+  background: ${({ $tone }) => $tone === 'done' ? '#d8f2ef' : $tone === 'partial' ? '#fff1d6' : '#fde7e3'};
+  color: ${({ $tone }) => $tone === 'done' ? '#08766f' : $tone === 'partial' ? '#8c5d00' : '#a74438'};
   white-space: nowrap;
   font-size: 1.3rem;
   font-weight: 700;
@@ -361,8 +376,63 @@ const formatDate = (value) => {
   const parts = String(value || '').slice(0, 10).match(/^(\d{4})-(\d{2})-(\d{2})$/)
   return parts ? `${parts[3]}.${parts[2]}.${parts[1]}` : value
 }
+const toMinorUnits = (value) => {
+  const [whole, fraction = ''] = String(value ?? 0).split('.')
+  return Number(whole) * 100 + Number(`${fraction}00`.slice(0, 2))
+}
 const sumInvoices = (vessel) => vessel.invoices.reduce((sum, invoice) => sum + invoice.totalQty, 0)
-const sumClearances = (invoice) => invoice.clearances.reduce((sum, clearance) => sum + clearance.qty, 0)
+const clearanceMinorUnits = (invoice) => invoice.clearances.reduce((sum, clearance) => sum + toMinorUnits(clearance.qty), 0)
+const sumClearances = (invoice) => clearanceMinorUnits(invoice) / 100
+const exportInvoices = (selectedVessel) => {
+  if (!selectedVessel) return
+
+  const rows = selectedVessel.invoices.map((invoice, index) => {
+    const totalMinorUnits = toMinorUnits(invoice.totalQty)
+    const clearedMinorUnits = clearanceMinorUnits(invoice)
+    const complete = clearedMinorUnits === totalMinorUnits
+    const progress = complete ? 100 : Math.min(99, Math.round((clearedMinorUnits / totalMinorUnits) * 100))
+    const status = progress >= 99 ? 'დასრულებული' : progress >= 30 ? 'ნაწილობრივი' : 'დაბალი'
+
+    return {
+      '№': index + 1,
+      'ინვოისის №': invoice.num,
+      'თარიღი': formatDate(invoice.date),
+      'სრული რაოდენობა (კგ)': totalMinorUnits / 100,
+      'განაშთული (კგ)': clearedMinorUnits / 100,
+      'დარჩენილი (კგ)': (totalMinorUnits - clearedMinorUnits) / 100,
+      'პროგრესი (%)': progress,
+      'სტატუსი': status,
+    }
+  })
+
+  const totalQuantity = selectedVessel.invoices.reduce((sum, invoice) => sum + toMinorUnits(invoice.totalQty), 0) / 100
+  const clearedTotal = selectedVessel.invoices.reduce((sum, invoice) => sum + clearanceMinorUnits(invoice), 0) / 100
+  rows.push({
+    '№': '',
+    'ინვოისის №': 'სულ ჯამი:',
+    'თარიღი': '',
+    'სრული რაოდენობა (კგ)': totalQuantity,
+    'განაშთული (კგ)': clearedTotal,
+    'დარჩენილი (კგ)': totalQuantity - clearedTotal,
+    'პროგრესი (%)': '',
+    'სტატუსი': '',
+  })
+
+  const worksheet = XLSX.utils.json_to_sheet(rows)
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'ინვოისები')
+  const safeVesselName = selectedVessel.name
+    .replaceAll('/', '_')
+    .replaceAll('\\', '_')
+    .replaceAll(':', '_')
+    .replaceAll('*', '_')
+    .replaceAll('?', '_')
+    .replaceAll('"', '_')
+    .replaceAll('<', '_')
+    .replaceAll('>', '_')
+    .replaceAll('|', '_')
+  XLSX.writeFile(workbook, `${safeVesselName}_ინვოისები.xlsx`)
+}
 
 const InvoiceManagement = () => {
   const [vessels, setVessels] = useState([])
@@ -523,28 +593,36 @@ const InvoiceManagement = () => {
                 <Stat><p>გემის დასახელება</p><strong>{selectedVessel.name}</strong><small>რეგ. თარიღი: {formatDate(selectedVessel.date)}</small></Stat>
                 <Stat><p>სრული ტვირთი</p><strong>{number(selectedVessel.totalQty)} კგ</strong><small>{selectedVessel.goods}</small></Stat>
                 <Stat $color="#2167a5"><p>გაწერილი ინვოისები</p><strong>{number(invoiced)} კგ</strong><small>ინვოისების ჯამი</small></Stat>
-                <Stat $color="#087b58"><p>დარჩენილი ტვირთი</p><strong>{number(selectedVessel.totalQty - invoiced)} კგ</strong><small>განაშთულია {number(cleared)} კგ</small></Stat>
+                <Stat $color="#087b58"><p>დარჩენილი ტვირთი</p><strong>{number(selectedVessel.totalQty - cleared)} კგ</strong><small>განაშთულია {number(cleared)} კგ</small></Stat>
               </StatGrid>
             )
           })()}
           <Panel>
             <PanelHead>
               <div><h2>გემის ინვოისები</h2><p>ინვოისები, საბაჟო დოკუმენტები და განაშთვის სტატუსები</p></div>
-              <Button $tone="green" disabled={selectedVessel.totalQty <= sumInvoices(selectedVessel)} onClick={() => openModal('invoice')}>+ ინვოისის დამატება</Button>
+              <PanelActions>
+                <Button $tone="green" disabled={selectedVessel.totalQty <= sumInvoices(selectedVessel)} onClick={() => openModal('invoice')}>+ ინვოისის დამატება</Button>
+                <Button type="button" disabled={!selectedVessel.invoices.length} onClick={() => exportInvoices(selectedVessel)}>↓ XLSX ექსპორტი</Button>
+              </PanelActions>
             </PanelHead>
             <TableWrap>
               <Table>
                 <thead><tr><th>№</th><th>ინვოისის №</th><th>თარიღი</th><th>სრული რაოდენობა</th><th>განაშთული</th><th>დარჩენილი</th><th>პროგრესი</th><th>სტატუსი</th><th>მოქმედება</th></tr></thead>
                 <tbody>
                   {selectedVessel.invoices.length === 0 ? <tr><td colSpan="9"><Empty>ინვოისები ჯერ არ არის დამატებული</Empty></td></tr> : selectedVessel.invoices.map((invoice, index) => {
-                    const cleared = sumClearances(invoice)
-                    const remaining = invoice.totalQty - cleared
-                    const progress = Math.min(100, Math.round((cleared / invoice.totalQty) * 100))
-                    const status = cleared === 0 ? ['გაუნაშთავი', ''] : remaining <= 0 ? ['სრულად განაშთული', 'done'] : ['ნაწილობრივ', 'partial']
+                    const totalMinorUnits = toMinorUnits(invoice.totalQty)
+                    const clearedMinorUnits = clearanceMinorUnits(invoice)
+                    const cleared = clearedMinorUnits / 100
+                    const remaining = (totalMinorUnits - clearedMinorUnits) / 100
+                    const complete = clearedMinorUnits === totalMinorUnits
+                    const progress = complete ? 100 : Math.min(99, Math.round((clearedMinorUnits / totalMinorUnits) * 100))
+                    const status = progress >= 99
+                      ? ['დასრულებული', 'done']
+                      : progress >= 30 ? ['ნაწილობრივი', 'partial'] : ['დაბალი', 'low']
                     return <tr key={invoice.id}>
-                      <td>{index + 1}</td><td><strong>{invoice.num}</strong></td><td>{invoice.date}</td>
+                      <td>{index + 1}</td><td><strong>{invoice.num}</strong></td><td>{formatDate(invoice.date)}</td>
                       <td>{number(invoice.totalQty)} კგ</td><td style={{ color: '#087b58' }}>{number(cleared)} კგ</td><td style={{ color: '#9b6500' }}>{number(remaining)} კგ</td>
-                      <td><Progress><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress></td>
+                      <td><Progress $tone={status[1]}><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress></td>
                       <td><Badge $tone={status[1]}>{status[0]}</Badge></td>
                       <td><Actions>
                         <Button $tone="green" disabled={remaining <= 0} onClick={() => openModal('clearance', invoice.id)}>განაშთვა</Button>
