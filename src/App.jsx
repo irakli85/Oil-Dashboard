@@ -5,6 +5,7 @@ import Content from "./components/Content"
 import { MainSty } from "./styledComponents/StyledComponents"
 import { BrowserRouter } from "react-router-dom"
 import ScrollToTop from "./components/ScrollToTop"
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Content/>
           <ScrollToTop/>      
       </MainSty>
+      <Analytics />
     </BrowserRouter>
   )
 }
