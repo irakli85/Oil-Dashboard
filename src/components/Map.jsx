@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import L from 'leaflet'
-import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
+import { MapContainer, Marker as LeafletMarker, Popup, TileLayer, Tooltip } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import ship from '../assets/ship.svg'
 import { subscribeToBatumiVessels } from '../services/ais'
@@ -148,6 +148,9 @@ const Map = () => {
               position={[vessel.latitude, vessel.longitude]}
               icon={vesselIcon}
             >
+              <Tooltip permanent direction="top" offset={[0, -12]}>
+                {vessel.shipName}
+              </Tooltip>
               <Popup>
                 <strong>{vessel.shipName}</strong>
                 <br />
