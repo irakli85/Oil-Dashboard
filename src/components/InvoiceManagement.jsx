@@ -85,7 +85,13 @@ const Button = styled.button`
   font-weight: 700;
   cursor: pointer;
   transition: background .16s ease, transform .16s ease;
-  &:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(.96); }
+  svg { display: block; transition: color .16s ease; }
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    background: ${({ $tone }) => $tone === 'danger' ? '#ef4444' : undefined};
+    filter: ${({ $tone }) => $tone === 'danger' ? 'none' : 'brightness(.96)'};
+  }
+  &:hover:not(:disabled) svg { color: #ffd8d4; }
   &:disabled { opacity: .48; cursor: not-allowed; }
   &:focus-visible { outline: 3px solid #176b53; outline-offset: 3px; }
 `
@@ -372,6 +378,13 @@ const today = () => {
 }
 
 const number = (value) => Number(value || 0).toLocaleString('en-US', { maximumFractionDigits: 2 })
+const TrashIcon = () => (
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 7h16" />
+    <path d="M10 11v6M14 11v6" />
+    <path d="M6 7l1 13h10l1-13M9 7V4h6v3" />
+  </svg>
+)
 const formatDate = (value) => {
   const parts = String(value || '').slice(0, 10).match(/^(\d{4})-(\d{2})-(\d{2})$/)
   return parts ? `${parts[3]}.${parts[2]}.${parts[1]}` : value
@@ -628,7 +641,7 @@ const InvoiceManagement = () => {
                       <td><Actions>
                         <Button $tone="green" disabled={remaining <= 0} onClick={() => openModal('clearance', invoice.id)}>განაშთვა</Button>
                         <Button onClick={() => openModal('history', invoice.id)}>დოკუმენტები ({invoice.clearances.length})</Button>
-                        <Button $tone="danger" title="ინვოისის წაშლა" aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}>წაშლა</Button>
+                        <Button $tone="danger" title="ინვოისის წაშლა" aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
                     </tr>
                   })}
