@@ -77,8 +77,8 @@ const Button = styled.button`
   border-radius: .6rem;
   min-height: 4rem;
   padding: .8rem 1.3rem;
-  background: ${({ $tone }) => $tone === 'light' ? '#fff' : $tone === 'green' ? 'var(--invoice-green)' : $tone === 'danger' ? '#c63c3c' : '#edf1f1'};
-  color: ${({ $tone }) => $tone === 'light' ? 'var(--invoice-green-dark)' : ['green', 'danger'].includes($tone) ? '#fff' : '#34464d'};
+  background: ${({ $tone, $iconOnly }) => $iconOnly ? '#fff' : $tone === 'light' ? '#fff' : $tone === 'green' ? 'var(--invoice-green)' : $tone === 'danger' ? '#c63c3c' : '#edf1f1'};
+  color: ${({ $tone, $iconOnly }) => $iconOnly ? '#c63c3c' : $tone === 'light' ? 'var(--invoice-green-dark)' : ['green', 'danger'].includes($tone) ? '#fff' : '#34464d'};
   font: inherit;
   font-size: 1.4rem;
   line-height: 1.35;
@@ -641,7 +641,7 @@ const InvoiceManagement = () => {
                       <td><Actions>
                         <Button $tone="green" disabled={remaining <= 0} onClick={() => openModal('clearance', invoice.id)}>განაშთვა</Button>
                         <Button onClick={() => openModal('history', invoice.id)}>დოკუმენტები ({invoice.clearances.length})</Button>
-                        <Button $tone="danger" title="ინვოისის წაშლა" aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
+                        <Button $tone="danger" $iconOnly title="ინვოისის წაშლა" aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
                     </tr>
                   })}
