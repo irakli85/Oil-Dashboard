@@ -21,6 +21,16 @@ function isDismissedVessel(vessel, dismissedVessels) {
   return getVesselKeys(vessel).some((key) => dismissedVessels.has(key))
 }
 
+function formatVesselType(type) {
+  const code = Number(type)
+  if (!Number.isFinite(code)) return String(type || '')
+  if (code === 70 || code === 79) return 'Cargo'
+  if (code === 80 || code === 89) return 'Tanker'
+  if (code >= 71 && code <= 74) return `Cargo - hazardous category ${code - 70}`
+  if (code >= 81 && code <= 84) return `Tanker - hazardous category ${code - 80}`
+  return String(type)
+}
+
 function readDismissedVessels() {
   try {
     const stored = JSON.parse(localStorage.getItem(DISMISSED_VESSELS_KEY) || '[]')
@@ -151,7 +161,7 @@ const Map = () => {
                 <strong>{vessel.shipName}</strong>
                 {vessel.imo && <p>IMO: {vessel.imo}</p>}
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
-                {vessel.shipType && <p>Type: {vessel.shipType}</p>}
+                {vessel.shipType && <p>Type: {formatVesselType(vessel.shipType)}</p>}
               </div>
               <RemoveButton
                 type="button"
@@ -184,7 +194,7 @@ const Map = () => {
                 <br />
                 {vessel.imo && <>IMO: {vessel.imo}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
-                {vessel.shipType && <><br />Type: {vessel.shipType}</>}
+                {vessel.shipType && <><br />Type: {formatVesselType(vessel.shipType)}</>}
               </Popup>
             </LeafletMarker>
           ))}
