@@ -4,16 +4,45 @@ import map from '../assets/batumi.png'
 import ship from '../assets/ship.svg'
 import { fetchBatumiVessels, subscribeToBatumiVessels } from '../services/ais'
 
+const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
+
+function getVesselKey(vessel) {
+  return String(vessel.mmsi || vessel.shipName || '').trim()
+}
+
+function readDismissedVessels() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(DISMISSED_VESSELS_KEY) || '[]')
+    return new Set(Array.isArray(stored) ? stored : [])
+  } catch {
+    return new Set()
+  }
+}
+
 const Map = () => {
   const [vessels, setVessels] = useState([])
+  const [dismissedVessels, setDismissedVessels] = useState(readDismissedVessels)
   const [lastUpdated, setLastUpdated] = useState('')
   const [connectionState, setConnectionState] = useState('connecting')
   const [selectedRadius, setSelectedRadius] = useState(20)
 
+  const updateVessels = (nextVessels) => {
+    setVessels(nextVessels.filter((vessel) => !dismissedVessels.has(getVesselKey(vessel))))
+  }
+
+  const dismissVessel = (vessel) => {
+    const vesselKey = getVesselKey(vessel)
+    const nextDismissedVessels = new Set(dismissedVessels)
+    nextDismissedVessels.add(vesselKey)
+    setDismissedVessels(nextDismissedVessels)
+    localStorage.setItem(DISMISSED_VESSELS_KEY, JSON.stringify([...nextDismissedVessels]))
+    setVessels((currentVessels) => currentVessels.filter((item) => getVesselKey(item) !== vesselKey))
+  }
+
   useEffect(() => {
     const loadInitialVessels = async () => {
       const nextVessels = await fetchBatumiVessels(selectedRadius)
-      setVessels(nextVessels)
+      updateVessels(nextVessels)
       setLastUpdated(new Date().toLocaleTimeString())
       setConnectionState(nextVessels.length > 0 ? 'live' : 'idle')
     }
@@ -21,7 +50,7 @@ const Map = () => {
     loadInitialVessels()
 
     const source = subscribeToBatumiVessels(selectedRadius, (nextVessels) => {
-      setVessels(nextVessels)
+      updateVessels(nextVessels)
       setLastUpdated(new Date().toLocaleTimeString())
       setConnectionState('live')
     }, () => {
@@ -30,7 +59,7 @@ const Map = () => {
     })
 
     return () => source.close()
-  }, [selectedRadius])
+  }, [selectedRadius, dismissedVessels])
 
   return (
     <Container>
@@ -74,45 +103,11 @@ const Map = () => {
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
                 <p>SOG: {vessel.sog ?? 'N/A'} kn</p>
               </div>
+              <RemoveButton type="button" onClick={() => dismissVessel(vessel)} aria-label={`წაშლა: ${vessel.shipName}`}>
+                წაშლა
+              </RemoveButton>
             </VesselCard>
           ))
-        )}
-
-        {vessels.length === 0 && (
-          <VesselCard>
-            <img src={ship} alt="ship" />
-            <div>
-              <strong>TAMARA 1</strong>
-              <p>MMSI: 213981000</p>
-              <p>Distance: 2.7 km</p>
-              <p>SOG: 0.1 kn</p>
-            </div>
-          </VesselCard>
-        )}
-
-        {vessels.length > 0 && (
-          <TableWrapper>
-            <LiveTable>
-              <thead>
-                <tr>
-                  <th>Vessel</th>
-                  <th>Speed</th>
-                  <th>Heading</th>
-                  <th>Last seen</th>
-                </tr>
-              </thead>
-              <tbody>
-                {vessels.slice(0, 8).map((vessel, index) => (
-                  <tr key={`${vessel.mmsi || vessel.shipName}-${index}`}>
-                    <td>{vessel.shipName}</td>
-                    <td>{vessel.sog ?? 'N/A'} kn</td>
-                    <td>{vessel.cog ?? 'N/A'}°</td>
-                    <td>{vessel.lastSeen ? new Date(vessel.lastSeen).toLocaleTimeString() : 'N/A'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </LiveTable>
-          </TableWrapper>
         )}
       </Aside>
 
@@ -170,6 +165,7 @@ const VesselCard = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 1;
   }
 
   strong {
@@ -181,6 +177,21 @@ const VesselCard = styled.div`
     margin: 0;
     font-size: 12px;
     color: #555;
+  }
+`
+
+const RemoveButton = styled.button`
+  border: 0;
+  background: transparent;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 0 6px 8px;
+
+  &:hover {
+    color: #7a271a;
+    text-decoration: underline;
   }
 `
 
@@ -236,35 +247,6 @@ const StatusText = styled.div`
 const EmptyState = styled.div`
   color: #666;
   font-size: 14px;
-`
-
-const TableWrapper = styled.div`
-  margin-top: 18px;
-  overflow-x: auto;
-`
-
-const LiveTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11px;
-  background: #f7f9fb;
-  border: 1px solid #eaeef2;
-
-  th, td {
-    padding: 8px 6px;
-    border-bottom: 1px solid #edf1f4;
-    text-align: left;
-  }
-
-  th {
-    color: #4b5563;
-    font-weight: 700;
-    background: #eef3f8;
-  }
-
-  td {
-    color: #1f2937;
-  }
 `
 
 const Content = styled.div`
