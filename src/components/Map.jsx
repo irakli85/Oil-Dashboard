@@ -103,8 +103,8 @@ const Map = () => {
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
                 <p>SOG: {vessel.sog ?? 'N/A'} kn</p>
               </div>
-              <RemoveButton type="button" onClick={() => dismissVessel(vessel)} aria-label={`წაშლა: ${vessel.shipName}`}>
-                წაშლა
+              <RemoveButton type="button" onClick={() => dismissVessel(vessel)} aria-label={`წაშლა: ${vessel.shipName}`} title={`წაშლა: ${vessel.shipName}`}>
+                🗑
               </RemoveButton>
             </VesselCard>
           ))
