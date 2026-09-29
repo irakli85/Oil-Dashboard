@@ -149,9 +149,9 @@ const Map = () => {
               <img src={ship} alt="ship" />
               <div>
                 <strong>{vessel.shipName}</strong>
-                <p>IMO: {vessel.imo || 'N/A'}</p>
+                {vessel.imo && <p>IMO: {vessel.imo}</p>}
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
-                <p>Type: {vessel.shipType || 'N/A'}</p>
+                {vessel.shipType && <p>Type: {vessel.shipType}</p>}
               </div>
               <RemoveButton
                 type="button"
@@ -182,11 +182,9 @@ const Map = () => {
               <Popup>
                 <strong>{vessel.shipName}</strong>
                 <br />
-                IMO: {vessel.imo || 'N/A'}
-                <br />
+                {vessel.imo && <>IMO: {vessel.imo}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
-                <br />
-                Type: {vessel.shipType || 'N/A'}
+                {vessel.shipType && <><br />Type: {vessel.shipType}</>}
               </Popup>
             </LeafletMarker>
           ))}
