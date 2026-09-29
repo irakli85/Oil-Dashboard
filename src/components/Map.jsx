@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import map from '../assets/batumi.png'
+import L from 'leaflet'
+import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
 import ship from '../assets/ship.svg'
 import { fetchBatumiVessels, subscribeToBatumiVessels } from '../services/ais'
 
@@ -18,6 +20,13 @@ function readDismissedVessels() {
     return new Set()
   }
 }
+
+const vesselIcon = L.divIcon({
+  className: 'vessel-map-icon',
+  html: '<span style="display:block;width:16px;height:16px;background:#d92d20;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px rgba(217,45,32,.25)"></span>',
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+})
 
 const Map = () => {
   const [vessels, setVessels] = useState([])
@@ -124,27 +133,30 @@ const Map = () => {
       </Aside>
 
       <Content>
-        <img src={map} alt="Batumi map" />
+        <LiveMap center={[41.65, 41.63]} zoom={11} scrollWheelZoom>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-        {vessels.map((vessel, index) => {
-          const lonMin = 41.2
-          const lonMax = 42.0
-          const latMin = 41.45
-          const latMax = 41.85
-
-          const left = ((vessel.longitude - lonMin) / (lonMax - lonMin)) * 100
-          const top = ((latMax - vessel.latitude) / (latMax - latMin)) * 100
-
-          const safeLeft = Math.min(Math.max(left, 4), 96)
-          const safeTop = Math.min(Math.max(top, 4), 96)
-
-          return (
-            <MarkerWrap key={vessel.mmsi || `${vessel.shipName}-${index}`} style={{ left: `${safeLeft}%`, top: `${safeTop}%` }}>
-              <Marker title={`${vessel.shipName} • ${vessel.distanceKm} km`} />
-              <MarkerLabel>{vessel.shipName}</MarkerLabel>
-            </MarkerWrap>
-          )
-        })}
+          {vessels.map((vessel, index) => (
+            <LeafletMarker
+              key={vessel.mmsi || `${vessel.shipName}-${index}`}
+              position={[vessel.latitude, vessel.longitude]}
+              icon={vesselIcon}
+            >
+              <Popup>
+                <strong>{vessel.shipName}</strong>
+                <br />
+                MMSI: {vessel.mmsi || 'N/A'}
+                <br />
+                Distance: {vessel.distanceKm ?? 'N/A'} km
+                <br />
+                SOG: {vessel.sog ?? 'N/A'} kn
+              </Popup>
+            </LeafletMarker>
+          ))}
+        </LiveMap>
       </Content>
 
       {vesselToRemove && (
@@ -286,40 +298,11 @@ const Content = styled.div`
   width: 75%;
   height: 100vh;
   background-color: gainsboro;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `
 
-const MarkerWrap = styled.div`
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const Marker = styled.div`
-  width: 12px;
-  height: 12px;
-  background: #ff4d4d;
-  border: 2px solid white;
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.2);
-`
-
-const MarkerLabel = styled.span`
-  margin-top: 6px;
-  background: rgba(17, 24, 39, 0.72);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 3px 6px;
-  border-radius: 999px;
-  white-space: nowrap;
+const LiveMap = styled(MapContainer)`
+  width: 100%;
+  height: 100%;
 `
 
 const ModalOverlay = styled.div`
