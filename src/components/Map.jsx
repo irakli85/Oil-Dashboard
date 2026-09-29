@@ -172,6 +172,11 @@ const VesselCard = styled.div`
     gap: 2px;
   }
 
+  strong {
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
   p {
     margin: 0;
     font-size: 12px;
@@ -296,7 +301,8 @@ const MarkerLabel = styled.span`
   margin-top: 6px;
   background: rgba(17, 24, 39, 0.72);
   color: #fff;
-  font-size: 10px;
+  font-size: 13px;
+  font-weight: 700;
   padding: 3px 6px;
   border-radius: 999px;
   white-space: nowrap;
