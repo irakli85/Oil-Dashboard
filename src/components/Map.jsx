@@ -116,6 +116,13 @@ const Map = () => {
       <Aside>
         <RadiusControls>
           <RadiusButton
+            active={selectedRadius === 5}
+            onClick={() => setSelectedRadius(5)}
+            type="button"
+          >
+            5 km
+          </RadiusButton>
+          <RadiusButton
             active={selectedRadius === 20}
             onClick={() => setSelectedRadius(20)}
             type="button"
