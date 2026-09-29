@@ -63,8 +63,8 @@ function createVesselIcon(shipName) {
 }
 
 const Map = () => {
-  const [selectedRadius, setSelectedRadius] = useState(20)
-  const [vessels, setVessels] = useState(() => readCachedVessels(20))
+  const [selectedRadius, setSelectedRadius] = useState(5)
+  const [vessels, setVessels] = useState(() => readCachedVessels(5))
   const [dismissedVessels, setDismissedVessels] = useState(readDismissedVessels)
   const [lastUpdated, setLastUpdated] = useState('')
   const [connectionState, setConnectionState] = useState('connecting')
