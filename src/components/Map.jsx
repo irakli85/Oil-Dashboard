@@ -103,7 +103,14 @@ const Map = () => {
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
                 <p>SOG: {vessel.sog ?? 'N/A'} kn</p>
               </div>
-              <RemoveButton type="button" onClick={() => dismissVessel(vessel)} aria-label={`წაშლა: ${vessel.shipName}`} title={`წაშლა: ${vessel.shipName}`}>
+              <RemoveButton
+                type="button"
+                onClick={() => {
+                  if (window.confirm(`წავშალოთ გემი „${vessel.shipName}“?`)) dismissVessel(vessel)
+                }}
+                aria-label={`წაშლა: ${vessel.shipName}`}
+                title={`წაშლა: ${vessel.shipName}`}
+              >
                 🗑
               </RemoveButton>
             </VesselCard>
@@ -184,14 +191,17 @@ const RemoveButton = styled.button`
   border: 0;
   background: transparent;
   color: #b42318;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
-  padding: 6px 0 6px 8px;
+  line-height: 1;
+  border-radius: 6px;
+  padding: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    color: #7a271a;
-    text-decoration: underline;
+    background: #d92d20;
+    color: #fff;
   }
 `
 
