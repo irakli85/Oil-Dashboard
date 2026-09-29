@@ -8,8 +8,8 @@ const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0'
 const MAX_WINDOW_MS = 50000
 
 const BATUMI_PORT = {
-  lat: 41.65,
-  lon: 41.63,
+  lat: 41.6494,
+  lon: 41.6594,
 }
 
 function toRadians(deg) {

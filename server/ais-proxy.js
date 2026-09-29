@@ -41,8 +41,8 @@ app.use((req, res, next) => {
 });
 
 const BATUMI_PORT = {
-  lat: 41.65,
-  lon: 41.63,
+  lat: 41.6494,
+  lon: 41.6594,
   radiusKm: 20,
 };
 

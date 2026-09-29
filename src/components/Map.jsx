@@ -133,7 +133,7 @@ const Map = () => {
       </Aside>
 
       <Content>
-        <LiveMap center={[41.65, 41.63]} zoom={15} scrollWheelZoom>
+        <LiveMap center={[41.6494, 41.6594]} zoom={15} scrollWheelZoom>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
