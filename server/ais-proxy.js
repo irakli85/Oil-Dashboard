@@ -10,6 +10,7 @@ import {
   removeOption,
 } from './export-routes.js';
 import invoiceRoutes from './invoice-routes.js';
+import { enrichVessel, saveVesselRegistry } from './vessel-registry.js';
 
 for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
   process.env[key] ??= value;
@@ -248,7 +249,7 @@ function connectAISStream() {
     );
   });
 
-  socket.on('message', (data) => {
+  socket.on('message', async (data) => {
     try {
       const event = JSON.parse(data.toString());
 
@@ -265,9 +266,13 @@ function connectAISStream() {
       const vessel = normalizeVessel(event, currentRadiusKm);
       const staticVessel = vessel ? null : normalizeStaticVessel(event);
       if (vessel) {
-        upsertVessel(vessel);
+        const enrichedVessel = await enrichVessel(vessel);
+        if (vessel.imo || vessel.shipType) await saveVesselRegistry(enrichedVessel);
+        upsertVessel(enrichedVessel);
       } else if (staticVessel) {
-        upsertVessel(staticVessel);
+        const enrichedVessel = await enrichVessel(staticVessel);
+        await saveVesselRegistry(enrichedVessel);
+        upsertVessel(enrichedVessel);
       }
       if (vessel || staticVessel) {
         broadcast({

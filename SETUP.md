@@ -61,3 +61,16 @@ VITE_AIS_API_URL=https://oil-dashboard-ais.onrender.com
 The local frontend keeps using the Vite proxy when `VITE_AIS_API_URL` is not
 set. The Render free plan may sleep when idle; use an always-on plan for a
 continuous AIS feed.
+
+### Vessel registry in Neon
+
+The AIS proxy stores vessel metadata in the `vessel_registry` table. Add the
+same Neon pooled connection string to the Render service environment:
+
+```
+POSTGRES_URL=<Neon pooled connection string>
+```
+
+The table is created automatically on the first AIS metadata event. Records
+are keyed by MMSI and keep the first known IMO, vessel type, and name when a
+later AIS position report omits those fields.
