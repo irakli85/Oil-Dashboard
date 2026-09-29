@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import L from 'leaflet'
-import { MapContainer, Marker as LeafletMarker, Popup, TileLayer, Tooltip } from 'react-leaflet'
+import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import ship from '../assets/ship.svg'
 import { subscribeToBatumiVessels } from '../services/ais'
@@ -29,12 +29,24 @@ function readDismissedVessels() {
   }
 }
 
-const vesselIcon = L.divIcon({
-  className: 'vessel-map-icon',
-  html: '<span style="display:block;width:16px;height:16px;background:#d92d20;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px rgba(217,45,32,.25)"></span>',
-  iconSize: [22, 22],
-  iconAnchor: [11, 11],
-})
+function escapeHtml(value) {
+  return String(value).replace(/[&<>'"]/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;',
+  })[character])
+}
+
+function createVesselIcon(shipName) {
+  return L.divIcon({
+    className: 'vessel-map-icon',
+    html: `<span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><i style="display:block;flex:0 0 16px;width:16px;height:16px;background:#d92d20;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px rgba(217,45,32,.25)"></i><b style="background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(shipName)}</b></span>`,
+    iconSize: [180, 32],
+    iconAnchor: [8, 16],
+  })
+}
 
 const Map = () => {
   const [vessels, setVessels] = useState([])
@@ -146,11 +158,8 @@ const Map = () => {
             <LeafletMarker
               key={vessel.mmsi || `${vessel.shipName}-${index}`}
               position={[vessel.latitude, vessel.longitude]}
-              icon={vesselIcon}
+              icon={createVesselIcon(vessel.shipName)}
             >
-              <Tooltip permanent direction="top" offset={[0, -12]}>
-                {vessel.shipName}
-              </Tooltip>
               <Popup>
                 <strong>{vessel.shipName}</strong>
                 <br />
