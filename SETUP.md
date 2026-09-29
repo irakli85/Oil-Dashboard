@@ -40,5 +40,24 @@ Tables (`export_items`, `export_options`) are created and seeded automatically o
    ```
 
 The export API lives in `api/export/` (Vercel Functions) and uses `POSTGRES_URL`
-(injected by the Neon integration). The AIS proxy routes (`/api/ais/*`) are
-local-dev only, served by `server/ais-proxy.js`.
+(injected by the Neon integration).
+
+### Production AIS proxy (Render)
+
+Vercel Functions are not a reliable home for the long-lived AIS WebSocket.
+Deploy the persistent proxy as a Render web service:
+
+1. In Render, create a new Blueprint from this repository. Render will use
+   `render.yaml` and start `npm run start:ais`.
+2. Wait for the health check at `/api/ais/health` to report `status: ok`.
+3. Add the Render service URL as the Vercel production environment variable:
+
+```
+VITE_AIS_API_URL=https://oil-dashboard-ais.onrender.com
+```
+
+4. Redeploy the Vercel frontend after adding the variable.
+
+The local frontend keeps using the Vite proxy when `VITE_AIS_API_URL` is not
+set. The Render free plan may sleep when idle; use an always-on plan for a
+continuous AIS feed.

@@ -1,4 +1,5 @@
-const BATUMI_AIS_URL = '/api/ais/batumi';
+const AIS_API_BASE_URL = (import.meta.env.VITE_AIS_API_URL || '').replace(/\/$/, '')
+const BATUMI_AIS_URL = `${AIS_API_BASE_URL}/api/ais/batumi`
 
 export async function fetchBatumiVessels(radiusKm = 20) {
   try {

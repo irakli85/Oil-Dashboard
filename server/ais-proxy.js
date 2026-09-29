@@ -266,6 +266,15 @@ app.get('/api/ais/batumi', (req, res) => {
   });
 });
 
+app.get('/api/ais/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    socket: socket?.readyState === WebSocket.OPEN ? 'connected' : 'connecting',
+    vesselCount: latestVessels.length,
+    updatedAt: new Date().toISOString(),
+  });
+});
+
 app.get('/api/ais/batumi/stream', (req, res) => {
   const radiusKm = setRadiusFromRequest(req);
 

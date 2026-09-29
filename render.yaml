@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: oil-dashboard-ais
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start:ais
+    healthCheckPath: /api/ais/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
