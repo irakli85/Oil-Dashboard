@@ -109,6 +109,14 @@ function normalizeVessel(raw, radiusKm = currentRadiusKm) {
     readValue(meta, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string') ??
     readValue(raw, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string');
 
+  const imo =
+    readValue(meta, 'IMO', 'imo', 'IMO_Number', 'imo_number') ??
+    readValue(raw, 'IMO', 'imo', 'IMO_Number', 'imo_number');
+
+  const shipType =
+    readValue(meta, 'ShipType', 'shipType', 'VesselType', 'vesselType', 'Type', 'type') ??
+    readValue(raw, 'ShipType', 'shipType', 'VesselType', 'vesselType', 'Type', 'type');
+
   const shipName = String(
     readValue(meta, 'ShipName', 'shipName', 'Name', 'name') ??
       readValue(raw, 'ShipName', 'shipName', 'Name', 'name') ??
@@ -129,7 +137,9 @@ function normalizeVessel(raw, radiusKm = currentRadiusKm) {
 
   return {
     mmsi: mmsi ?? null,
+    imo: imo ?? null,
     shipName: shipName || 'Unknown vessel',
+    shipType: shipType ?? null,
     latitude,
     longitude,
     sog: sog != null ? Number(sog) : null,
