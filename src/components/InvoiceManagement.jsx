@@ -561,6 +561,7 @@ const InvoiceManagement = () => {
             <VesselGrid>
               {filteredVessels.map((vessel) => {
                 const invoiced = sumInvoices(vessel)
+                const cleared = vessel.invoices.reduce((sum, invoice) => sum + sumClearances(invoice), 0)
                 return (
                   <VesselCard key={vessel.id}>
                     <VesselOpenButton type="button" onClick={() => setSelectedVesselId(vessel.id)} aria-label={`${vessel.name}-ის დეტალების ნახვა`}>
@@ -571,7 +572,7 @@ const InvoiceManagement = () => {
                       <MetricList>
                         <MetricLine><span>სრული ტვირთი</span><span>{number(vessel.totalQty)} კგ</span></MetricLine>
                         <MetricLine $color="#2167a5"><span>გაწერილი ინვოისები</span><span>{number(invoiced)} კგ</span></MetricLine>
-                        <MetricLine $color="#087b58"><span>თავისუფალი ნაშთი</span><span>{number(vessel.totalQty - invoiced)} კგ</span></MetricLine>
+                        <MetricLine $color="#087b58"><span>ტვირთის ნაშთი</span><span>{number(vessel.totalQty - cleared)} კგ</span></MetricLine>
                       </MetricList>
                     </VesselOpenButton>
                     <VesselDeleteRow>
@@ -602,7 +603,7 @@ const InvoiceManagement = () => {
               <div><h2>გემის ინვოისები</h2><p>ინვოისები, საბაჟო დოკუმენტები და განაშთვის სტატუსები</p></div>
               <PanelActions>
                 <Button $tone="green" disabled={selectedVessel.totalQty <= sumInvoices(selectedVessel)} onClick={() => openModal('invoice')}>+ ინვოისის დამატება</Button>
-                <Button type="button" disabled={!selectedVessel.invoices.length} onClick={() => exportInvoices(selectedVessel)}>↓ XLSX ექსპორტი</Button>
+                <Button type="button" disabled={!selectedVessel.invoices.length} onClick={() => exportInvoices(selectedVessel)}>↓ ექსელში ექსპორტი</Button>
               </PanelActions>
             </PanelHead>
             <TableWrap>
