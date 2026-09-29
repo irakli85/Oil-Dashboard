@@ -5,7 +5,6 @@ export const config = {
 }
 
 const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0'
-const EARLY_WINDOW_MS = 12000
 const MAX_WINDOW_MS = 35000
 
 const BATUMI_PORT = {
@@ -118,15 +117,6 @@ function collectVessels(radiusKm) {
       resolve([...vessels.values()])
     }
 
-    const earlyTimer = setTimeout(() => {
-      if (vessels.size > 0) {
-        try {
-          socket.terminate()
-        } catch {}
-        finish()
-      }
-    }, EARLY_WINDOW_MS)
-
     const timer = setTimeout(() => {
       try {
         socket.terminate()
@@ -172,13 +162,11 @@ function collectVessels(radiusKm) {
       if (settled) return
       settled = true
       clearTimeout(timer)
-      clearTimeout(earlyTimer)
       reject(error)
     })
 
     socket.on('close', () => {
       clearTimeout(timer)
-      clearTimeout(earlyTimer)
       finish()
     })
   })
