@@ -63,8 +63,8 @@ function createVesselIcon(shipName) {
 }
 
 const Map = () => {
-  const [selectedRadius, setSelectedRadius] = useState(5)
-  const [vessels, setVessels] = useState(() => readCachedVessels(5))
+  const [selectedRadius, setSelectedRadius] = useState(2)
+  const [vessels, setVessels] = useState(() => readCachedVessels(2))
   const [dismissedVessels, setDismissedVessels] = useState(readDismissedVessels)
   const [lastUpdated, setLastUpdated] = useState('')
   const [connectionState, setConnectionState] = useState('connecting')
@@ -116,11 +116,11 @@ const Map = () => {
       <Aside>
         <RadiusControls>
           <RadiusButton
-            active={selectedRadius === 5}
-            onClick={() => setSelectedRadius(5)}
+            active={selectedRadius === 2}
+            onClick={() => setSelectedRadius(2)}
             type="button"
           >
-            5 km
+            2 km
           </RadiusButton>
           <RadiusButton
             active={selectedRadius === 20}
