@@ -4,7 +4,7 @@ import L from 'leaflet'
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import ship from '../assets/ship.svg'
-import { fetchBatumiVessels, subscribeToBatumiVessels } from '../services/ais'
+import { subscribeToBatumiVessels } from '../services/ais'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
 
@@ -37,7 +37,10 @@ const Map = () => {
   const [vesselToRemove, setVesselToRemove] = useState(null)
 
   const updateVessels = (nextVessels) => {
-    setVessels(nextVessels.filter((vessel) => !dismissedVessels.has(getVesselKey(vessel))))
+    setVessels((currentVessels) => {
+      const filteredVessels = nextVessels.filter((vessel) => !dismissedVessels.has(getVesselKey(vessel)))
+      return filteredVessels.length > 0 || currentVessels.length === 0 ? filteredVessels : currentVessels
+    })
   }
 
   const dismissVessel = (vessel) => {
@@ -56,19 +59,12 @@ const Map = () => {
   }
 
   useEffect(() => {
-    const loadInitialVessels = async () => {
-      const nextVessels = await fetchBatumiVessels(selectedRadius)
-      updateVessels(nextVessels)
-      setLastUpdated(new Date().toLocaleTimeString())
-      setConnectionState(nextVessels.length > 0 ? 'live' : 'idle')
-    }
-
-    loadInitialVessels()
+    setVessels([])
 
     const source = subscribeToBatumiVessels(selectedRadius, (nextVessels) => {
       updateVessels(nextVessels)
       setLastUpdated(new Date().toLocaleTimeString())
-      setConnectionState('live')
+      setConnectionState(nextVessels.length > 0 ? 'live' : 'idle')
     }, () => {
       setConnectionState('offline')
       setLastUpdated('Live connection unavailable')
