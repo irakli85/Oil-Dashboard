@@ -25,6 +25,7 @@ const Map = () => {
   const [lastUpdated, setLastUpdated] = useState('')
   const [connectionState, setConnectionState] = useState('connecting')
   const [selectedRadius, setSelectedRadius] = useState(20)
+  const [vesselToRemove, setVesselToRemove] = useState(null)
 
   const updateVessels = (nextVessels) => {
     setVessels(nextVessels.filter((vessel) => !dismissedVessels.has(getVesselKey(vessel))))
@@ -37,6 +38,12 @@ const Map = () => {
     setDismissedVessels(nextDismissedVessels)
     localStorage.setItem(DISMISSED_VESSELS_KEY, JSON.stringify([...nextDismissedVessels]))
     setVessels((currentVessels) => currentVessels.filter((item) => getVesselKey(item) !== vesselKey))
+  }
+
+  const confirmVesselRemoval = () => {
+    if (!vesselToRemove) return
+    dismissVessel(vesselToRemove)
+    setVesselToRemove(null)
   }
 
   useEffect(() => {
@@ -105,9 +112,7 @@ const Map = () => {
               </div>
               <RemoveButton
                 type="button"
-                onClick={() => {
-                  if (window.confirm(`წავშალოთ გემი „${vessel.shipName}“?`)) dismissVessel(vessel)
-                }}
+                onClick={() => setVesselToRemove(vessel)}
                 aria-label={`წაშლა: ${vessel.shipName}`}
                 title={`წაშლა: ${vessel.shipName}`}
               >
@@ -141,6 +146,23 @@ const Map = () => {
           )
         })}
       </Content>
+
+      {vesselToRemove && (
+        <ModalOverlay role="presentation" onClick={() => setVesselToRemove(null)}>
+          <Modal role="dialog" aria-modal="true" aria-labelledby="remove-vessel-title" onClick={(event) => event.stopPropagation()}>
+            <ModalTitle id="remove-vessel-title">გემის წაშლა</ModalTitle>
+            <ModalText>ნამდვილად გსურთ „{vesselToRemove.shipName}“-ის წაშლა?</ModalText>
+            <ModalActions>
+              <CancelButton type="button" onClick={() => setVesselToRemove(null)}>
+                გაუქმება
+              </CancelButton>
+              <ConfirmButton type="button" onClick={confirmVesselRemoval}>
+                წაშლა
+              </ConfirmButton>
+            </ModalActions>
+          </Modal>
+        </ModalOverlay>
+      )}
     </Container>
   )
 }
@@ -298,6 +320,66 @@ const MarkerLabel = styled.span`
   padding: 3px 6px;
   border-radius: 999px;
   white-space: nowrap;
+`
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.48);
+`
+
+const Modal = styled.div`
+  width: min(100%, 420px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.24);
+`
+
+const ModalTitle = styled.h2`
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+`
+
+const ModalText = styled.p`
+  margin: 12px 0 24px;
+  color: #4b5563;
+  font-size: 15px;
+`
+
+const ModalActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+`
+
+const ModalButton = styled.button`
+  border: 0;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+`
+
+const CancelButton = styled(ModalButton)`
+  background: #eef2f6;
+  color: #374151;
+`
+
+const ConfirmButton = styled(ModalButton)`
+  background: #d92d20;
+  color: #fff;
+
+  &:hover {
+    background: #b42318;
+  }
 `
 
 export default Map
