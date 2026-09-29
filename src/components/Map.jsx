@@ -8,8 +8,16 @@ import { subscribeToBatumiVessels } from '../services/ais'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
 
-function getVesselKey(vessel) {
-  return String(vessel.mmsi || vessel.shipName || '').trim()
+function normalizeVesselName(name) {
+  return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
+}
+
+function getVesselKeys(vessel) {
+  return [String(vessel.mmsi || '').trim(), normalizeVesselName(vessel.shipName)].filter(Boolean)
+}
+
+function isDismissedVessel(vessel, dismissedVessels) {
+  return getVesselKeys(vessel).some((key) => dismissedVessels.has(key))
 }
 
 function readDismissedVessels() {
@@ -38,18 +46,17 @@ const Map = () => {
 
   const updateVessels = (nextVessels) => {
     setVessels((currentVessels) => {
-      const filteredVessels = nextVessels.filter((vessel) => !dismissedVessels.has(getVesselKey(vessel)))
+      const filteredVessels = nextVessels.filter((vessel) => !isDismissedVessel(vessel, dismissedVessels))
       return filteredVessels.length > 0 || currentVessels.length === 0 ? filteredVessels : currentVessels
     })
   }
 
   const dismissVessel = (vessel) => {
-    const vesselKey = getVesselKey(vessel)
     const nextDismissedVessels = new Set(dismissedVessels)
-    nextDismissedVessels.add(vesselKey)
+    getVesselKeys(vessel).forEach((key) => nextDismissedVessels.add(key))
     setDismissedVessels(nextDismissedVessels)
     localStorage.setItem(DISMISSED_VESSELS_KEY, JSON.stringify([...nextDismissedVessels]))
-    setVessels((currentVessels) => currentVessels.filter((item) => getVesselKey(item) !== vesselKey))
+    setVessels((currentVessels) => currentVessels.filter((item) => !isDismissedVessel(item, nextDismissedVessels)))
   }
 
   const confirmVesselRemoval = () => {
