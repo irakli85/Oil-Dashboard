@@ -207,7 +207,13 @@ function upsertVessel(vessel) {
 
   latestVessels = latestVessels.map((item) => {
     if ((item.mmsi && item.mmsi === vessel.mmsi) || item.shipName === vessel.shipName) {
-      return { ...item, ...vessel, lastSeen: new Date().toISOString() };
+      return {
+        ...item,
+        ...vessel,
+        imo: vessel.imo ?? item.imo ?? null,
+        shipType: vessel.shipType ?? item.shipType ?? null,
+        lastSeen: new Date().toISOString(),
+      };
     }
 
     return item;

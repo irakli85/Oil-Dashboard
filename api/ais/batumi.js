@@ -187,7 +187,15 @@ function collectVessels(radiusKm) {
         const nextVessel = vessel || staticVessel
         if (nextVessel) {
           const key = nextVessel.mmsi || nextVessel.shipName
-          if (key) vessels.set(key, { ...vessels.get(key), ...nextVessel })
+          if (key) {
+            const currentVessel = vessels.get(key) || {}
+            vessels.set(key, {
+              ...currentVessel,
+              ...nextVessel,
+              imo: nextVessel.imo ?? currentVessel.imo ?? null,
+              shipType: nextVessel.shipType ?? currentVessel.shipType ?? null,
+            })
+          }
         }
       } catch {
         // ignore malformed frames
