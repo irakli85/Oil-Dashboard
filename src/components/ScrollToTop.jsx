@@ -42,7 +42,7 @@ const TopBtn = styled(motion.div)`
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    z-index: 1;
+    z-index: 1500;
     background: #1aac83;
     box-shadow: 0px 20px 50px 0px rgba(55, 69, 87, 0.10);
 `
