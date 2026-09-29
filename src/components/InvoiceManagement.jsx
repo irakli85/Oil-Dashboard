@@ -621,7 +621,7 @@ const InvoiceManagement = () => {
             </PanelHead>
             <TableWrap>
               <Table>
-                <thead><tr><th>№</th><th>ინვოისის №</th><th>თარიღი</th><th>სრული რაოდენობა</th><th>განაშთული</th><th>დარჩენილი</th><th>პროგრესი</th><th>სტატუსი</th><th>მოქმედება</th></tr></thead>
+                <thead><tr><th>№</th><th>ინვოისის №</th><th>თარიღი</th><th>სრული რაოდენობა</th><th>განაშთული</th><th>დარჩენილი</th><th>პროგრესი</th><th>სტატუსი</th><th aria-label="მოქმედებები" /></tr></thead>
                 <tbody>
                   {selectedVessel.invoices.length === 0 ? <tr><td colSpan="9"><Empty>ინვოისები ჯერ არ არის დამატებული</Empty></td></tr> : selectedVessel.invoices.map((invoice, index) => {
                     const totalMinorUnits = toMinorUnits(invoice.totalQty)
@@ -691,7 +691,7 @@ const InvoiceManagement = () => {
         <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget) setModal(null) }}>
           <Dialog $wide role="dialog" aria-modal="true" aria-labelledby="invoice-history-title">
             <h2 id="invoice-history-title">ჩამოწერების ისტორია</h2><p>ინვოისი № {selectedInvoice.num}</p>
-            <TableWrap><Table style={{ minWidth: '54rem' }}><thead><tr><th>თარიღი/დრო</th><th>საბაჟო დოკუმენტი</th><th>რაოდენობა</th><th>მოქმედება</th></tr></thead>
+            <TableWrap><Table style={{ minWidth: '54rem' }}><thead><tr><th>თარიღი/დრო</th><th>საბაჟო დოკუმენტი</th><th>რაოდენობა</th><th aria-label="მოქმედებები" /></tr></thead>
               <tbody>{selectedInvoice.clearances.length === 0 ? <tr><td colSpan="4"><Empty>ჩამოწერები არ მოიძებნა</Empty></td></tr> : selectedInvoice.clearances.map((clearance) => <tr key={clearance.id}>
                 <td>{new Date(clearance.timestamp).toLocaleString('ka-GE')}</td><td><strong>{clearance.doc}</strong></td><td>{number(clearance.qty)} კგ</td><td><Button $tone="danger" onClick={() => removeClearance(clearance.id)}>გაუქმება</Button></td>
               </tr>)}</tbody></Table></TableWrap>
