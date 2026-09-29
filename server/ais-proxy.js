@@ -82,6 +82,7 @@ function normalizeVessel(raw, radiusKm = currentRadiusKm) {
   const meta = raw?.MetaData || {};
   const message = raw?.Message || {};
   const position = raw?.Message?.PositionReport || raw?.PositionReport || {};
+  const staticData = raw?.Message?.ShipStaticData || raw?.ShipStaticData || {};
 
   const lat =
     readValue(meta, 'Latitude', 'latitude', 'Lat', 'lat') ??
@@ -111,10 +112,12 @@ function normalizeVessel(raw, radiusKm = currentRadiusKm) {
 
   const imo =
     readValue(meta, 'IMO', 'imo', 'IMO_Number', 'imo_number') ??
+    readValue(staticData, 'ImoNumber', 'IMO', 'imo', 'IMO_Number', 'imo_number') ??
     readValue(raw, 'IMO', 'imo', 'IMO_Number', 'imo_number');
 
   const shipType =
     readValue(meta, 'ShipType', 'shipType', 'VesselType', 'vesselType', 'Type', 'type') ??
+    readValue(staticData, 'Type', 'ShipType', 'shipType', 'VesselType', 'vesselType') ??
     readValue(raw, 'ShipType', 'shipType', 'VesselType', 'vesselType', 'Type', 'type');
 
   const shipName = String(
@@ -147,6 +150,28 @@ function normalizeVessel(raw, radiusKm = currentRadiusKm) {
     messageType: raw?.MessageType || 'PositionReport',
     lastSeen: new Date().toISOString(),
     distanceKm: Number(distanceKm.toFixed(2)),
+  };
+}
+
+function normalizeStaticVessel(raw) {
+  const meta = raw?.MetaData || {};
+  const message = raw?.Message?.ShipStaticData || raw?.ShipStaticData || {};
+  const mmsi =
+    readValue(message, 'UserID', 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string') ??
+    readValue(meta, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string') ??
+    readValue(raw, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string');
+
+  if (!mmsi) return null;
+
+  const imo = readValue(message, 'ImoNumber', 'IMO', 'imo', 'IMO_Number', 'imo_number');
+  const shipType = readValue(message, 'Type', 'ShipType', 'shipType', 'VesselType', 'vesselType');
+  const shipName = readValue(message, 'Name', 'ShipName', 'shipName') ?? readValue(meta, 'ShipName', 'shipName');
+
+  return {
+    mmsi,
+    ...(imo != null ? { imo } : {}),
+    ...(shipType != null ? { shipType } : {}),
+    ...(shipName ? { shipName: String(shipName).trim() } : {}),
   };
 }
 
@@ -212,7 +237,7 @@ function connectAISStream() {
             [42.1, 42.1],
           ],
         ],
-        FilterMessageTypes: ['PositionReport'],
+        FilterMessageTypes: ['PositionReport', 'ShipStaticData'],
       })
     );
   });
@@ -232,8 +257,13 @@ function connectAISStream() {
       }
 
       const vessel = normalizeVessel(event, currentRadiusKm);
+      const staticVessel = vessel ? null : normalizeStaticVessel(event);
       if (vessel) {
         upsertVessel(vessel);
+      } else if (staticVessel) {
+        upsertVessel(staticVessel);
+      }
+      if (vessel || staticVessel) {
         broadcast({
           source: 'aisstream',
           type: 'update',
@@ -271,7 +301,9 @@ app.get('/api/ais/batumi', (req, res) => {
     radiusKm,
     updatedAt: new Date().toISOString(),
     vessels: latestVessels.filter((vessel) => {
-      return haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, vessel.latitude, vessel.longitude) <= radiusKm;
+      return Number.isFinite(vessel.latitude) &&
+        Number.isFinite(vessel.longitude) &&
+        haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, vessel.latitude, vessel.longitude) <= radiusKm;
     }),
   });
 });
