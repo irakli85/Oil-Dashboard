@@ -12,6 +12,11 @@ function normalizeVesselName(name) {
   return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
 }
 
+function hasCoordinates(vessel) {
+  return vessel.latitude != null && vessel.longitude != null &&
+    Number.isFinite(Number(vessel.latitude)) && Number.isFinite(Number(vessel.longitude))
+}
+
 function formatVesselType(type) {
   const code = Number(type)
   if (!Number.isFinite(code)) return String(type || '')
@@ -193,7 +198,7 @@ const Map = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {vessels.map((vessel, index) => (
+          {vessels.filter(hasCoordinates).map((vessel, index) => (
             <LeafletMarker
               key={vessel.mmsi || `${vessel.shipName}-${index}`}
               position={[vessel.latitude, vessel.longitude]}
