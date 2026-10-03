@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import sanctioned from '../../sanctioned'
+import sanctionIcon from '../assets/sanction.svg'
 import { Container, Hr, H2, Table, Th, Td, Tr } from './Measurment'
 
 const SanctionedVessels = () => {
@@ -24,7 +25,9 @@ const SanctionedVessels = () => {
     <Container>
       <Header>
         <HeaderContent>
-          <ShipLogo aria-label='Ship logo' />
+          <LogoFrame>
+            <SanctionLogo src={sanctionIcon} alt='SANCTION' />
+          </LogoFrame>
           <H2st>სანქცირებული გემები</H2st>
           <HeaderBadge>{sanctioned.length} ჩანაწერი</HeaderBadge>
         </HeaderContent>
@@ -90,27 +93,6 @@ const SanctionedVessels = () => {
   )
 }
 
-const ShipLogo = () => (
-  <ShipSvg viewBox='0 0 120 120' role='img' aria-hidden='true'>
-    <defs>
-      <linearGradient id='shipHull' x1='0%' y1='0%' x2='100%' y2='100%'>
-        <stop offset='0%' stopColor='#ffffff' stopOpacity='1' />
-        <stop offset='100%' stopColor='#dffaf2' stopOpacity='1' />
-      </linearGradient>
-    </defs>
-
-    <circle cx='60' cy='60' r='52' fill='rgba(255,255,255,0.12)' />
-    <path d='M24 67L52 33H96L102 51L92 67H24Z' fill='url(#shipHull)' opacity='0.98' />
-    <path d='M48 33V18H69V33' fill='none' stroke='#ffffff' strokeWidth='5' strokeLinecap='round' strokeLinejoin='round' />
-    <path d='M60 18V53' fill='none' stroke='#ffffff' strokeWidth='5' strokeLinecap='round' />
-    <path d='M49 53H90' fill='none' stroke='#ffffff' strokeWidth='5' strokeLinecap='round' />
-    <path d='M34 71H96' fill='none' stroke='#ffffff' strokeWidth='4' strokeLinecap='round' opacity='0.8' />
-    <path d='M30 79C42 76 49 75 60 75C73 75 82 77 90 79' fill='none' stroke='#ffffff' strokeWidth='4' strokeLinecap='round' opacity='0.8' />
-    <path d='M16 87C28 82 39 80 52 80C60 80 67 81 75 83C82 85 89 87 96 87C101 87 105 88 108 90V92H16V87Z' fill='rgba(255,255,255,0.18)' />
-    <path d='M20 94H100' fill='none' stroke='rgba(255,255,255,0.42)' strokeWidth='3' strokeLinecap='round' />
-  </ShipSvg>
-)
-
 const Header = styled.div`
   width: 100%;
   border-radius: 1.5rem;
@@ -130,11 +112,23 @@ const HeaderContent = styled.div`
   flex-wrap: wrap;
 `
 
-const ShipSvg = styled.svg`
+const LogoFrame = styled.div`
+  width: 9rem;
+  height: 9rem;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+`
+
+const SanctionLogo = styled.img`
   width: 7.5rem;
   height: 7.5rem;
   display: block;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.12));
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(34%) sepia(47%) saturate(960%) hue-rotate(107deg) brightness(89%) contrast(94%);
 `
 
 const H2st = styled(H2)`

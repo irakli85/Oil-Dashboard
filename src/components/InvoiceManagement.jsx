@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import * as XLSX from 'xlsx'
+import invoiceIcon from '../assets/invoice.svg'
 import {
   createClearance,
   createInvoice,
@@ -68,9 +69,16 @@ const ShipMark = styled.span`
   place-items: center;
   width: 5.2rem;
   height: 5.2rem;
+  border: 1px solid #c0e9d7;
   border-radius: .8rem;
-  background: rgba(255,255,255,.14);
+  background: #e8f5ef;
   font-size: 2.4rem;
+  img {
+    width: 3.6rem;
+    height: 3.6rem;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(34%) sepia(47%) saturate(960%) hue-rotate(107deg) brightness(89%) contrast(94%);
+  }
 `
 
 const Button = styled.button`
@@ -551,7 +559,7 @@ const InvoiceManagement = () => {
     <Page>
       <Banner>
         <BannerTitle>
-          <ShipMark aria-hidden="true">🚢</ShipMark>
+          <ShipMark aria-hidden="true"><img src={invoiceIcon} alt="" /></ShipMark>
           <div>
             <h1>ინვოისების მართვა</h1>
             <p>ტვირთების აღრიცხვა და ინვოისების განაშთვა</p>
