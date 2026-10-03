@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, H2,  Table, Tr,  Td } from './Measurment'
+import { Container, H2, Table, TableScroll, Tr, Td } from './Measurment'
 import PriceCalc from './PriceCalc'
 import DeepDive from '../styledComponents/DeepDive'
 
@@ -11,7 +11,7 @@ const OilPrice = () => {
     <PriceCalc/>
     <DeepDive text='ნავთობპროდუქტების მაქსიმალური ფასები კოდების მიხედვით'>
         <H2>ნედლი ნავთობის ფასი</H2>
-        <Table
+        <TableScroll><Table
                 width={240}
                 border={1}
                 cellPadding={2}
@@ -38,12 +38,12 @@ const OilPrice = () => {
                     <Td>3&nbsp;სექტემბერი 2025</Td>
                 </Tr>
             </tbody>
-        </Table>
+        </Table></TableScroll>
        
 
         <H2>ნავთობპროდუქტების ფასები</H2>
                
-        <Table
+        <TableScroll><Table
             width={320}
             border={1}
             cellPadding={2}
@@ -525,7 +525,7 @@ const OilPrice = () => {
                 </Tr>
                 
             </tbody>
-        </Table>
+        </Table></TableScroll>
     </DeepDive>        
 </Container>
 

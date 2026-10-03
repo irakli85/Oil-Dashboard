@@ -93,23 +93,24 @@ const NavAssetIcon = styled(motion.img)`
     : 'brightness(0) saturate(100%) invert(50%) sepia(10%) saturate(650%) hue-rotate(195deg) brightness(91%) contrast(88%)'};
 `
 
-const SanctionNavIcon = styled(NavAssetIcon)`
+const SanctionNavIcon = styled(motion.span)`
   width: 4.2rem;
   height: 4.2rem;
-  filter: ${({ $isClicked }) => $isClicked
-    ? 'brightness(0) saturate(100%) invert(34%) sepia(47%) saturate(960%) hue-rotate(107deg) brightness(89%) contrast(94%)'
-    : 'brightness(0) saturate(100%) invert(50%) sepia(10%) saturate(650%) hue-rotate(195deg) brightness(91%) contrast(88%)'};
+  flex-shrink: 0;
+  display: block;
+  background-color: ${({ $isClicked }) => $isClicked ? '#1aac83' : '#737791'};
+  mask: url(${sanctionIcon}) center / contain no-repeat;
+  -webkit-mask: url(${sanctionIcon}) center / contain no-repeat;
 `
 
-const ExportNavIcon = styled(motion.img)`
+const ExportNavIcon = styled(motion.span)`
   width: 2.6rem;
   height: 2.6rem;
   flex-shrink: 0;
   display: block;
-  object-fit: contain;
-  filter: ${({ $isActive }) => $isActive
-    ? 'brightness(0) saturate(100%) invert(34%) sepia(47%) saturate(960%) hue-rotate(107deg) brightness(89%) contrast(94%)'
-    : 'brightness(0) saturate(100%) invert(50%) sepia(10%) saturate(650%) hue-rotate(195deg) brightness(91%) contrast(88%)'};
+  background-color: ${({ $isActive }) => $isActive ? '#1aac83' : '#737791'};
+  mask: url(${exportIcon}) center / contain no-repeat;
+  -webkit-mask: url(${exportIcon}) center / contain no-repeat;
 `
 
 const ExportNavHeader = styled.div`
@@ -219,8 +220,6 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
             <motion.div variants={childrenVariants}>
               <LinkSty to='/sanctioned-vessels' onClick={closeMenu}>
                     <SanctionNavIcon
-                      src={sanctionIcon}
-                      alt=''
                       aria-hidden='true'
                       $isClicked={isClicked6 || pathname === '/sanctioned-vessels'}
                       variants={childrenVariants}
@@ -235,8 +234,6 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                 <ExportNavItem $isOpen={isExportOpen}>
                     <ExportNavHeader onClick={toggleExport}>
                         <ExportNavIcon
-                          src={exportIcon}
-                          alt=''
                           aria-hidden='true'
                           $isActive={isClicked8 || isClicked9 || isClicked10 || pathname.startsWith('/export')}
                           variants={childrenVariants}

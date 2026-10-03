@@ -119,10 +119,15 @@ export const HeadPsty = styled.p`
 
 export const ContentDivSty = styled.div`
     width: 100%;
+    min-width: 0;
     /* height: 100%; */
     background: #F3E8FF;
     border-radius: 1.5rem;
     padding: 3.2rem;
+
+    @media (max-width: 768px) {
+        padding: 1.6rem;
+    }
 `
 
 export const LinkSty = styled(Link)`

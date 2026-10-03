@@ -5,13 +5,11 @@ import Logo from '../styledComponents/Logo'
 import Navigation from './Navigation'
 
 const Aside = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(true)
+  const [isMenuOpen, setIsMenuOpen] = useState(() => window.innerWidth > 980)
 
   useEffect(() => {
     const syncMenuState = () => {
-      if (window.innerWidth > 980) {
-        setIsMenuOpen(true)
-      }
+      setIsMenuOpen(window.innerWidth > 980)
     }
 
     syncMenuState()

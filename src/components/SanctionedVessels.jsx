@@ -150,12 +150,20 @@ const HeaderBadge = styled.span`
 const SearchPanel = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(20rem, 1fr));
+  width: 100%;
+  min-width: 0;
   gap: 2rem;
   margin-top: 3rem;
   padding: 2rem;
   background: rgba(26, 172, 131, 0.04);
   border: 1px solid rgba(26, 172, 131, 0.12);
   border-radius: 1.4rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    padding: 1.2rem;
+  }
 `
 
 const SearchField = styled.label`

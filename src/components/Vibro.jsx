@@ -37,6 +37,7 @@ const Vibro = () => {
 
 const Div = styled.div`
   width: 100%;
+  min-width: 0;
   height: auto;
   border: 3px solid #1aac83;
   border-top: none;
@@ -45,10 +46,20 @@ const Div = styled.div`
   padding: 6rem;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.6rem;
+    border-width: 1px;
+  }
+
+  @media (max-width: 420px) {
+    padding: 1.6rem 1.2rem;
+  }
 `
 const P = styled.p`
   margin-top: 3rem;
   font-size: 1.8rem;
+  overflow-wrap: anywhere;
 `
 const Str = styled.strong`
   font-size: 1.8rem;
@@ -56,6 +67,7 @@ const Str = styled.strong`
 const Iframe = styled.iframe`
   margin-top: 3rem;
   width: 100%;
+  max-width: 100%;
   height: 93rem;
   object-fit: fill;
 `

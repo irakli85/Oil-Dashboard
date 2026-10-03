@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Container, Table, Tr, Th, Td, Input, TdInp, H2, H4, Hr } from './Measurment'
+import { Container, Table, TableScroll, Tr, Th, Td, Input, TdInp, H2, H4, Hr } from './Measurment'
 import Pitfall from './Pitfall'
 
 const PriceCalc = () => {
@@ -21,7 +21,7 @@ const PriceCalc = () => {
     <Container>
         <H2>ნავთობპროდუქტების ფასის ზედა ზღვარის კალკულატორი</H2>
         <Hr/>
-        <Table>
+        <TableScroll><Table>
           <Tr>
             <Th>სიმკვრივე</Th>
             <Th>ერთი ბარელის ფასი, $</Th>
@@ -65,7 +65,7 @@ const PriceCalc = () => {
             <Td>100 $</Td>
             <Td style={{color: '#1aac83', fontWeight: 900}}>{calculation3.toFixed(2) + ' $'}</Td>
           </Tr> 
-        </Table>
+        </Table></TableScroll>
         <Pitfall text='დათვლის მეთოდი'>
             <PriceDiv>
                 <H4 style={{fontWeight: 800}}>ბარელზე 45$ ზღვრული ფასის შემთხვევაში:</H4>

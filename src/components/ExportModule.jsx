@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import * as XLSX from 'xlsx'
+import exportIcon from '../assets/export.svg'
 import { Container, Hr, H2 } from './Measurment'
 import { useAdminAuth } from './AdminAuthProvider'
 import {
@@ -318,7 +319,9 @@ const ExportModule = ({ tab = 'active' }) => {
     <Container>
       <HeaderBar>
         <HeaderContent>
-          <HeaderIcon>📦</HeaderIcon>
+          <HeaderIcon aria-hidden='true'>
+            <ExportHeaderIcon />
+          </HeaderIcon>
           <div>
             <H2st>{currentTab === 'archived' ? 'გასული ექსპორტი' : currentTab === 'settings' ? 'ინფორმაციის დამატება' : 'მიმდინარე ექსპორტი'}</H2st>
             <HeaderSub>საექსპორტო განაცხადები, დასაწყობების ვადები</HeaderSub>
@@ -326,7 +329,10 @@ const ExportModule = ({ tab = 'active' }) => {
         </HeaderContent>
         <HeaderActions>
           {currentTab !== 'settings' && (
-            <GhostButton type='button' onClick={exportToExcel}>📥 Excel-ში ჩამოტვირთვა</GhostButton>
+            <GhostButton type='button' onClick={exportToExcel}>
+              <DownloadArrow aria-hidden='true'>↓</DownloadArrow>
+              Excel-ში ჩამოტვირთვა
+            </GhostButton>
           )}
           {currentTab === 'active' && (
             <SolidButton type='button' onClick={openModal}>+ დამატება</SolidButton>
@@ -586,10 +592,22 @@ const HeaderContent = styled.div`
 `
 
 const HeaderIcon = styled.div`
-  font-size: 3.4rem;
-  background: rgba(255, 255, 255, 0.14);
+  width: 6.6rem;
+  height: 6.6rem;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #fff;
   border-radius: 1.4rem;
-  padding: 1.2rem 1.6rem;
+`
+
+const ExportHeaderIcon = styled.span`
+  width: 3.4rem;
+  height: 3.4rem;
+  display: block;
+  background-color: #1aac83;
+  mask: url(${exportIcon}) center / contain no-repeat;
+  -webkit-mask: url(${exportIcon}) center / contain no-repeat;
 `
 
 const H2st = styled(H2)`
@@ -629,6 +647,13 @@ const GhostButton = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.3);
   }
+`
+
+const DownloadArrow = styled.span`
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
 `
 
 const SolidButton = styled.button`

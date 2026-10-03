@@ -1,6 +1,6 @@
 import React from 'react'
 import DeepDive from '../styledComponents/DeepDive'
-import { Table, Th, Td, Tr } from './Measurment'
+import { Table, TableScroll, Th, Td, Tr } from './Measurment'
 
 const ReservoirTable = ({
   id,
@@ -13,14 +13,15 @@ const ReservoirTable = ({
 
   return (
     <DeepDive text={title} id={id}>
-      <Table
-        style={{
-          width: '70%',
-          marginTop: '3rem',
-          border: 'solid 1px gray',
-          alignSelf: 'center',
-        }}
-      >
+      <TableScroll>
+        <Table
+          style={{
+            width: '70%',
+            marginTop: '3rem',
+            border: 'solid 1px gray',
+            alignSelf: 'center',
+          }}
+        >
         <Tr>
           <Th style={{ width: '11rem' }}>რეზ-ბის რაოდ.</Th>
           <Th style={{ width: '10rem' }}>რეზ-რის №</Th>
@@ -43,7 +44,8 @@ const ReservoirTable = ({
           ))}
           <Td style={{ color: '#1aac83', fontWeight: 900, border: 'none' }}>{total}</Td>
         </Tr>
-      </Table>
+        </Table>
+      </TableScroll>
     </DeepDive>
   )
 }

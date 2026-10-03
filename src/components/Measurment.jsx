@@ -35,7 +35,7 @@ const Measurment = () => {
     <Container>
         <H2>ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმები</H2>
         <Hr/>
-        <Table>
+        <TableScroll><Table>
           <Tr>
             <Th colSpan={2}>ნავთობპროდუქტების რაოდენობა</Th>
             <Th colSpan={2}>ცდომილება</Th>
@@ -56,9 +56,9 @@ const Measurment = () => {
             <TdRes norm={percentage < 0.5 ? true : false }>{difference + ' კგ'} </TdRes>
             <TdRes norm={percentage < 0.5 ? true : false }>{isNaN(percentage) ? (0 + '%') : (percentage + ' %')}</TdRes>
           </Tr>
-        </Table>
+        </Table></TableScroll>
         <H2>აზომვის მეთოდები</H2>
-        <Table>
+        <TableScroll><Table>
           <Tr>
             <Th colSpan={2}>პირდაპირი მეთოდი</Th>
           </Tr>          
@@ -70,8 +70,8 @@ const Measurment = () => {
             <Td>პლასტიკური საცხების ნეტო მასის გაზომვის ცდომილება</Td>
             <TdCond norm={percentage < 0.3 ? true : false }>&#xb1;0.3%</TdCond>
           </Tr>
-        </Table>
-        <Table>
+        </Table></TableScroll>
+        <TableScroll><Table>
           <Tr>
             <Th colSpan={3}>არაპირდაპირი მეთოდი</Th>
           </Tr>
@@ -114,7 +114,7 @@ const Measurment = () => {
             <TdCond norm={percentage < 0.8 ? true : false }>&#xb1;0.8%</TdCond>
           </Tr>
 
-        </Table>
+        </Table></TableScroll>
         
     </Container>
   )
@@ -124,9 +124,19 @@ const Measurment = () => {
 
 export const Container = styled.div`
     display: flex;
+  width: 100%;
+  min-width: 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+`
+
+export const TableScroll = styled.div`
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 `
 
 export const H2 = styled.h2`
