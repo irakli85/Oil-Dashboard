@@ -10,7 +10,15 @@ import {
   removeOption,
 } from './export-routes.js';
 import invoiceRoutes from './invoice-routes.js';
-import { enrichVessel, saveVesselRegistry } from './vessel-registry.js';
+import {
+  dismissVessel,
+  enrichVessel,
+  filterDismissedVessels,
+  getVesselIdentifier,
+  getVesselIdentifiers,
+  isVesselDismissed,
+  saveVesselRegistry,
+} from './vessel-registry.js';
 
 for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
   process.env[key] ??= value;
@@ -30,7 +38,7 @@ let currentRadiusKm = 20;
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
 
   if (req.method === 'OPTIONS') {
@@ -265,16 +273,22 @@ function connectAISStream() {
 
       const vessel = normalizeVessel(event, currentRadiusKm);
       const staticVessel = vessel ? null : normalizeStaticVessel(event);
-      if (vessel) {
-        const enrichedVessel = await enrichVessel(vessel);
-        if (vessel.imo || vessel.shipType) await saveVesselRegistry(enrichedVessel);
-        upsertVessel(enrichedVessel);
-      } else if (staticVessel) {
-        const enrichedVessel = await enrichVessel(staticVessel);
-        await saveVesselRegistry(enrichedVessel);
-        upsertVessel(enrichedVessel);
-      }
-      if (vessel || staticVessel) {
+      const nextVessel = vessel || staticVessel;
+      if (nextVessel) {
+        const identifiers = new Set(getVesselIdentifiers(nextVessel));
+        if (await isVesselDismissed(nextVessel)) {
+          latestVessels = latestVessels.filter((item) =>
+            !getVesselIdentifiers(item).some((identifier) => identifiers.has(identifier))
+          );
+        } else if (vessel) {
+          const enrichedVessel = await enrichVessel(vessel);
+          if (vessel.imo || vessel.shipType) await saveVesselRegistry(enrichedVessel);
+          upsertVessel(enrichedVessel);
+        } else {
+          const enrichedVessel = await enrichVessel(staticVessel);
+          await saveVesselRegistry(enrichedVessel);
+          upsertVessel(enrichedVessel);
+        }
         broadcast({
           source: 'aisstream',
           type: 'update',
@@ -303,20 +317,52 @@ function connectAISStream() {
   });
 }
 
-app.get('/api/ais/batumi', (req, res) => {
+app.post('/api/ais/vessels/dismiss', async (req, res) => {
+  const vessel = { mmsi: req.body?.mmsi, shipName: req.body?.shipName };
+  if (!getVesselIdentifier(vessel)) {
+    return res.status(400).json({ error: 'MMSI or ship name is required' });
+  }
+
+  try {
+    await dismissVessel(vessel);
+    const identifiers = new Set(getVesselIdentifiers(vessel));
+    latestVessels = latestVessels.filter((item) =>
+      !getVesselIdentifiers(item).some((identifier) => identifiers.has(identifier))
+    );
+    broadcast({
+      source: 'aisstream',
+      type: 'update',
+      updatedAt: new Date().toISOString(),
+      vessels: latestVessels,
+      radiusKm: currentRadiusKm,
+    });
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error('[ais dismiss vessel]', error);
+    return res.status(503).json({ error: 'Could not save vessel dismissal' });
+  }
+});
+
+app.get('/api/ais/batumi', async (req, res) => {
   const radiusKm = setRadiusFromRequest(req);
 
-  res.json({
-    source: 'aisstream',
-    port: 'Batumi',
-    radiusKm,
-    updatedAt: new Date().toISOString(),
-    vessels: latestVessels.filter((vessel) => {
+  try {
+    const visibleVessels = await filterDismissedVessels(latestVessels.filter((vessel) => {
       return Number.isFinite(vessel.latitude) &&
         Number.isFinite(vessel.longitude) &&
         haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, vessel.latitude, vessel.longitude) <= radiusKm;
-    }),
-  });
+    }));
+    return res.json({
+      source: 'aisstream',
+      port: 'Batumi',
+      radiusKm,
+      updatedAt: new Date().toISOString(),
+      vessels: visibleVessels,
+    });
+  } catch (error) {
+    console.error('[ais batumi dismissal filter]', error);
+    return res.status(503).json({ error: 'Vessel exclusions are temporarily unavailable', vessels: [] });
+  }
 });
 
 app.get('/api/ais/health', (req, res) => {
@@ -328,8 +374,16 @@ app.get('/api/ais/health', (req, res) => {
   });
 });
 
-app.get('/api/ais/batumi/stream', (req, res) => {
+app.get('/api/ais/batumi/stream', async (req, res) => {
   const radiusKm = setRadiusFromRequest(req);
+
+  let visibleVessels;
+  try {
+    visibleVessels = await filterDismissedVessels(latestVessels);
+  } catch (error) {
+    console.error('[ais batumi stream dismissal filter]', error);
+    return res.status(503).json({ error: 'Vessel exclusions are temporarily unavailable' });
+  }
 
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache, no-transform');
@@ -337,7 +391,7 @@ app.get('/api/ais/batumi/stream', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   clients.add(res);
-  res.write(`data: ${JSON.stringify({ type: 'connected', radiusKm, vessels: latestVessels })}\n\n`);
+  res.write(`data: ${JSON.stringify({ type: 'connected', radiusKm, vessels: visibleVessels })}\n\n`);
 
   req.on('close', () => {
     clients.delete(res);

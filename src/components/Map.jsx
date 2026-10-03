@@ -4,20 +4,12 @@ import L from 'leaflet'
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import ship from '../assets/ship.svg'
-import { subscribeToBatumiVessels } from '../services/ais'
+import { dismissBatumiVessel, subscribeToBatumiVessels } from '../services/ais'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
 
 function normalizeVesselName(name) {
   return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
-}
-
-function getVesselKeys(vessel) {
-  return [String(vessel.mmsi || '').trim(), normalizeVesselName(vessel.shipName)].filter(Boolean)
-}
-
-function isDismissedVessel(vessel, dismissedVessels) {
-  return getVesselKeys(vessel).some((key) => dismissedVessels.has(key))
 }
 
 function formatVesselType(type) {
@@ -28,15 +20,6 @@ function formatVesselType(type) {
   if (code >= 71 && code <= 74) return `Cargo - hazardous category ${code - 70}`
   if (code >= 81 && code <= 84) return `Tanker - hazardous category ${code - 80}`
   return String(type)
-}
-
-function readDismissedVessels() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(DISMISSED_VESSELS_KEY) || '[]')
-    return new Set(Array.isArray(stored) ? stored : [])
-  } catch {
-    return new Set()
-  }
 }
 
 function escapeHtml(value) {
@@ -61,31 +44,35 @@ function createVesselIcon(shipName) {
 const Map = () => {
   const [selectedRadius, setSelectedRadius] = useState(2)
   const [vessels, setVessels] = useState([])
-  const [dismissedVessels, setDismissedVessels] = useState(readDismissedVessels)
+  const [dismissalsReady, setDismissalsReady] = useState(false)
   const [lastUpdated, setLastUpdated] = useState('')
   const [connectionState, setConnectionState] = useState('connecting')
   const [vesselToRemove, setVesselToRemove] = useState(null)
+  const [removalError, setRemovalError] = useState('')
+  const [isRemoving, setIsRemoving] = useState(false)
   const previousRadius = useRef(selectedRadius)
 
   const updateVessels = (nextVessels) => {
-    setVessels((currentVessels) => {
-      const filteredVessels = nextVessels.filter((vessel) => !isDismissedVessel(vessel, dismissedVessels))
-      return filteredVessels.length > 0 || currentVessels.length === 0 ? filteredVessels : currentVessels
-    })
+    setVessels(nextVessels)
   }
 
-  const dismissVessel = (vessel) => {
-    const nextDismissedVessels = new Set(dismissedVessels)
-    getVesselKeys(vessel).forEach((key) => nextDismissedVessels.add(key))
-    setDismissedVessels(nextDismissedVessels)
-    localStorage.setItem(DISMISSED_VESSELS_KEY, JSON.stringify([...nextDismissedVessels]))
-    setVessels((currentVessels) => currentVessels.filter((item) => !isDismissedVessel(item, nextDismissedVessels)))
-  }
+  const confirmVesselRemoval = async () => {
+    if (!vesselToRemove || isRemoving) return
+    setIsRemoving(true)
+    setRemovalError('')
 
-  const confirmVesselRemoval = () => {
-    if (!vesselToRemove) return
-    dismissVessel(vesselToRemove)
-    setVesselToRemove(null)
+    try {
+      await dismissBatumiVessel(vesselToRemove)
+      setVessels((currentVessels) => currentVessels.filter((item) => {
+        if (vesselToRemove.mmsi) return String(item.mmsi) !== String(vesselToRemove.mmsi)
+        return normalizeVesselName(item.shipName) !== normalizeVesselName(vesselToRemove.shipName)
+      }))
+      setVesselToRemove(null)
+    } catch {
+      setRemovalError('გემის წაშლა ვერ მოხერხდა. სცადეთ ხელახლა.')
+    } finally {
+      setIsRemoving(false)
+    }
   }
 
   useEffect(() => {
@@ -95,6 +82,36 @@ const Map = () => {
   }, [])
 
   useEffect(() => {
+    let active = true
+
+    const migrateLegacyDismissals = async () => {
+      let legacyIdentifiers = []
+      try {
+        const stored = JSON.parse(localStorage.getItem(DISMISSED_VESSELS_KEY) || '[]')
+        if (Array.isArray(stored)) legacyIdentifiers = [...new Set(stored.map((value) => String(value).trim()).filter(Boolean))]
+      } catch {
+        localStorage.removeItem(DISMISSED_VESSELS_KEY)
+      }
+
+      try {
+        for (const identifier of legacyIdentifiers) {
+          const vessel = /^\d{9}$/.test(identifier) ? { mmsi: identifier } : { shipName: identifier }
+          await dismissBatumiVessel(vessel)
+        }
+        localStorage.removeItem(DISMISSED_VESSELS_KEY)
+        if (active) setDismissalsReady(true)
+      } catch {
+        if (active) setRemovalError('წაშლილი გემების სიის სინქრონიზაცია ვერ მოხერხდა. განაახლეთ გვერდი.')
+      }
+    }
+
+    migrateLegacyDismissals()
+    return () => { active = false }
+  }, [])
+
+  useEffect(() => {
+    if (!dismissalsReady) return undefined
+
     if (previousRadius.current !== selectedRadius) {
       setVessels([])
       previousRadius.current = selectedRadius
@@ -110,7 +127,7 @@ const Map = () => {
     })
 
     return () => source.close()
-  }, [selectedRadius, dismissedVessels])
+  }, [selectedRadius, dismissalsReady])
 
   return (
     <Container>
@@ -140,7 +157,9 @@ const Map = () => {
         </StatusRow>
         <StatusText>{lastUpdated ? `Updated: ${lastUpdated}` : 'Waiting for data...'}</StatusText>
 
-        {vessels.length === 0 ? (
+        {!dismissalsReady ? (
+          <EmptyState>{removalError || 'Checking previously removed vessels...'}</EmptyState>
+        ) : vessels.length === 0 ? (
           <EmptyState>
             No live AIS data received for this radius.
           </EmptyState>
@@ -197,12 +216,13 @@ const Map = () => {
           <Modal role="dialog" aria-modal="true" aria-labelledby="remove-vessel-title" onClick={(event) => event.stopPropagation()}>
             <ModalTitle id="remove-vessel-title">გემის წაშლა</ModalTitle>
             <ModalText>ნამდვილად გსურთ „{vesselToRemove.shipName}“-ის წაშლა?</ModalText>
+            {removalError && <ModalText role="alert">{removalError}</ModalText>}
             <ModalActions>
-              <CancelButton type="button" onClick={() => setVesselToRemove(null)}>
+              <CancelButton type="button" disabled={isRemoving} onClick={() => setVesselToRemove(null)}>
                 გაუქმება
               </CancelButton>
-              <ConfirmButton type="button" onClick={confirmVesselRemoval}>
-                წაშლა
+              <ConfirmButton type="button" disabled={isRemoving} onClick={confirmVesselRemoval}>
+                {isRemoving ? 'ინახება...' : 'წაშლა'}
               </ConfirmButton>
             </ModalActions>
           </Modal>

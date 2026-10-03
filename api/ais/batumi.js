@@ -1,5 +1,5 @@
 import WebSocket from 'ws'
-import { enrichVessel, saveVesselRegistry } from '../../server/vessel-registry.js'
+import { enrichVessel, filterDismissedVessels, saveVesselRegistry } from '../../server/vessel-registry.js'
 
 export const config = {
   maxDuration: 60,
@@ -228,7 +228,9 @@ export default async function handler(req, res) {
 
   try {
     const vessels = await collectVessels(radiusKm)
-    const liveVessels = vessels.filter((vessel) => Number.isFinite(vessel.latitude) && Number.isFinite(vessel.longitude))
+    const liveVessels = await filterDismissedVessels(
+      vessels.filter((vessel) => Number.isFinite(vessel.latitude) && Number.isFinite(vessel.longitude))
+    )
     const enrichedVessels = await Promise.all(liveVessels.map(async (vessel) => {
       const enrichedVessel = await enrichVessel(vessel)
       if (vessel.imo != null || vessel.shipType != null) await saveVesselRegistry(enrichedVessel)
