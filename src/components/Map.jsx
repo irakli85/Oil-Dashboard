@@ -5,6 +5,7 @@ import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-l
 import 'leaflet/dist/leaflet.css'
 import ship from '../assets/ship.svg'
 import { dismissBatumiVessel, subscribeToBatumiVessels } from '../services/ais'
+import { useAdminAuth } from './AdminAuthProvider'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
 
@@ -15,6 +16,11 @@ function normalizeVesselName(name) {
 function hasCoordinates(vessel) {
   return vessel.latitude != null && vessel.longitude != null &&
     Number.isFinite(Number(vessel.latitude)) && Number.isFinite(Number(vessel.longitude))
+}
+
+function hasDistanceData(vessel) {
+  return vessel.distanceKm != null && vessel.distanceKm !== '' &&
+    Number.isFinite(Number(vessel.distanceKm))
 }
 
 function formatVesselType(type) {
@@ -47,6 +53,7 @@ function createVesselIcon(shipName) {
 }
 
 const Map = () => {
+  const { isAuthenticated } = useAdminAuth()
   const [selectedRadius, setSelectedRadius] = useState(2)
   const [vessels, setVessels] = useState([])
   const [dismissalsReady, setDismissalsReady] = useState(false)
@@ -56,6 +63,7 @@ const Map = () => {
   const [removalError, setRemovalError] = useState('')
   const [isRemoving, setIsRemoving] = useState(false)
   const previousRadius = useRef(selectedRadius)
+  const vesselsWithDistance = vessels.filter(hasDistanceData)
 
   const updateVessels = (nextVessels) => {
     setVessels(nextVessels)
@@ -164,12 +172,12 @@ const Map = () => {
 
         {!dismissalsReady ? (
           <EmptyState>{removalError || 'Checking previously removed vessels...'}</EmptyState>
-        ) : vessels.length === 0 ? (
+        ) : vesselsWithDistance.length === 0 ? (
           <EmptyState>
-            No live AIS data received for this radius.
+            {vessels.length === 0 ? 'No live AIS data received for this radius.' : 'Waiting for vessel distance data.'}
           </EmptyState>
         ) : (
-          vessels.map((vessel, index) => (
+          vesselsWithDistance.map((vessel, index) => (
             <VesselCard key={vessel.mmsi || `${vessel.shipName}-${index}`}>
               <img src={ship} alt="ship" />
               <div>
@@ -180,9 +188,10 @@ const Map = () => {
               </div>
               <RemoveButton
                 type="button"
+                disabled={!isAuthenticated || isRemoving}
                 onClick={() => setVesselToRemove(vessel)}
                 aria-label={`წაშლა: ${vessel.shipName}`}
-                title={`წაშლა: ${vessel.shipName}`}
+                title={isAuthenticated ? `წაშლა: ${vessel.shipName}` : 'ავტორიზაცია საჭიროა'}
               >
                 🗑
               </RemoveButton>
@@ -226,7 +235,7 @@ const Map = () => {
               <CancelButton type="button" disabled={isRemoving} onClick={() => setVesselToRemove(null)}>
                 გაუქმება
               </CancelButton>
-              <ConfirmButton type="button" disabled={isRemoving} onClick={confirmVesselRemoval}>
+              <ConfirmButton type="button" disabled={!isAuthenticated || isRemoving} onClick={confirmVesselRemoval}>
                 {isRemoving ? 'ინახება...' : 'წაშლა'}
               </ConfirmButton>
             </ModalActions>
@@ -294,6 +303,11 @@ const RemoveButton = styled.button`
   &:hover {
     background: #d92d20;
     color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 `
 

@@ -6,12 +6,35 @@ import usa from '../assets/usa.svg'
 import bell from '../assets/bell.svg'
 import user from '../assets/user.svg'
 import search from '../assets/search.svg'
+import { useAdminAuth } from './AdminAuthProvider'
 
 const Header = () => {
   const [count, setCount] = useState(0)
-  
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const [loginName, setLoginName] = useState('')
+  const [password, setPassword] = useState('')
+  const [loginError, setLoginError] = useState('')
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const { authReady, isAuthenticated, username, login, logout } = useAdminAuth()
+
   const handleClick = () => {
     setCount(count+1)
+  }
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    if (isLoggingIn) return
+    setIsLoggingIn(true)
+    setLoginError('')
+    try {
+      await login(loginName, password)
+      setPassword('')
+      setIsLoginOpen(false)
+    } catch (error) {
+      setLoginError(error.message)
+    } finally {
+      setIsLoggingIn(false)
+    }
   }
 
 
@@ -37,11 +60,38 @@ const Header = () => {
           <Div3>
             <img src={user} alt="user" />
             <div>
-              <P>User Name</P>
-              <P1>admin</P1>
+              <P>{isAuthenticated ? username : 'სტუმარი'}</P>
+              <P1>{isAuthenticated ? 'admin' : 'არაა შესული'}</P1>
             </div>
+            {isAuthenticated ? (
+              <AuthButton type="button" onClick={logout}>გასვლა</AuthButton>
+            ) : (
+              <AuthButton type="button" disabled={!authReady} onClick={() => setIsLoginOpen(true)}>შესვლა</AuthButton>
+            )}
           </Div3>
         </Div>
+        {isLoginOpen && (
+          <LoginOverlay role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !isLoggingIn) setIsLoginOpen(false) }}>
+            <LoginDialog role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+              <h2 id="admin-login-title">ადმინისტრატორის შესვლა</h2>
+              <form onSubmit={handleLogin}>
+                <label>
+                  მომხმარებელი
+                  <LoginInput autoComplete="username" required value={loginName} onChange={(event) => setLoginName(event.target.value)} />
+                </label>
+                <label>
+                  პაროლი
+                  <LoginInput type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} />
+                </label>
+                {loginError && <LoginError role="alert">{loginError}</LoginError>}
+                <LoginActions>
+                  <AuthButton type="button" disabled={isLoggingIn} onClick={() => setIsLoginOpen(false)}>გაუქმება</AuthButton>
+                  <AuthButton $primary type="submit" disabled={isLoggingIn}>{isLoggingIn ? 'მოწმდება...' : 'შესვლა'}</AuthButton>
+                </LoginActions>
+              </form>
+            </LoginDialog>
+          </LoginOverlay>
+        )}
     </HeadDivSty>
   )
 }
@@ -131,6 +181,70 @@ const P1 = styled.p`
   font-weight: 400;
   line-height: 2rem; /* 142.857% */
 `
+
+const AuthButton = styled.button`
+  border: 1px solid ${({ $primary }) => $primary ? '#087b58' : '#d8e1df'};
+  border-radius: .6rem;
+  min-height: 3.6rem;
+  padding: .6rem 1rem;
+  background: ${({ $primary }) => $primary ? '#087b58' : '#fff'};
+  color: ${({ $primary }) => $primary ? '#fff' : '#34464d'};
+  font: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  &:disabled { opacity: .5; cursor: not-allowed; }
+  &:focus-visible { outline: 3px solid #1aac83; outline-offset: 2px; }
+`
+
+const LoginOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 1.6rem;
+  background: rgba(14, 31, 27, .58);
+`
+
+const LoginDialog = styled.div`
+  width: min(100%, 42rem);
+  padding: 2.4rem;
+  border: 1px solid #d8e1df;
+  border-radius: .8rem;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .22);
+  h2 { margin: 0 0 2rem; color: #192b32; font-size: 2rem; }
+  form { display: grid; gap: 1.4rem; }
+  label { display: grid; gap: .6rem; color: #34464d; font-size: 1.4rem; font-weight: 700; }
+`
+
+const LoginInput = styled.input`
+  width: 100%;
+  min-height: 4.4rem;
+  padding: .9rem 1.1rem;
+  border: 1px solid #d8e1df;
+  border-radius: .6rem;
+  background: #f8faf9;
+  color: #192b32;
+  font: inherit;
+  font-size: 1.5rem;
+  &:focus { outline: 2px solid #087b5840; border-color: #087b58; }
+`
+
+const LoginError = styled.p`
+  margin: 0;
+  color: #a52e26;
+  font-size: 1.4rem;
+`
+
+const LoginActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: .8rem;
+  padding-top: .8rem;
+`
+
 const Strong = styled.strong`
   color: #EB5757;
   font-size: 1.5rem;

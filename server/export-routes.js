@@ -1,4 +1,5 @@
 import { getExportStore } from './export-store.js'
+import { requireAdmin } from './admin-auth.js'
 
 const CATEGORY_LABELS = {
   exporters: 'ექსპორტიორი',
@@ -128,6 +129,7 @@ export async function addOption(req, res) {
 }
 
 export async function removeOption(req, res, category, value) {
+  if (!requireAdmin(req, res)) return
   try {
     const list = await getExportStore().removeOption(category, decodeURIComponent(value || ''))
     sendJson(res, 200, {

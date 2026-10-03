@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import * as XLSX from 'xlsx'
 import { Container, Hr, H2 } from './Measurment'
+import { useAdminAuth } from './AdminAuthProvider'
 import {
   fetchExportItems,
   createExportItem,
@@ -76,6 +77,7 @@ const formatCode = (value) => {
 }
 
 const ExportModule = ({ tab = 'active' }) => {
+  const { isAuthenticated } = useAdminAuth()
   const [currentTab, setCurrentTab] = useState(tab)
   const [items, setItems] = useState([])
   const [dropdowns, setDropdowns] = useState({ exporters: [], declarants: [], goods: [] })
@@ -396,7 +398,8 @@ const ExportModule = ({ tab = 'active' }) => {
                       <span>• {option}</span>
                       <DeleteButton
                         type='button'
-                        title='წაშლა'
+                        disabled={!isAuthenticated}
+                        title={isAuthenticated ? 'წაშლა' : 'ავტორიზაცია საჭიროა'}
                         onClick={() => removeDropdownOption(card.category, option)}
                       >
                         ✕
@@ -835,6 +838,11 @@ const DeleteButton = styled.button`
   &:hover {
     background: #ef4444;
     color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 `
 

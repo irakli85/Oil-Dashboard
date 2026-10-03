@@ -1,4 +1,5 @@
 import { Pool } from 'pg'
+import { requireAdmin } from '../../../server/admin-auth.js'
 
 let pool = null
 let initPromise = null
@@ -58,6 +59,7 @@ function rowToItem(row) {
 
 export default async function handler(req, res) {
   if (req.method === 'DELETE') {
+    if (!requireAdmin(req, res)) return
     try {
       await ensureReady()
       const { rowCount } = await pool.query(

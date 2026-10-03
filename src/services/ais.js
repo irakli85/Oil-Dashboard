@@ -1,3 +1,5 @@
+import { getAdminAuthHeaders } from './adminAuth'
+
 const AIS_API_BASE_URL = (import.meta.env.VITE_AIS_API_URL || 'https://oil-dashboard-ais.onrender.com').replace(/\/$/, '')
 const BATUMI_AIS_URL = `${AIS_API_BASE_URL}/api/ais/batumi`
 const BATUMI_AIS_STREAM_URL = `${AIS_API_BASE_URL}/api/ais/batumi/stream`
@@ -25,6 +27,7 @@ export async function dismissBatumiVessel(vessel) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      ...getAdminAuthHeaders(),
     },
     body: JSON.stringify({ mmsi: vessel.mmsi, shipName: vessel.shipName }),
   })

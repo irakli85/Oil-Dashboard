@@ -1,11 +1,19 @@
+import { getAdminAuthHeaders } from './adminAuth'
+
 const BASE_URL = '/api/export'
 
 async function request(path, options = {}) {
   let response
+  const { headers: requestHeaders, ...fetchOptions } = options
   try {
     response = await fetch(`${BASE_URL}${path}`, {
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      ...options,
+      ...fetchOptions,
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        ...getAdminAuthHeaders(),
+        ...requestHeaders,
+      },
     })
   } catch {
     throw new Error('network')

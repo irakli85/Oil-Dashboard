@@ -74,3 +74,22 @@ POSTGRES_URL=<Neon pooled connection string>
 The table is created automatically on the first AIS metadata event. Records
 are keyed by MMSI and keep the first known IMO, vessel type, and name when a
 later AIS position report omits those fields.
+
+### Admin authorization for deletions
+
+Deletion controls in the live vessel list, export settings, and invoice
+management require an admin login. There is no public signup. Configure these
+server-only variables in Vercel for the production and preview environments:
+
+```
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=<strong admin password>
+ADMIN_SESSION_SECRET=<random secret of at least 32 bytes>
+```
+
+Set the same `ADMIN_SESSION_SECRET` on the Render `oil-dashboard-ais` service so
+it can verify admin sessions for vessel dismissals. For local `npm run dev`,
+put all three values in the gitignored project-root `.env` file. Never prefix
+these variables with `VITE_` or commit their values. After changing variables,
+redeploy Vercel and restart/redeploy Render. Admin sessions expire after 12
+hours.

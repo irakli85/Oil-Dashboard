@@ -1,0 +1,1 @@
+export { getAdminSession as default } from '../../server/admin-auth.js'

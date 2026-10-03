@@ -1,4 +1,5 @@
 import { invoiceDb } from './invoice-db.js'
+import { requireAdmin } from './admin-auth.js'
 
 function sendJson(res, status, payload) {
   if (typeof res.status === 'function' && typeof res.json === 'function') {
@@ -56,6 +57,7 @@ function handleError(res, error) {
 }
 
 export default async function invoiceRoutes(req, res) {
+  if (req.method === 'DELETE' && !requireAdmin(req, res)) return
   try {
     const pathname = new URL(req.originalUrl || req.url, 'http://localhost').pathname
     const route = pathname.replace(/^\/api\/invoices(?=\/|$)/, '') || '/'

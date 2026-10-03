@@ -10,6 +10,7 @@ import {
   deleteVessel,
   fetchVessels,
 } from '../services/invoiceApi'
+import { useAdminAuth } from './AdminAuthProvider'
 
 const Page = styled.div`
   --invoice-green: #087b58;
@@ -448,6 +449,7 @@ const exportInvoices = (selectedVessel) => {
 }
 
 const InvoiceManagement = () => {
+  const { isAuthenticated } = useAdminAuth()
   const [vessels, setVessels] = useState([])
   const [selectedVesselId, setSelectedVesselId] = useState(null)
   const [search, setSearch] = useState('')
@@ -502,7 +504,7 @@ const InvoiceManagement = () => {
   }
 
   const removeInvoice = async () => {
-    if (saving) return
+    if (!isAuthenticated || saving) return
     setSaving(true)
     try {
       await deleteInvoice(modal.invoiceId)
@@ -516,7 +518,7 @@ const InvoiceManagement = () => {
   }
 
   const removeVessel = async () => {
-    if (saving) return
+    if (!isAuthenticated || saving) return
     setSaving(true)
     setFormError('')
     try {
@@ -532,6 +534,7 @@ const InvoiceManagement = () => {
   }
 
   const removeClearance = async (clearanceId) => {
+    if (!isAuthenticated) return
     if (!window.confirm('ნამდვილად გსურთ ამ ჩამოწერის გაუქმება? ნაშთი ავტომატურად აღდგება.')) return
     try {
       await deleteClearance(clearanceId)
@@ -589,7 +592,7 @@ const InvoiceManagement = () => {
                       </MetricList>
                     </VesselOpenButton>
                     <VesselDeleteRow>
-                      <VesselDeleteButton type="button" $tone="danger" onClick={() => openVesselDeleteModal(vessel.id)}>გემის წაშლა</VesselDeleteButton>
+                      <VesselDeleteButton type="button" $tone="danger" disabled={!isAuthenticated} title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'} onClick={() => openVesselDeleteModal(vessel.id)}>გემის წაშლა</VesselDeleteButton>
                     </VesselDeleteRow>
                   </VesselCard>
                 )
@@ -641,7 +644,7 @@ const InvoiceManagement = () => {
                       <td><Actions>
                         <Button $tone="green" disabled={remaining <= 0} onClick={() => openModal('clearance', invoice.id)}>განაშთვა</Button>
                         <Button onClick={() => openModal('history', invoice.id)}>დოკუმენტები ({invoice.clearances.length})</Button>
-                        <Button $tone="danger" $iconOnly title="ინვოისის წაშლა" aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
+                        <Button $tone="danger" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'ინვოისის წაშლა' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
                     </tr>
                   })}
@@ -693,7 +696,7 @@ const InvoiceManagement = () => {
             <h2 id="invoice-history-title">ჩამოწერების ისტორია</h2><p>ინვოისი № {selectedInvoice.num}</p>
             <TableWrap><Table style={{ minWidth: '54rem' }}><thead><tr><th>თარიღი/დრო</th><th>საბაჟო დოკუმენტი</th><th>რაოდენობა</th><th aria-label="მოქმედებები" /></tr></thead>
               <tbody>{selectedInvoice.clearances.length === 0 ? <tr><td colSpan="4"><Empty>ჩამოწერები არ მოიძებნა</Empty></td></tr> : selectedInvoice.clearances.map((clearance) => <tr key={clearance.id}>
-                <td>{new Date(clearance.timestamp).toLocaleString('ka-GE')}</td><td><strong>{clearance.doc}</strong></td><td>{number(clearance.qty)} კგ</td><td><Button $tone="danger" onClick={() => removeClearance(clearance.id)}>გაუქმება</Button></td>
+                <td>{new Date(clearance.timestamp).toLocaleString('ka-GE')}</td><td><strong>{clearance.doc}</strong></td><td>{number(clearance.qty)} კგ</td><td><Button $tone="danger" disabled={!isAuthenticated} title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'} onClick={() => removeClearance(clearance.id)}>გაუქმება</Button></td>
               </tr>)}</tbody></Table></TableWrap>
             <FormActions><Button onClick={() => setModal(null)}>დახურვა</Button></FormActions>
           </Dialog>
@@ -706,7 +709,7 @@ const InvoiceManagement = () => {
             <h2 id="invoice-delete-title">ინვოისის წაშლა</h2>
             <p>ნამდვილად გსურთ {selectedInvoice.num}-ის წაშლა? მასთან დაკავშირებული საბაჟო ჩამოწერებიც წაიშლება.</p>
             {formError && <Message $error>{formError}</Message>}
-            <FormActions><Button disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button $tone="danger" disabled={saving} onClick={removeInvoice}>{saving ? 'იშლება...' : 'წაშლა'}</Button></FormActions>
+            <FormActions><Button disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button $tone="danger" disabled={!isAuthenticated || saving} onClick={removeInvoice}>{saving ? 'იშლება...' : 'წაშლა'}</Button></FormActions>
           </Dialog>
         </Overlay>
       )}
@@ -719,7 +722,7 @@ const InvoiceManagement = () => {
             {formError && <Message $error>{formError}</Message>}
             <FormActions>
               <Button disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button>
-              <Button $tone="danger" disabled={saving} onClick={removeVessel}>{saving ? 'იშლება...' : 'გემის წაშლა'}</Button>
+              <Button $tone="danger" disabled={!isAuthenticated || saving} onClick={removeVessel}>{saving ? 'იშლება...' : 'გემის წაშლა'}</Button>
             </FormActions>
           </Dialog>
         </Overlay>

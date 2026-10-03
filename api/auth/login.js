@@ -1,0 +1,1 @@
+export { loginAdmin as default } from '../../server/admin-auth.js'

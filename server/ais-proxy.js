@@ -10,6 +10,7 @@ import {
   removeOption,
 } from './export-routes.js';
 import invoiceRoutes from './invoice-routes.js';
+import { getAdminSession, loginAdmin, requireAdmin } from './admin-auth.js';
 import {
   dismissVessel,
   enrichVessel,
@@ -28,6 +29,8 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
+app.post('/api/auth/login', loginAdmin);
+app.get('/api/auth/session', getAdminSession);
 app.use('/api/invoices', invoiceRoutes);
 
 const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0';
@@ -39,7 +42,7 @@ let currentRadiusKm = 20;
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
 
   if (req.method === 'OPTIONS') {
     res.sendStatus(204);
@@ -318,6 +321,7 @@ function connectAISStream() {
 }
 
 app.post('/api/ais/vessels/dismiss', async (req, res) => {
+  if (!requireAdmin(req, res)) return;
   const vessel = { mmsi: req.body?.mmsi, shipName: req.body?.shipName };
   if (!getVesselIdentifier(vessel)) {
     return res.status(400).json({ error: 'MMSI or ship name is required' });
