@@ -61,12 +61,12 @@ const Header = () => {
             <img src={user} alt="user" />
             <div>
               <P>{isAuthenticated ? username : 'სტუმარი'}</P>
-              <P1>{isAuthenticated ? 'admin' : 'არაა შესული'}</P1>
+              <P1>{isAuthenticated ? 'admin' : 'არ ხართ შესული'}</P1>
             </div>
             {isAuthenticated ? (
               <AuthButton type="button" onClick={logout}>გასვლა</AuthButton>
             ) : (
-              <AuthButton type="button" disabled={!authReady} onClick={() => setIsLoginOpen(true)}>შესვლა</AuthButton>
+              <AuthButton $login type="button" disabled={!authReady} onClick={() => setIsLoginOpen(true)}>შესვლა</AuthButton>
             )}
           </Div3>
         </Div>
@@ -86,7 +86,7 @@ const Header = () => {
                 {loginError && <LoginError role="alert">{loginError}</LoginError>}
                 <LoginActions>
                   <AuthButton type="button" disabled={isLoggingIn} onClick={() => setIsLoginOpen(false)}>გაუქმება</AuthButton>
-                  <AuthButton $primary type="submit" disabled={isLoggingIn}>{isLoggingIn ? 'მოწმდება...' : 'შესვლა'}</AuthButton>
+                  <AuthButton $primary $login type="submit" disabled={isLoggingIn}>{isLoggingIn ? 'მოწმდება...' : 'შესვლა'}</AuthButton>
                 </LoginActions>
               </form>
             </LoginDialog>
@@ -194,6 +194,11 @@ const AuthButton = styled.button`
   font-weight: 700;
   cursor: pointer;
   &:disabled { opacity: .5; cursor: not-allowed; }
+  &:hover:not(:disabled) {
+    border-color: ${({ $login, $primary }) => ($login || $primary) ? '#087b58' : '#d8e1df'};
+    background: ${({ $primary, $login }) => $primary ? '#075f46' : $login ? '#e8f5ef' : '#fff'};
+    color: ${({ $primary, $login }) => $primary ? '#fff' : $login ? '#087b58' : '#34464d'};
+  }
   &:focus-visible { outline: 3px solid #1aac83; outline-offset: 2px; }
 `
 
