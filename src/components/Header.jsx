@@ -64,7 +64,7 @@ const Header = () => {
               <P1>{isAuthenticated ? 'admin' : 'არ ხართ შესული'}</P1>
             </div>
             {isAuthenticated ? (
-              <AuthButton type="button" onClick={logout}>გასვლა</AuthButton>
+              <AuthButton $logout type="button" onClick={logout}>გასვლა</AuthButton>
             ) : (
               <AuthButton $login type="button" disabled={!authReady} onClick={() => setIsLoginOpen(true)}>შესვლა</AuthButton>
             )}
@@ -195,9 +195,9 @@ const AuthButton = styled.button`
   cursor: pointer;
   &:disabled { opacity: .5; cursor: not-allowed; }
   &:hover:not(:disabled) {
-    border-color: ${({ $login, $primary }) => ($login || $primary) ? '#087b58' : '#d8e1df'};
-    background: ${({ $primary, $login }) => $primary ? '#075f46' : $login ? '#e8f5ef' : '#fff'};
-    color: ${({ $primary, $login }) => $primary ? '#fff' : $login ? '#087b58' : '#34464d'};
+    border-color: ${({ $login, $logout, $primary }) => $logout ? '#b42318' : ($login || $primary) ? '#087b58' : '#d8e1df'};
+    background: ${({ $primary, $login, $logout }) => $logout ? '#c63c3c' : $primary ? '#075f46' : $login ? '#e8f5ef' : '#fff'};
+    color: ${({ $primary, $login, $logout }) => ($primary || $logout) ? '#fff' : $login ? '#087b58' : '#34464d'};
   }
   &:focus-visible { outline: 3px solid #1aac83; outline-offset: 2px; }
 `
