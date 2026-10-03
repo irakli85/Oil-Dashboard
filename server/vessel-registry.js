@@ -16,7 +16,7 @@ function getSql() {
 
 async function ensureReady() {
   if (!initPromise) {
-    initPromise = getSql()(`
+    initPromise = getSql().query(`
       CREATE TABLE IF NOT EXISTS vessel_registry (
         mmsi TEXT PRIMARY KEY,
         imo TEXT,
@@ -56,7 +56,7 @@ export async function enrichVessel(vessel) {
 
   try {
     await ensureReady()
-    const rows = await getSql()(
+    const rows = await getSql().query(
       'SELECT imo, ship_type, ship_name FROM vessel_registry WHERE mmsi = $1',
       [key]
     )
@@ -86,7 +86,7 @@ export async function saveVesselRegistry(vessel) {
   try {
     await ensureReady()
     const key = String(vessel.mmsi)
-    await getSql()(
+    await getSql().query(
       `INSERT INTO vessel_registry (mmsi, imo, ship_type, ship_name)
        VALUES ($1, $2, $3, $4)
        ON CONFLICT (mmsi) DO UPDATE SET
