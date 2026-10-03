@@ -235,7 +235,7 @@ const ClearButton = styled.button`
 
 const TableWrapper = styled.div`
   width: 100%;
-  max-height: 46rem;
+  max-height: 64rem;
   overflow: auto;
   margin-top: 1rem;
   border: 1px solid rgba(21, 29, 72, 0.15);

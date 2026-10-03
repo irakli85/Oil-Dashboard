@@ -320,7 +320,7 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                     </motion.div>
 
             <motion.div variants={childrenVariants}>
-                <LinkSty to='/settings'>
+                <LinkSty to='/livemap'>
                     <SvgSettings isClicked={isClicked7}/>
                     <NavP text='გემები' onClick={handleClick7} isClicked={isClicked7}/>
                 </LinkSty>

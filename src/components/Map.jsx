@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import L from 'leaflet'
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
@@ -7,7 +7,6 @@ import ship from '../assets/ship.svg'
 import { subscribeToBatumiVessels } from '../services/ais'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
-const VESSEL_CACHE_KEY = 'oil-dashboard-vessel-cache'
 
 function normalizeVesselName(name) {
   return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
@@ -40,19 +39,6 @@ function readDismissedVessels() {
   }
 }
 
-function readCachedVessels(radiusKm) {
-  try {
-    const stored = JSON.parse(localStorage.getItem(`${VESSEL_CACHE_KEY}-${radiusKm}`) || '[]')
-    return Array.isArray(stored) ? stored : []
-  } catch {
-    return []
-  }
-}
-
-function writeCachedVessels(radiusKm, vessels) {
-  localStorage.setItem(`${VESSEL_CACHE_KEY}-${radiusKm}`, JSON.stringify(vessels))
-}
-
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, (character) => ({
     '&': '&amp;',
@@ -74,16 +60,16 @@ function createVesselIcon(shipName) {
 
 const Map = () => {
   const [selectedRadius, setSelectedRadius] = useState(2)
-  const [vessels, setVessels] = useState(() => readCachedVessels(2))
+  const [vessels, setVessels] = useState([])
   const [dismissedVessels, setDismissedVessels] = useState(readDismissedVessels)
   const [lastUpdated, setLastUpdated] = useState('')
   const [connectionState, setConnectionState] = useState('connecting')
   const [vesselToRemove, setVesselToRemove] = useState(null)
+  const previousRadius = useRef(selectedRadius)
 
   const updateVessels = (nextVessels) => {
     setVessels((currentVessels) => {
       const filteredVessels = nextVessels.filter((vessel) => !isDismissedVessel(vessel, dismissedVessels))
-      if (filteredVessels.length > 0) writeCachedVessels(selectedRadius, filteredVessels)
       return filteredVessels.length > 0 || currentVessels.length === 0 ? filteredVessels : currentVessels
     })
   }
@@ -93,11 +79,7 @@ const Map = () => {
     getVesselKeys(vessel).forEach((key) => nextDismissedVessels.add(key))
     setDismissedVessels(nextDismissedVessels)
     localStorage.setItem(DISMISSED_VESSELS_KEY, JSON.stringify([...nextDismissedVessels]))
-    setVessels((currentVessels) => {
-      const remainingVessels = currentVessels.filter((item) => !isDismissedVessel(item, nextDismissedVessels))
-      writeCachedVessels(selectedRadius, remainingVessels)
-      return remainingVessels
-    })
+    setVessels((currentVessels) => currentVessels.filter((item) => !isDismissedVessel(item, nextDismissedVessels)))
   }
 
   const confirmVesselRemoval = () => {
@@ -107,7 +89,16 @@ const Map = () => {
   }
 
   useEffect(() => {
-    setVessels(readCachedVessels(selectedRadius))
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith('oil-dashboard-vessel-cache-'))
+      .forEach((key) => localStorage.removeItem(key))
+  }, [])
+
+  useEffect(() => {
+    if (previousRadius.current !== selectedRadius) {
+      setVessels([])
+      previousRadius.current = selectedRadius
+    }
 
     const source = subscribeToBatumiVessels(selectedRadius, (nextVessels) => {
       updateVessels(nextVessels)

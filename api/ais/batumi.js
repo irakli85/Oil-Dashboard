@@ -1,4 +1,5 @@
 import WebSocket from 'ws'
+import { enrichVessel, saveVesselRegistry } from '../../server/vessel-registry.js'
 
 export const config = {
   maxDuration: 60,
@@ -227,12 +228,19 @@ export default async function handler(req, res) {
 
   try {
     const vessels = await collectVessels(radiusKm)
+    const liveVessels = vessels.filter((vessel) => Number.isFinite(vessel.latitude) && Number.isFinite(vessel.longitude))
+    const enrichedVessels = await Promise.all(liveVessels.map(async (vessel) => {
+      const enrichedVessel = await enrichVessel(vessel)
+      if (vessel.imo != null || vessel.shipType != null) await saveVesselRegistry(enrichedVessel)
+      return enrichedVessel
+    }))
+
     return res.status(200).json({
       source: 'aisstream',
       port: 'Batumi',
       radiusKm,
       updatedAt: new Date().toISOString(),
-      vessels: vessels.filter((vessel) => Number.isFinite(vessel.latitude) && Number.isFinite(vessel.longitude)),
+      vessels: enrichedVessels,
     })
   } catch (error) {
     console.error('[ais batumi]', error)

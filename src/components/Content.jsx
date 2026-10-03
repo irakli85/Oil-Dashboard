@@ -29,7 +29,7 @@ const Content = () => {
             <Route path='/export/archived' element={<ExportModule tab='archived'/>}/>
             <Route path='/export/settings' element={<ExportModule tab='settings'/>}/>
             <Route path='/invoices' element={<InvoiceManagement/>}/>
-            <Route path='/settings' element={<Map/>}/>
+            <Route path='/livemap' element={<Map/>}/>
           </Routes>
         </ContentDivSty>
     </ContentSty>
