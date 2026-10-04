@@ -3,14 +3,14 @@ import { styled } from 'styled-components'
 import arrow from '../assets/white.svg'
 
 
-function DeepDive({text, children, id, compactMobileTitle = false}) {
+function DeepDive({text, children, id, compactMobileTitle = false, compactMobileButton = false}) {
   const [clicked, setClicked] = useState(false)
   const [drop, setDrop] = useState(0)
 
   return (
     <DiveDivSt id={id}>      
       <DiveH2St $compactMobileTitle={compactMobileTitle}>{text}</DiveH2St>
-      <DiveBtnSt onClick={() => {setClicked(!clicked); drop === 0 ? setDrop(1) : setDrop(0)}}>
+      <DiveBtnSt $compactMobileButton={compactMobileButton} onClick={() => {setClicked(!clicked); drop === 0 ? setDrop(1) : setDrop(0)}}>
         <div><ConceptImgSt src={arrow} alt="arrow" dropdown={drop}/></div>
         <DiveP>დეტალურად</DiveP>       
       </DiveBtnSt>
@@ -57,6 +57,10 @@ const DiveBtnSt = styled.div`
   border-radius: 9999px;
   cursor: pointer;
   align-self: flex-start;  
+
+  @media (max-width: 640px) {
+    ${({ $compactMobileButton }) => $compactMobileButton && 'width: min(100%, 20rem);'}
+  }
 `
 
 const DiveP = styled.p`
