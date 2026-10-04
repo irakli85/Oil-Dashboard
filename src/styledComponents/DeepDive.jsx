@@ -16,7 +16,7 @@ function DeepDive({text, children, id, compactMobileTitle = false}) {
       </DiveBtnSt>
       {
             clicked ?
-                children
+            <DiveContent>{children}</DiveContent>
             :
             null
         }      
@@ -34,7 +34,16 @@ const DiveDivSt = styled.div`
     border-radius: 1rem;
     border: 1px solid #1aac83;
     width: 100%;
+    min-width: 0;
     align-items: center;    
+`
+
+const DiveContent = styled.div`
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 `
 
 const DiveBtnSt = styled.div`
