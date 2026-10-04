@@ -55,6 +55,24 @@ const GlobalStyles = createGlobalStyle`
     background-color: #fff !important;
 }
 
+.vessel-map-label {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vessel-map-icon:hover .vessel-map-label {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.vessel-map-icon:focus-visible .vessel-map-label {
+  opacity: 1;
+  visibility: visible;
+}
+
 `;
 
 
