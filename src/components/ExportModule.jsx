@@ -335,7 +335,7 @@ const ExportModule = ({ tab = 'active' }) => {
             </GhostButton>
           )}
           {currentTab === 'active' && (
-            <SolidButton type='button' onClick={openModal}>+ დამატება</SolidButton>
+            <SolidButton type='button' disabled={!isAuthenticated} onClick={openModal}>+ დამატება</SolidButton>
           )}
         </HeaderActions>
       </HeaderBar>
@@ -671,8 +671,13 @@ const SolidButton = styled.button`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: background 0.2s ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: #ecfdf5;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `
 
