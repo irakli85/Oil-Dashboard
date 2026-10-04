@@ -299,6 +299,7 @@ const ExportModule = ({ tab = 'active' }) => {
         <StatusSelect
           $active={item.status === 'active'}
           value={item.status}
+          disabled={!isAuthenticated}
           onChange={(event) => changeStatus(item.id, event.target.value)}
         >
           <option value='active'>🟢 აქტიური</option>
@@ -393,7 +394,13 @@ const ExportModule = ({ tab = 'active' }) => {
                     setNewOptions((prev) => ({ ...prev, [card.category]: event.target.value }))
                   }
                 />
-                <AddButton type='button' onClick={() => addDropdownOption(card.category)}>+</AddButton>
+                <AddButton
+                  type='button'
+                  disabled={!isAuthenticated}
+                  onClick={() => addDropdownOption(card.category)}
+                >
+                  +
+                </AddButton>
               </SettingsInputRow>
               <SettingsList>
                 {dropdowns[card.category].length === 0 ? (
@@ -769,6 +776,11 @@ const StatusSelect = styled.select`
   font-weight: 600;
   cursor: pointer;
   outline: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `
 
 const SettingsGrid = styled.div`
@@ -824,8 +836,13 @@ const AddButton = styled.button`
   font-weight: 700;
   cursor: pointer;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: #158a69;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `
 
