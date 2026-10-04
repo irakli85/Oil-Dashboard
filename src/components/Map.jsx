@@ -8,7 +8,7 @@ import { dismissBatumiVessel, subscribeToBatumiVessels } from '../services/ais'
 import { useAdminAuth } from './AdminAuthProvider'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
-const vesselIconCache = new Map()
+const vesselIconCache = new globalThis.Map()
 
 function normalizeVesselName(name) {
   return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
