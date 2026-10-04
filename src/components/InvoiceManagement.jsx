@@ -567,7 +567,16 @@ const InvoiceManagement = () => {
         </BannerTitle>
         <BannerActions>
           {selectedVessel && <Button $tone="light" onClick={() => setSelectedVesselId(null)}>← გემების სია</Button>}
-          {!selectedVessel && <Button $tone="light" onClick={() => openModal('vessel')}>+ ახალი გემი</Button>}
+          {!selectedVessel && (
+            <Button
+              $tone="light"
+              disabled={!isAuthenticated}
+              title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'}
+              onClick={() => openModal('vessel')}
+            >
+              + ახალი გემი
+            </Button>
+          )}
         </BannerActions>
       </Banner>
 
@@ -626,7 +635,14 @@ const InvoiceManagement = () => {
             <PanelHead>
               <div><h2>გემის ინვოისები</h2><p>ინვოისები, საბაჟო დოკუმენტები და განაშთვის სტატუსები</p></div>
               <PanelActions>
-                <Button $tone="green" disabled={selectedVessel.totalQty <= sumInvoices(selectedVessel)} onClick={() => openModal('invoice')}>+ ინვოისის დამატება</Button>
+                <Button
+                  $tone="green"
+                  disabled={!isAuthenticated || selectedVessel.totalQty <= sumInvoices(selectedVessel)}
+                  title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'}
+                  onClick={() => openModal('invoice')}
+                >
+                  + ინვოისის დამატება
+                </Button>
                 <Button type="button" disabled={!selectedVessel.invoices.length} onClick={() => exportInvoices(selectedVessel)}>↓ ექსელში ექსპორტი</Button>
               </PanelActions>
             </PanelHead>
@@ -650,7 +666,14 @@ const InvoiceManagement = () => {
                       <td><Progress $tone={status[1]}><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress></td>
                       <td><Badge $tone={status[1]}>{status[0]}</Badge></td>
                       <td><Actions>
-                        <Button $tone="green" disabled={remaining <= 0} onClick={() => openModal('clearance', invoice.id)}>განაშთვა</Button>
+                        <Button
+                          $tone="green"
+                          disabled={!isAuthenticated || remaining <= 0}
+                          title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'}
+                          onClick={() => openModal('clearance', invoice.id)}
+                        >
+                          განაშთვა
+                        </Button>
                         <Button onClick={() => openModal('history', invoice.id)}>დოკუმენტები ({invoice.clearances.length})</Button>
                         <Button $tone="danger" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'ინვოისის წაშლა' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
