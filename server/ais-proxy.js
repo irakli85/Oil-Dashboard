@@ -27,6 +27,7 @@ for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), 
 
 const app = express();
 const port = process.env.PORT || 3001;
+const MAX_RADIUS_KM = 50;
 
 app.use(express.json());
 app.post('/api/auth/login', loginAdmin);
@@ -34,10 +35,9 @@ app.get('/api/auth/session', getAdminSession);
 app.use('/api/invoices', invoiceRoutes);
 
 const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0';
-const clients = new Set();
+const clients = new Map();
 let latestVessels = [];
 let socket = null;
-let currentRadiusKm = 20;
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -88,7 +88,7 @@ function readValue(source, ...keys) {
   return null;
 }
 
-function normalizeVessel(raw, radiusKm = currentRadiusKm) {
+function normalizeVessel(raw, radiusKm = MAX_RADIUS_KM) {
   if (!raw) return null;
 
   const meta = raw?.MetaData || {};
@@ -188,20 +188,23 @@ function normalizeStaticVessel(raw) {
 }
 
 function broadcast(payload) {
-  const message = `data: ${JSON.stringify(payload)}\n\n`;
-
-  for (const client of clients) {
-    client.write(message);
+  for (const [client, radiusKm] of clients) {
+    const vessels = payload.vessels?.filter((vessel) => {
+      return Number.isFinite(vessel.latitude) &&
+        Number.isFinite(vessel.longitude) &&
+        haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, vessel.latitude, vessel.longitude) <= radiusKm;
+    });
+    client.write(`data: ${JSON.stringify({ ...payload, radiusKm, vessels })}\n\n`);
   }
 }
 
 function getRadiusFromRequest(req) {
-  const raw = Number(req?.query?.radiusKm ?? currentRadiusKm);
+  const raw = Number(req?.query?.radiusKm ?? 20);
   if (!Number.isFinite(raw) || raw <= 0) {
-    return currentRadiusKm;
+    return 20;
   }
 
-  return Math.min(raw, 50);
+  return Math.min(raw, MAX_RADIUS_KM);
 }
 
 function upsertVessel(vessel) {
@@ -230,12 +233,6 @@ function upsertVessel(vessel) {
 
     return item;
   });
-}
-
-function setRadiusFromRequest(req) {
-  const nextRadius = getRadiusFromRequest(req);
-  currentRadiusKm = nextRadius;
-  return currentRadiusKm;
 }
 
 function connectAISStream() {
@@ -274,7 +271,7 @@ function connectAISStream() {
         });
       }
 
-      const vessel = normalizeVessel(event, currentRadiusKm);
+      const vessel = normalizeVessel(event, MAX_RADIUS_KM);
       const staticVessel = vessel ? null : normalizeStaticVessel(event);
       const nextVessel = vessel || staticVessel;
       if (nextVessel) {
@@ -297,7 +294,6 @@ function connectAISStream() {
           type: 'update',
           updatedAt: new Date().toISOString(),
           vessels: latestVessels,
-          radiusKm: currentRadiusKm,
         });
       }
     } catch (error) {
@@ -338,7 +334,6 @@ app.post('/api/ais/vessels/dismiss', async (req, res) => {
       type: 'update',
       updatedAt: new Date().toISOString(),
       vessels: latestVessels,
-      radiusKm: currentRadiusKm,
     });
     return res.status(200).json({ ok: true });
   } catch (error) {
@@ -348,7 +343,7 @@ app.post('/api/ais/vessels/dismiss', async (req, res) => {
 });
 
 app.get('/api/ais/batumi', async (req, res) => {
-  const radiusKm = setRadiusFromRequest(req);
+  const radiusKm = getRadiusFromRequest(req);
 
   try {
     const visibleVessels = await filterDismissedVessels(latestVessels.filter((vessel) => {
@@ -379,7 +374,7 @@ app.get('/api/ais/health', (req, res) => {
 });
 
 app.get('/api/ais/batumi/stream', async (req, res) => {
-  const radiusKm = setRadiusFromRequest(req);
+  const radiusKm = getRadiusFromRequest(req);
 
   let visibleVessels;
   try {
@@ -394,8 +389,13 @@ app.get('/api/ais/batumi/stream', async (req, res) => {
   res.setHeader('Connection', 'keep-alive');
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  clients.add(res);
-  res.write(`data: ${JSON.stringify({ type: 'connected', radiusKm, vessels: visibleVessels })}\n\n`);
+  clients.set(res, radiusKm);
+  const radiusVessels = visibleVessels.filter((vessel) => {
+    return Number.isFinite(vessel.latitude) &&
+      Number.isFinite(vessel.longitude) &&
+      haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, vessel.latitude, vessel.longitude) <= radiusKm;
+  });
+  res.write(`data: ${JSON.stringify({ type: 'connected', radiusKm, vessels: radiusVessels })}\n\n`);
 
   req.on('close', () => {
     clients.delete(res);

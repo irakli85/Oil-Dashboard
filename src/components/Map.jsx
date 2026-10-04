@@ -53,7 +53,7 @@ function createVesselIcon(shipName) {
 }
 
 const Map = () => {
-  const { isAuthenticated } = useAdminAuth()
+  const { authReady, isAuthenticated } = useAdminAuth()
   const [selectedRadius, setSelectedRadius] = useState(2)
   const [vessels, setVessels] = useState([])
   const [dismissalsReady, setDismissalsReady] = useState(false)
@@ -97,6 +97,16 @@ const Map = () => {
   useEffect(() => {
     let active = true
 
+    if (!authReady) return () => { active = false }
+
+    if (!isAuthenticated) {
+      setRemovalError('')
+      setDismissalsReady(true)
+      return () => { active = false }
+    }
+
+    setDismissalsReady(false)
+
     const migrateLegacyDismissals = async () => {
       let legacyIdentifiers = []
       try {
@@ -112,15 +122,17 @@ const Map = () => {
           await dismissBatumiVessel(vessel)
         }
         localStorage.removeItem(DISMISSED_VESSELS_KEY)
-        if (active) setDismissalsReady(true)
+        if (active) setRemovalError('')
       } catch {
         if (active) setRemovalError('წაშლილი გემების სიის სინქრონიზაცია ვერ მოხერხდა. განაახლეთ გვერდი.')
+      } finally {
+        if (active) setDismissalsReady(true)
       }
     }
 
     migrateLegacyDismissals()
     return () => { active = false }
-  }, [])
+  }, [authReady, isAuthenticated])
 
   useEffect(() => {
     if (!dismissalsReady) return undefined
