@@ -75,6 +75,12 @@ The table is created automatically on the first AIS metadata event. Records
 are keyed by MMSI and keep the first known IMO, vessel type, and name when a
 later AIS position report omits those fields.
 
+The proxy also maintains a `latest_vessel_positions` snapshot in Neon. It is
+updated in batches while AIS data changes and restored when the Render service
+starts, so a process restart does not leave the live map waiting for every ship
+to report again. This stores only the latest position per MMSI, not a position
+history.
+
 ### Admin authorization for deletions
 
 Deletion controls in the live vessel list, export settings, and invoice

@@ -18,7 +18,9 @@ import {
   getVesselIdentifier,
   getVesselIdentifiers,
   isVesselDismissed,
+  loadLatestVesselPositions,
   saveVesselRegistry,
+  saveLatestVesselPositions,
 } from './vessel-registry.js';
 
 for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
@@ -38,6 +40,8 @@ const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0';
 const clients = new Map();
 let latestVessels = [];
 let socket = null;
+let snapshotSaveTimer = null;
+let snapshotSavePromise = Promise.resolve();
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -235,6 +239,15 @@ function upsertVessel(vessel) {
   });
 }
 
+function scheduleSnapshotSave() {
+  if (snapshotSaveTimer) return;
+
+  snapshotSaveTimer = setTimeout(() => {
+    snapshotSaveTimer = null;
+    snapshotSavePromise = snapshotSavePromise.then(() => saveLatestVesselPositions(latestVessels));
+  }, 5000);
+}
+
 function connectAISStream() {
   if (socket && socket.readyState === WebSocket.OPEN) {
     return;
@@ -289,6 +302,7 @@ function connectAISStream() {
           await saveVesselRegistry(enrichedVessel);
           upsertVessel(enrichedVessel);
         }
+        scheduleSnapshotSave();
         broadcast({
           source: 'aisstream',
           type: 'update',
@@ -316,7 +330,18 @@ function connectAISStream() {
   });
 }
 
+const snapshotReady = loadLatestVesselPositions()
+  .then(async (savedVessels) => {
+    latestVessels = await filterDismissedVessels(savedVessels);
+    if (latestVessels.length !== savedVessels.length) scheduleSnapshotSave();
+  })
+  .catch((error) => {
+    console.error('[ais snapshot restore]', error);
+  })
+  .finally(() => connectAISStream());
+
 app.post('/api/ais/vessels/dismiss', async (req, res) => {
+  await snapshotReady;
   if (!requireAdmin(req, res)) return;
   const vessel = { mmsi: req.body?.mmsi, shipName: req.body?.shipName };
   if (!getVesselIdentifier(vessel)) {
@@ -329,6 +354,7 @@ app.post('/api/ais/vessels/dismiss', async (req, res) => {
     latestVessels = latestVessels.filter((item) =>
       !getVesselIdentifiers(item).some((identifier) => identifiers.has(identifier))
     );
+    scheduleSnapshotSave();
     broadcast({
       source: 'aisstream',
       type: 'update',
@@ -343,6 +369,7 @@ app.post('/api/ais/vessels/dismiss', async (req, res) => {
 });
 
 app.get('/api/ais/batumi', async (req, res) => {
+  await snapshotReady;
   const radiusKm = getRadiusFromRequest(req);
 
   try {
@@ -364,7 +391,8 @@ app.get('/api/ais/batumi', async (req, res) => {
   }
 });
 
-app.get('/api/ais/health', (req, res) => {
+app.get('/api/ais/health', async (req, res) => {
+  await snapshotReady;
   res.json({
     status: 'ok',
     socket: socket?.readyState === WebSocket.OPEN ? 'connected' : 'connecting',
@@ -374,6 +402,7 @@ app.get('/api/ais/health', (req, res) => {
 });
 
 app.get('/api/ais/batumi/stream', async (req, res) => {
+  await snapshotReady;
   const radiusKm = getRadiusFromRequest(req);
 
   let visibleVessels;
@@ -410,8 +439,6 @@ app.post('/api/export/options', addOption);
 app.delete('/api/export/options/:category/:value', (req, res) =>
   removeOption(req, res, req.params.category, req.params.value)
 );
-
-connectAISStream();
 
 app.listen(port, () => {
   console.log(`AIS proxy is running on http://localhost:${port}`);

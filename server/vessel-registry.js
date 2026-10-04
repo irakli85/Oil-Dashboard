@@ -36,6 +36,22 @@ async function ensureReady() {
           dismissed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
       `)
+      await getSql().query(`
+        CREATE TABLE IF NOT EXISTS latest_vessel_positions (
+          mmsi TEXT PRIMARY KEY,
+          imo TEXT,
+          ship_type TEXT,
+          ship_name TEXT,
+          latitude DOUBLE PRECISION NOT NULL,
+          longitude DOUBLE PRECISION NOT NULL,
+          sog DOUBLE PRECISION,
+          cog DOUBLE PRECISION,
+          message_type TEXT,
+          distance_km DOUBLE PRECISION NOT NULL,
+          last_seen TIMESTAMPTZ NOT NULL,
+          updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        )
+      `)
     })().catch((error) => {
       initPromise = null
       throw error
@@ -185,6 +201,110 @@ export async function saveVesselRegistry(vessel) {
   } catch (error) {
     if (!warnedDatabase) {
       console.error('[vessel registry] save unavailable:', error.message)
+      warnedDatabase = true
+    }
+  }
+}
+
+export async function loadLatestVesselPositions() {
+  try {
+    await ensureReady()
+    const rows = await getSql().query(`
+      SELECT mmsi, imo, ship_type, ship_name, latitude, longitude,
+             sog, cog, message_type, distance_km, last_seen
+      FROM latest_vessel_positions
+      WHERE distance_km <= 50
+      ORDER BY last_seen DESC
+      LIMIT 50
+    `)
+
+    return rows.map((row) => ({
+      mmsi: row.mmsi,
+      imo: row.imo,
+      shipType: row.ship_type,
+      shipName: row.ship_name || 'Unknown vessel',
+      latitude: Number(row.latitude),
+      longitude: Number(row.longitude),
+      sog: row.sog == null ? null : Number(row.sog),
+      cog: row.cog == null ? null : Number(row.cog),
+      messageType: row.message_type || 'PositionReport',
+      distanceKm: Number(row.distance_km),
+      lastSeen: new Date(row.last_seen).toISOString(),
+    }))
+  } catch (error) {
+    if (!warnedDatabase) {
+      console.error('[vessel snapshot] load unavailable:', error.message)
+      warnedDatabase = true
+    }
+    return []
+  }
+}
+
+export async function saveLatestVesselPositions(vessels) {
+  const snapshot = vessels
+    .filter((vessel) => vessel?.mmsi &&
+      Number.isFinite(Number(vessel.latitude)) &&
+      Number.isFinite(Number(vessel.longitude)) &&
+      Number.isFinite(Number(vessel.distanceKm)))
+    .map((vessel) => ({
+      mmsi: String(vessel.mmsi),
+      imo: vessel.imo == null ? null : String(vessel.imo),
+      ship_type: vessel.shipType == null ? null : String(vessel.shipType),
+      ship_name: vessel.shipName || 'Unknown vessel',
+      latitude: Number(vessel.latitude),
+      longitude: Number(vessel.longitude),
+      sog: vessel.sog == null ? null : Number(vessel.sog),
+      cog: vessel.cog == null ? null : Number(vessel.cog),
+      message_type: vessel.messageType || 'PositionReport',
+      distance_km: Number(vessel.distanceKm),
+      last_seen: vessel.lastSeen || new Date().toISOString(),
+    }))
+
+  try {
+    await ensureReady()
+    await getSql().query(`
+      WITH incoming AS (
+        SELECT *
+        FROM jsonb_to_recordset($1::jsonb) AS position(
+          mmsi TEXT,
+          imo TEXT,
+          ship_type TEXT,
+          ship_name TEXT,
+          latitude DOUBLE PRECISION,
+          longitude DOUBLE PRECISION,
+          sog DOUBLE PRECISION,
+          cog DOUBLE PRECISION,
+          message_type TEXT,
+          distance_km DOUBLE PRECISION,
+          last_seen TIMESTAMPTZ
+        )
+      ), removed AS (
+        DELETE FROM latest_vessel_positions
+        WHERE mmsi NOT IN (SELECT mmsi FROM incoming)
+      )
+      INSERT INTO latest_vessel_positions (
+        mmsi, imo, ship_type, ship_name, latitude, longitude,
+        sog, cog, message_type, distance_km, last_seen, updated_at
+      )
+      SELECT mmsi, imo, ship_type, ship_name, latitude, longitude,
+             sog, cog, message_type, distance_km, last_seen, NOW()
+      FROM incoming
+      ON CONFLICT (mmsi) DO UPDATE SET
+        imo = COALESCE(EXCLUDED.imo, latest_vessel_positions.imo),
+        ship_type = COALESCE(EXCLUDED.ship_type, latest_vessel_positions.ship_type),
+        ship_name = COALESCE(EXCLUDED.ship_name, latest_vessel_positions.ship_name),
+        latitude = EXCLUDED.latitude,
+        longitude = EXCLUDED.longitude,
+        sog = EXCLUDED.sog,
+        cog = EXCLUDED.cog,
+        message_type = EXCLUDED.message_type,
+        distance_km = EXCLUDED.distance_km,
+        last_seen = EXCLUDED.last_seen,
+        updated_at = NOW()
+    `, [JSON.stringify(snapshot)])
+  } catch (error) {
+    if (!warnedDatabase) {
+      console.error('[vessel snapshot] save unavailable:', error.message)
       warnedDatabase = true
     }
   }
