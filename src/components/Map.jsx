@@ -260,18 +260,35 @@ const Map = () => {
 
 const Container = styled.div`
   width: 100%;
+  min-width: 0;
   display: flex;
+
+  @media (max-width: 640px) {
+    height: 65vh;
+    gap: 0.8rem;
+    align-items: stretch;
+  }
 `
 
 const Aside = styled.div`
   width: 25%;
+  min-width: 0;
   background-color: white;
   padding: 1rem;
+
+  @media (max-width: 640px) {
+    width: auto;
+    flex: 0 0 40%;
+    height: 100%;
+    padding: 0.8rem;
+    overflow-y: auto;
+  }
 `
 
 const VesselCard = styled.div`
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 12px;
   padding: 10px 0;
   border-bottom: 1px solid #f0f0f0;
@@ -279,6 +296,7 @@ const VesselCard = styled.div`
   img {
     width: 24px;
     height: 24px;
+    flex: 0 0 24px;
   }
 
   div {
@@ -286,17 +304,41 @@ const VesselCard = styled.div`
     flex-direction: column;
     gap: 2px;
     flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   strong {
     font-size: 15px;
     line-height: 1.2;
+    overflow-wrap: anywhere;
   }
 
   p {
     margin: 0;
     font-size: 12px;
     color: #555;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 640px) {
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 0;
+
+    img {
+      width: 18px;
+      height: 18px;
+      flex-basis: 18px;
+    }
+
+    strong {
+      font-size: 12px;
+    }
+
+    p {
+      font-size: 10px;
+    }
   }
 `
 
@@ -321,12 +363,23 @@ const RemoveButton = styled.button`
     opacity: 0.4;
     cursor: not-allowed;
   }
+
+  @media (max-width: 640px) {
+    flex: 0 0 auto;
+    padding: 4px;
+    font-size: 14px;
+  }
 `
 
 const RadiusControls = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 12px;
+
+  @media (max-width: 640px) {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
 `
 
 const RadiusButton = styled.button`
@@ -339,6 +392,10 @@ const RadiusButton = styled.button`
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
+
+  @media (max-width: 640px) {
+    padding: 6px 8px;
+  }
 
   &:hover {
     opacity: 0.95;
@@ -380,8 +437,15 @@ const EmptyState = styled.div`
 const Content = styled.div`
   position: relative;
   width: 75%;
+  min-width: 0;
   height: 100vh;
   background-color: gainsboro;
+
+  @media (max-width: 640px) {
+    width: auto;
+    flex: 1 1 0;
+    height: 100%;
+  }
 `
 
 const LiveMap = styled(MapContainer)`

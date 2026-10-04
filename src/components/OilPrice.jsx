@@ -9,7 +9,7 @@ const OilPrice = () => {
     
 <Container>        
     <PriceCalc/>
-    <DeepDive text='ნავთობპროდუქტების მაქსიმალური ფასები კოდების მიხედვით'>
+    <DeepDive compactMobileTitle text='ნავთობპროდუქტების მაქსიმალური ფასები კოდების მიხედვით'>
         <H2>ნედლი ნავთობის ფასი</H2>
         <TableScroll><Table
                 width={240}

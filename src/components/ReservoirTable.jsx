@@ -12,7 +12,7 @@ const ReservoirTable = ({
   const emptyCellCount = showYear ? 3 : 2
 
   return (
-    <DeepDive text={title} id={id}>
+    <DeepDive text={title} id={id} compactMobileTitle>
       <TableScroll>
         <Table
           style={{

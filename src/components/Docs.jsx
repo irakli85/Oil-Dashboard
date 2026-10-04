@@ -162,6 +162,11 @@ const Img = styled.img`
 
 const DivHead = styled.div`
   position: relative;
+
+  @media (max-width: 640px) {
+    width: min(calc(100% + 3.2rem + 50px), calc(100vw - 1.8rem));
+    margin-left: 0;
+  }
 `
 
 const DivBody = styled(motion.div)`
@@ -188,6 +193,10 @@ const P = styled.p`
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0 1.5rem;
+
+  @media (max-width: 640px) {
+    padding: 0 0.8rem;
+  }
 `
 const DivItem = styled(motion.div)`
   display: flex;
@@ -209,6 +218,10 @@ const DivItem1 = styled.div`
   @media (max-width: 560px) {
     align-items: flex-start;
     flex-direction: column;
+
+    img {
+      display: none;
+    }
   }
 `
 const Pitem = styled.p`

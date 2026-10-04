@@ -60,6 +60,18 @@ const ExportNavItem = styled.div`
   width: 100%;
 `
 
+const DesktopWorld = styled.div`
+  @media (max-width: 980px) {
+    display: none;
+  }
+`
+
+const DesktopCopyRight = styled(CopyRight)`
+  @media (max-width: 980px) {
+    display: none;
+  }
+`
+
 const InvoiceNavIconWrap = styled.span`
   display: grid;
   place-items: center;
@@ -291,8 +303,8 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                 </LinkSty>
             </motion.div>
         </NavDivSty>
-        <SvgWorld/>
-        <CopyRight>2023 © All Rights Reserved </CopyRight>
+        <DesktopWorld><SvgWorld /></DesktopWorld>
+        <DesktopCopyRight>2023 © All Rights Reserved </DesktopCopyRight>
     </NavCont>
   )
 }
