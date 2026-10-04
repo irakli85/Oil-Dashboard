@@ -8,9 +8,14 @@ import { dismissBatumiVessel, subscribeToBatumiVessels } from '../services/ais'
 import { useAdminAuth } from './AdminAuthProvider'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
+const vesselIconCache = new Map()
 
 function normalizeVesselName(name) {
   return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
+}
+
+function getVesselKey(vessel) {
+  return vessel.mmsi ? `mmsi:${vessel.mmsi}` : `name:${normalizeVesselName(vessel.shipName)}`
 }
 
 function hasCoordinates(vessel) {
@@ -44,12 +49,26 @@ function escapeHtml(value) {
 }
 
 function createVesselIcon(shipName) {
-  return L.divIcon({
+  const iconName = String(shipName || 'Unknown vessel')
+  const cachedIcon = vesselIconCache.get(iconName)
+  if (cachedIcon) {
+    vesselIconCache.delete(iconName)
+    vesselIconCache.set(iconName, cachedIcon)
+    return cachedIcon
+  }
+
+  const icon = L.divIcon({
     className: 'vessel-map-icon',
-    html: `<span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><i style="display:block;flex:0 0 16px;width:16px;height:16px;background:#d92d20;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px rgba(217,45,32,.25)"></i><b style="background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(shipName)}</b></span>`,
+    html: `<span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><i style="display:block;flex:0 0 16px;width:16px;height:16px;background:#d92d20;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px rgba(217,45,32,.25)"></i><b style="background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(iconName)}</b></span>`,
     iconSize: [180, 32],
     iconAnchor: [8, 16],
   })
+
+  vesselIconCache.set(iconName, icon)
+  if (vesselIconCache.size > 100) {
+    vesselIconCache.delete(vesselIconCache.keys().next().value)
+  }
+  return icon
 }
 
 const Map = () => {
@@ -138,7 +157,9 @@ const Map = () => {
     if (!dismissalsReady) return undefined
 
     if (previousRadius.current !== selectedRadius) {
-      setVessels([])
+      setVessels((currentVessels) => currentVessels.filter((vessel) => {
+        return hasDistanceData(vessel) && Number(vessel.distanceKm) <= selectedRadius
+      }))
       previousRadius.current = selectedRadius
     }
 
@@ -189,8 +210,8 @@ const Map = () => {
             {vessels.length === 0 ? 'No live AIS data received for this radius.' : 'Waiting for vessel distance data.'}
           </EmptyState>
         ) : (
-          vesselsWithDistance.map((vessel, index) => (
-            <VesselCard key={vessel.mmsi || `${vessel.shipName}-${index}`}>
+          vesselsWithDistance.map((vessel) => (
+            <VesselCard key={getVesselKey(vessel)}>
               <img src={ship} alt="ship" />
               <div>
                 <strong>{vessel.shipName}</strong>
@@ -219,9 +240,9 @@ const Map = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {vessels.filter(hasCoordinates).map((vessel, index) => (
+          {vessels.filter(hasCoordinates).map((vessel) => (
             <LeafletMarker
-              key={vessel.mmsi || `${vessel.shipName}-${index}`}
+              key={getVesselKey(vessel)}
               position={[vessel.latitude, vessel.longitude]}
               icon={createVesselIcon(vessel.shipName)}
             >
