@@ -62,6 +62,10 @@ const GlobalStyles = createGlobalStyle`
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .vessel-map-icon:hover {
+    z-index: 10000 !important;
+  }
+
   .vessel-map-icon:hover .vessel-map-label {
     opacity: 1;
     visibility: visible;
