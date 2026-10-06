@@ -59,8 +59,12 @@ function handleError(res, error) {
 export default async function invoiceRoutes(req, res) {
   if (req.method === 'DELETE' && !requireAdmin(req, res)) return
   try {
-    const pathname = new URL(req.originalUrl || req.url, 'http://localhost').pathname
-    const route = pathname.replace(/^\/api\/invoices(?=\/|$)/, '') || '/'
+    const requestUrl = new URL(req.originalUrl || req.url, 'http://localhost')
+    const pathname = requestUrl.pathname
+    const routeOverride = pathname === '/api/invoices/vessels'
+      ? requestUrl.searchParams.get('route')
+      : null
+    const route = routeOverride || pathname.replace(/^\/api\/invoices(?=\/|$)/, '') || '/'
 
     if (req.method === 'GET' && route === '/vessels') {
       sendJson(res, 200, { vessels: await invoiceDb.getVessels() })

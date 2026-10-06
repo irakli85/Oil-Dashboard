@@ -15,7 +15,7 @@ async function request(path, options = {}) {
   let response
   const { headers: requestHeaders, ...fetchOptions } = options
   try {
-    response = await fetch(`${BASE_URL}${path}`, {
+    response = await fetch(`${BASE_URL}/vessels?route=${encodeURIComponent(path)}`, {
       ...fetchOptions,
       headers: {
         'Content-Type': 'application/json',
