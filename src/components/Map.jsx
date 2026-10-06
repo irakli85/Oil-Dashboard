@@ -40,6 +40,20 @@ function formatVesselType(type) {
   return String(type)
 }
 
+function getVesselMarkerColor(type) {
+  const code = Number(type)
+  if (Number.isFinite(code)) {
+    if (code >= 80 && code <= 89) return '#d92d20'
+    if (code === 60) return '#2563eb'
+    return '#16a34a'
+  }
+
+  const normalizedType = String(type || '').toLowerCase()
+  if (normalizedType.includes('tanker')) return '#d92d20'
+  if (normalizedType.includes('ro-ro') || normalizedType.includes('roro')) return '#2563eb'
+  return '#16a34a'
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, (character) => ({
     '&': '&amp;',
@@ -50,23 +64,25 @@ function escapeHtml(value) {
   })[character])
 }
 
-function createVesselIcon(shipName) {
+function createVesselIcon(shipName, shipType) {
   const iconName = String(shipName || 'Unknown vessel')
-  const cachedIcon = vesselIconCache.get(iconName)
+  const markerColor = getVesselMarkerColor(shipType)
+  const cacheKey = `${iconName}:${markerColor}`
+  const cachedIcon = vesselIconCache.get(cacheKey)
   if (cachedIcon) {
-    vesselIconCache.delete(iconName)
-    vesselIconCache.set(iconName, cachedIcon)
+    vesselIconCache.delete(cacheKey)
+    vesselIconCache.set(cacheKey, cachedIcon)
     return cachedIcon
   }
 
   const icon = L.divIcon({
     className: 'vessel-map-icon',
-    html: `<span style="display:flex;align-items:center;gap:6px;white-space:nowrap"><i style="display:block;flex:0 0 16px;width:16px;height:16px;background:#d92d20;border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px rgba(217,45,32,.25)"></i><b class="vessel-map-label" style="background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(iconName)}</b></span>`,
-    iconSize: [180, 32],
-    iconAnchor: [8, 16],
+    html: `<span style="position:absolute;top:0;left:0;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none"><i style="display:block;flex:0 0 16px;width:16px;height:16px;background:${markerColor};border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px ${markerColor}40;pointer-events:auto"></i><b class="vessel-map-label" style="pointer-events:none;background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(iconName)}</b></span>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
   })
 
-  vesselIconCache.set(iconName, icon)
+  vesselIconCache.set(cacheKey, icon)
   if (vesselIconCache.size > 100) {
     vesselIconCache.delete(vesselIconCache.keys().next().value)
   }
@@ -246,7 +262,7 @@ const Map = () => {
             <LeafletMarker
               key={getVesselKey(vessel)}
               position={[vessel.latitude, vessel.longitude]}
-              icon={createVesselIcon(vessel.shipName)}
+              icon={createVesselIcon(vessel.shipName, vessel.shipType)}
             >
               <Popup>
                 <strong>{vessel.shipName}</strong>
@@ -474,6 +490,28 @@ const Content = styled.div`
 const LiveMap = styled(MapContainer)`
   width: 100%;
   height: 100%;
+
+  && .leaflet-popup-content {
+    min-width: 180px;
+    margin: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  && .leaflet-popup-content * {
+    font-size: 14px;
+  }
+
+  && .leaflet-popup-close-button {
+    width: 28px;
+    height: 28px;
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  && .leaflet-popup-close-button:hover {
+    color: #d92d20;
+  }
 `
 
 const ModalOverlay = styled.div`
