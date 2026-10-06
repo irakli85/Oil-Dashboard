@@ -216,10 +216,10 @@ const Map = () => {
         <StatusRow>
           <StatusDot state={connectionState} />
           <StatusLabel>
-            {connectionState === 'live' ? 'Live AIS feed' : connectionState === 'offline' ? 'Offline' : 'Connecting...'}
+            {connectionState === 'live' ? 'Live' : connectionState === 'offline' ? 'Offline' : 'Connecting...'}
           </StatusLabel>
         </StatusRow>
-        <StatusText>{lastUpdated ? `Updated: ${lastUpdated}` : 'Waiting for data...'}</StatusText>
+        <StatusText>{lastUpdated ? `ბოლო განახლება: ${lastUpdated}` : 'Waiting for data...'}</StatusText>
 
         {!dismissalsReady ? (
           <EmptyState>{removalError || 'Checking previously removed vessels...'}</EmptyState>
@@ -449,11 +449,48 @@ const StatusRow = styled.div`
 `
 
 const StatusDot = styled.span`
+  position: relative;
+  isolation: isolate;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: ${({ state }) => state === 'live' ? '#1db954' : state === 'offline' ? '#d93025' : '#f59e0b'};
   box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+
+  ${({ state }) => state === 'live' && `
+    &::before,
+    &::after {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border: 1px solid #1db954;
+      border-radius: 50%;
+      content: '';
+      animation: live-status-pulse 2s ease-out infinite;
+    }
+
+    &::after {
+      animation-delay: 1s;
+    }
+
+    @keyframes live-status-pulse {
+      from {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      to {
+        transform: scale(3);
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &::before,
+      &::after {
+        animation: none;
+      }
+    }
+  `}
 `
 
 const StatusLabel = styled.div`
