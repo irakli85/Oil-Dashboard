@@ -2,6 +2,15 @@ import { getAdminAuthHeaders } from './adminAuth'
 
 const BASE_URL = '/api/invoices'
 
+function getErrorMessage(value) {
+  if (typeof value === 'string') return value.trim() || null
+  if (!value || typeof value !== 'object') return null
+
+  return getErrorMessage(value.message) ||
+    getErrorMessage(value.error) ||
+    getErrorMessage(value.detail)
+}
+
 async function request(path, options = {}) {
   let response
   const { headers: requestHeaders, ...fetchOptions } = options
@@ -20,7 +29,13 @@ async function request(path, options = {}) {
   }
 
   const data = await response.json().catch(() => ({}))
-  if (!response.ok) throw new Error(data?.error || 'მოთხოვნა ვერ შესრულდა')
+  if (!response.ok) {
+    throw new Error(
+      getErrorMessage(data?.error) ||
+      getErrorMessage(data?.message) ||
+      'მოთხოვნა ვერ შესრულდა'
+    )
+  }
   return data
 }
 
