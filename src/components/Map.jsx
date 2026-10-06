@@ -10,6 +10,37 @@ import { useAdminAuth } from './AdminAuthProvider'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
 const vesselIconCache = new globalThis.Map()
+const BERTHS = [
+  { number: 1, latitude: 41.65018029609214, longitude: 41.64925556545735 },
+  { number: 2, latitude: 41.65053303263249, longitude: 41.65195923214436 },
+  { number: 3, latitude: 41.650885767241405, longitude: 41.65431835138273 },
+  { number: 4, latitude: 41.64982755762035, longitude: 41.65646542833763 },
+  { number: 5, latitude: 41.648576923838924, longitude: 41.657366514489446 },
+  { number: 6, latitude: 41.646684893253514, longitude: 41.65710829100909 },
+  { number: 7, latitude: 41.64636420459651, longitude: 41.65419077901581 },
+  { number: 8, latitude: 41.646684893253514, longitude: 41.65174349876704 },
+  { number: 9, latitude: 41.646428342455614, longitude: 41.64908244125058 },
+  { number: 10, latitude: 41.64821615958242, longitude: 41.64485732950579 },
+  { number: 11, latitude: 41.65043683194939, longitude: 41.64439607885591 },
+]
+
+function createBerthIcon(number) {
+  return L.divIcon({
+    className: 'berth-map-icon',
+    html: `<span style="display:block;color:#5d5fef;font:800 15px/1 Arial,sans-serif">${number}</span>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9],
+  })
+}
+
+function createCbmIcon() {
+  return L.divIcon({
+    className: 'berth-map-icon',
+    html: `<span style="display:block;color:#5d5fef;font:800 13px/1 Arial,sans-serif">CBM</span>`,
+    iconSize: [34, 18],
+    iconAnchor: [17, 9],
+  })
+}
 
 function normalizeVesselName(name) {
   return String(name || '').trim().replace(/\s+/g, ' ').toUpperCase()
@@ -261,6 +292,23 @@ const Map = () => {
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+
+          {BERTHS.map((berth) => (
+            <LeafletMarker
+              key={`berth-${berth.number}`}
+              position={[berth.latitude, berth.longitude]}
+              icon={createBerthIcon(berth.number)}
+              interactive={false}
+              zIndexOffset={1000}
+            />
+          ))}
+
+          <LeafletMarker
+            position={[41.651591230664856, 41.64852365727373]}
+            icon={createCbmIcon()}
+            interactive={false}
+            zIndexOffset={1001}
           />
 
           {vessels.filter(hasCoordinates).map((vessel) => (
