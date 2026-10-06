@@ -33,7 +33,7 @@ function formatVesselType(type) {
   if (!Number.isFinite(code)) return String(type || '')
   if (code === 0) return 'Other'
   if (code === 60) return 'Ro-Ro'
-  if (code === 70 || code === 79) return 'Cargo'
+  if (code === 70 || code === 79) return 'Bulker'
   if (code === 80 || code === 89) return 'Tanker'
   if (code >= 71 && code <= 74) return `Cargo - hazardous category ${code - 70}`
   if (code >= 81 && code <= 84) return `Tanker - hazardous category ${code - 80}`
