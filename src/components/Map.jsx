@@ -50,6 +50,14 @@ function getVesselKey(vessel) {
   return vessel.mmsi ? `mmsi:${vessel.mmsi}` : `name:${normalizeVesselName(vessel.shipName)}`
 }
 
+function getVesselImo(vessel) {
+  const imo = String(vessel.imo ?? '').trim()
+  if (normalizeVesselName(vessel.shipName) === 'UNIMAR LIVESTOCK' && imo === '702182100') {
+    return imo.slice(0, -2)
+  }
+  return imo
+}
+
 function hasCoordinates(vessel) {
   return vessel.latitude != null && vessel.longitude != null &&
     Number.isFinite(Number(vessel.latitude)) && Number.isFinite(Number(vessel.longitude))
@@ -269,7 +277,7 @@ const Map = () => {
               <img src={ship} alt="ship" />
               <div>
                 <strong>{vessel.shipName}</strong>
-                {vessel.imo && <p>IMO: {vessel.imo}</p>}
+                {getVesselImo(vessel) && <p>IMO: {getVesselImo(vessel)}</p>}
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
                 {hasVesselType(vessel.shipType) && <p>Type: {formatVesselType(vessel.shipType)}</p>}
               </div>
@@ -320,7 +328,7 @@ const Map = () => {
               <Popup>
                 <strong>{vessel.shipName}</strong>
                 <br />
-                {vessel.imo && <>IMO: {vessel.imo}<br /></>}
+                {getVesselImo(vessel) && <>IMO: {getVesselImo(vessel)}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
                 {hasVesselType(vessel.shipType) && <><br />Type: {formatVesselType(vessel.shipType)}</>}
               </Popup>
