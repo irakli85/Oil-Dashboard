@@ -29,6 +29,10 @@ function hasDistanceData(vessel) {
     Number.isFinite(Number(vessel.distanceKm))
 }
 
+function hasVesselType(type) {
+  return type !== null && type !== undefined && type !== ''
+}
+
 function formatVesselType(type) {
   const code = Number(type)
   if (!Number.isFinite(code)) return String(type || '')
@@ -236,7 +240,7 @@ const Map = () => {
                 <strong>{vessel.shipName}</strong>
                 {vessel.imo && <p>IMO: {vessel.imo}</p>}
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
-                {vessel.shipType && <p>Type: {formatVesselType(vessel.shipType)}</p>}
+                {hasVesselType(vessel.shipType) && <p>Type: {formatVesselType(vessel.shipType)}</p>}
               </div>
               <RemoveButton
                 type="button"
@@ -270,7 +274,7 @@ const Map = () => {
                 <br />
                 {vessel.imo && <>IMO: {vessel.imo}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
-                {vessel.shipType && <><br />Type: {formatVesselType(vessel.shipType)}</>}
+                {hasVesselType(vessel.shipType) && <><br />Type: {formatVesselType(vessel.shipType)}</>}
               </Popup>
             </LeafletMarker>
           ))}
