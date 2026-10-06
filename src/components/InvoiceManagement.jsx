@@ -648,7 +648,7 @@ const InvoiceManagement = () => {
             </PanelHead>
             <TableWrap>
               <Table>
-                <thead><tr><th>№</th><th>ინვოისის №</th><th>თარიღი</th><th>სრული რაოდენობა</th><th>განაშთული</th><th>დარჩენილი</th><th>პროგრესი</th><th>სტატუსი</th><th aria-label="მოქმედებები" /></tr></thead>
+                <thead><tr><th>№</th><th>ინვოისის №</th><th>თარიღი</th><th>ინვოისის რაოდენობა</th><th>განაშთული</th><th>დარჩენილი</th><th>პროგრესი</th><th>სტატუსი</th><th aria-label="მოქმედებები" /></tr></thead>
                 <tbody>
                   {selectedVessel.invoices.length === 0 ? <tr><td colSpan="9"><Empty>ინვოისები ჯერ არ არის დამატებული</Empty></td></tr> : selectedVessel.invoices.map((invoice, index) => {
                     const totalMinorUnits = toMinorUnits(invoice.totalQty)
