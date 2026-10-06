@@ -61,6 +61,40 @@ const GlobalStyles = createGlobalStyle`
   transition: opacity 0.15s ease;
 }
 
+.vessel-map-icon i::before,
+.vessel-map-icon i::after {
+  position: absolute;
+  inset: -2px;
+  z-index: 0;
+  border: 1px solid var(--marker-color);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+  animation: vessel-marker-pulse 2s ease-out infinite;
+}
+
+.vessel-map-icon i::after {
+  animation-delay: 1s;
+}
+
+@keyframes vessel-marker-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vessel-map-icon i::before,
+  .vessel-map-icon i::after {
+    animation: none;
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .vessel-map-icon:hover {
     z-index: 10000 !important;

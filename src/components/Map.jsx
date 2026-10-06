@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import L from 'leaflet'
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
+import boatIcon from '../assets/boaticon.svg'
 import ship from '../assets/ship.svg'
 import { dismissBatumiVessel, subscribeToBatumiVessels } from '../services/ais'
 import { useAdminAuth } from './AdminAuthProvider'
@@ -77,9 +78,9 @@ function createVesselIcon(shipName, shipType) {
 
   const icon = L.divIcon({
     className: 'vessel-map-icon',
-    html: `<span style="position:absolute;top:0;left:0;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none"><i style="display:block;flex:0 0 16px;width:16px;height:16px;background:${markerColor};border:3px solid #fff;border-radius:50%;box-shadow:0 0 0 4px ${markerColor}40;pointer-events:auto"></i><b class="vessel-map-label" style="pointer-events:none;background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(iconName)}</b></span>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8],
+    html: `<span style="position:absolute;top:0;left:0;display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none"><i style="--marker-color:${markerColor};position:relative;display:block;flex:0 0 22px;width:22px;height:22px;border:2px solid #fff;border-radius:50%;background:${markerColor};box-shadow:0 1px 4px rgba(15,23,42,.45);pointer-events:auto"><span style="position:absolute;inset:1px;background:#fff;-webkit-mask:url('${boatIcon}') center/contain no-repeat;mask:url('${boatIcon}') center/contain no-repeat;z-index:1"></span></i><b class="vessel-map-label" style="pointer-events:none;background:rgba(17,24,39,.82);color:#fff;padding:4px 7px;border-radius:5px;font-size:13px;font-weight:700;line-height:1.1">${escapeHtml(iconName)}</b></span>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
   })
 
   vesselIconCache.set(cacheKey, icon)
