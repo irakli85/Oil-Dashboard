@@ -79,7 +79,8 @@ function formatVesselType(type) {
   const code = Number(stringType)
   if (!Number.isFinite(code)) return stringType
   if (code === 0) return 'Other'
-  if (code === 60) return 'Ro-Ro'
+  if (code === 1) return 'Livestock Carrier'
+  if (code === 60 || code === 69) return 'Ro-Ro'
   if (code === 70 || code === 79) return 'Bulker'
   if (code === 80 || code === 89) return 'Tanker'
   if (code === 71) return 'Container Carrier'
