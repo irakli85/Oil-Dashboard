@@ -8,18 +8,14 @@ import user from '../assets/user.svg'
 import search from '../assets/search.svg'
 import { useAdminAuth } from './AdminAuthProvider'
 
-const Header = () => {
-  const [count, setCount] = useState(0)
+const Header = ({ notifications, onClearNotifications }) => {
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [loginName, setLoginName] = useState('')
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const { authReady, isAuthenticated, username, login, logout } = useAdminAuth()
-
-  const handleClick = () => {
-    setCount(count+1)
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -53,10 +49,37 @@ const Header = () => {
               <Span>Eng(US)</Span>
             </Option>
           </Select>
-          <Div2 onClick={handleClick}>
-              <img src={bell} alt="bell" />
-              <Strong>{count}</Strong>
-          </Div2>
+          <NotificationWrapper>
+            <BellButton
+              type="button"
+              onClick={() => setIsNotificationsOpen((isOpen) => !isOpen)}
+              aria-label={`ნოტიფიკაციები: ${notifications.length}`}
+              aria-expanded={isNotificationsOpen}
+              aria-controls="notifications-panel"
+            >
+              <img src={bell} alt="" />
+              <Strong>{notifications.length > 99 ? '99+' : notifications.length}</Strong>
+            </BellButton>
+            {isNotificationsOpen && (
+              <NotificationsPanel id="notifications-panel" role="region" aria-label="ნოტიფიკაციები">
+                <NotificationsHeader>
+                  <strong>ნოტიფიკაციები</strong>
+                  <ClearButton type="button" onClick={onClearNotifications}>
+                    გასუფთავება
+                  </ClearButton>
+                </NotificationsHeader>
+                {notifications.length === 0 ? (
+                  <EmptyNotifications>ნოტიფიკაციები არ არის</EmptyNotifications>
+                ) : (
+                  <NotificationList>
+                    {notifications.map((notification) => (
+                      <NotificationItem key={notification.id}>{notification.message}</NotificationItem>
+                    ))}
+                  </NotificationList>
+                )}
+              </NotificationsPanel>
+            )}
+          </NotificationWrapper>
           <Div3>
             <img src={user} alt="user" />
             <div>
@@ -148,9 +171,15 @@ const Option = styled.option`
   padding: 5px;
 `
 
-const Div2 = styled.div`
+const NotificationWrapper = styled.div`
+  position: relative;
+`
+
+const BellButton = styled.button`
   width: 4.8rem;
   height: 4.8rem;
+  padding: 0;
+  border: 0;
   border-radius: 8px;
   background: #FFFAF1;
   display: flex;
@@ -158,6 +187,70 @@ const Div2 = styled.div`
   align-items: center;
   cursor: pointer;
   position: relative;
+  &:focus-visible { outline: 3px solid #1aac83; outline-offset: 2px; }
+`
+
+const NotificationsPanel = styled.div`
+  position: absolute;
+  top: calc(100% + 1rem);
+  right: 0;
+  z-index: 1200;
+  width: min(36rem, calc(100vw - 3rem));
+  max-height: min(42rem, 70vh);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: .8rem;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, .18);
+  color: #192b32;
+`
+
+const NotificationsHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.4rem 1.6rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 1.4rem;
+`
+
+const ClearButton = styled.button`
+  border: 0;
+  padding: .4rem;
+  background: transparent;
+  color: #087b58;
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  &:hover { text-decoration: underline; }
+  &:focus-visible { outline: 2px solid #1aac83; outline-offset: 2px; }
+`
+
+const NotificationList = styled.ul`
+  max-height: calc(min(42rem, 70vh) - 5.2rem);
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`
+
+const NotificationItem = styled.li`
+  padding: 1.2rem 1.6rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  &:last-child { border-bottom: 0; }
+`
+
+const EmptyNotifications = styled.p`
+  margin: 0;
+  padding: 2rem 1.6rem;
+  color: #737791;
+  font-size: 1.3rem;
+  text-align: center;
 `
 
 const Div3 = styled.div`

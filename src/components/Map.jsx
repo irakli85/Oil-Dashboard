@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import L from 'leaflet'
 import { MapContainer, Marker as LeafletMarker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import boatIcon from '../assets/boaticon.svg'
 import ship from '../assets/ship.svg'
-import { dismissBatumiVessel, subscribeToBatumiVessels } from '../services/ais'
+import { dismissBatumiVessel } from '../services/ais'
 import { useAdminAuth } from './AdminAuthProvider'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
@@ -477,6 +477,11 @@ function getVesselCountryCode(mmsi) {
   return /^\d{3}$/.test(mid) ? MID_COUNTRY_CODES[mid] || '' : ''
 }
 
+export function getVesselCountryName(mmsi) {
+  const countryCode = getVesselCountryCode(mmsi)
+  return COUNTRY_NAMES[countryCode] || ''
+}
+
 function getVesselImo(vessel) {
   const imo = String(vessel.imo ?? '').trim()
   if (normalizeVesselName(vessel.shipName) === 'UNIMAR LIVESTOCK' && imo === '702182100') {
@@ -565,22 +570,17 @@ function createVesselIcon(shipName, shipType) {
   return icon
 }
 
-const Map = () => {
+const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
   const { authReady, isAuthenticated } = useAdminAuth()
   const [selectedRadius, setSelectedRadius] = useState(2)
-  const [vessels, setVessels] = useState([])
   const [dismissalsReady, setDismissalsReady] = useState(false)
-  const [lastUpdated, setLastUpdated] = useState('')
-  const [connectionState, setConnectionState] = useState('connecting')
   const [vesselToRemove, setVesselToRemove] = useState(null)
   const [removalError, setRemovalError] = useState('')
   const [isRemoving, setIsRemoving] = useState(false)
-  const previousRadius = useRef(selectedRadius)
-  const vesselsWithDistance = vessels.filter(hasDistanceData)
-
-  const updateVessels = (nextVessels) => {
-    setVessels(nextVessels)
-  }
+  const vesselsInRadius = vessels.filter((vessel) =>
+    hasDistanceData(vessel) && Number(vessel.distanceKm) <= selectedRadius
+  )
+  const vesselsWithDistance = vesselsInRadius
 
   const confirmVesselRemoval = async () => {
     if (!vesselToRemove || isRemoving) return
@@ -589,10 +589,7 @@ const Map = () => {
 
     try {
       await dismissBatumiVessel(vesselToRemove)
-      setVessels((currentVessels) => currentVessels.filter((item) => {
-        if (vesselToRemove.mmsi) return String(item.mmsi) !== String(vesselToRemove.mmsi)
-        return normalizeVesselName(item.shipName) !== normalizeVesselName(vesselToRemove.shipName)
-      }))
+      onVesselDismissed(vesselToRemove)
       setVesselToRemove(null)
     } catch {
       setRemovalError('გემის წაშლა ვერ მოხერხდა. სცადეთ ხელახლა.')
@@ -647,28 +644,6 @@ const Map = () => {
     return () => { active = false }
   }, [authReady, isAuthenticated])
 
-  useEffect(() => {
-    if (!dismissalsReady) return undefined
-
-    if (previousRadius.current !== selectedRadius) {
-      setVessels((currentVessels) => currentVessels.filter((vessel) => {
-        return hasDistanceData(vessel) && Number(vessel.distanceKm) <= selectedRadius
-      }))
-      previousRadius.current = selectedRadius
-    }
-
-    const source = subscribeToBatumiVessels(selectedRadius, (nextVessels) => {
-      updateVessels(nextVessels)
-      setLastUpdated(new Date().toLocaleTimeString())
-      setConnectionState(nextVessels.length > 0 ? 'live' : 'idle')
-    }, () => {
-      setConnectionState('offline')
-      setLastUpdated('Live connection unavailable')
-    })
-
-    return () => source.close()
-  }, [selectedRadius, dismissalsReady])
-
   return (
     <Container>
       <Aside>
@@ -702,7 +677,7 @@ const Map = () => {
           <EmptyState>{removalError || 'Checking previously removed vessels...'}</EmptyState>
         ) : vesselsWithDistance.length === 0 ? (
           <EmptyState>
-            {vessels.length === 0 ? 'No live AIS data received for this radius.' : 'Waiting for vessel distance data.'}
+            {vessels.length === 0 ? 'No live AIS data received for this radius.' : 'No vessels within this radius.'}
           </EmptyState>
         ) : (
           vesselsWithDistance.map((vessel) => (
@@ -763,7 +738,7 @@ const Map = () => {
             zIndexOffset={1001}
           />
 
-          {vessels.filter(hasCoordinates).map((vessel) => (
+          {vesselsInRadius.filter(hasCoordinates).map((vessel) => (
             <LeafletMarker
               key={getVesselKey(vessel)}
               position={[vessel.latitude, vessel.longitude]}

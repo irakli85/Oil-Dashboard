@@ -86,16 +86,6 @@ const PriceDiv = styled.div`
     gap: 2rem;    
 `
 
-const PriceInp = styled.input`
-    font-size: 1.6rem;
-    padding: 5px;
-`
-
-const PriceStrong = styled.strong`
-    font-size: 1.6rem;
-    padding: 5px;
-`
-
 const PriceP = styled.p`
     font-size: 1.6rem;
     padding: 5px;
