@@ -12,7 +12,7 @@ The frontend proxies `/api/*` to the local server (see `vite.config.js`).
 
 ### Database (optional locally)
 
-Without a database the export module uses an in-memory store (data resets on restart).
+Without a database the export module uses an in-memory store (data resets on restart); persistent vessel notifications require a PostgreSQL connection.
 
 For a persistent local database, create `.env` in the project root:
 
@@ -20,7 +20,7 @@ For a persistent local database, create `.env` in the project root:
 DATABASE_URL=postgres://user:password@localhost:5432/oil_dashboard
 ```
 
-Tables (`export_items`, `export_options`) are created and seeded automatically on first request.
+Tables (`export_items`, `export_options`, `vessel_notifications`) are created automatically on first request. Vessel notifications and their detection timestamps are stored per browser and remain available after refresh.
 
 ## Production (Vercel)
 

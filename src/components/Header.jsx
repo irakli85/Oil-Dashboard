@@ -8,7 +8,26 @@ import user from '../assets/user.svg'
 import search from '../assets/search.svg'
 import { useAdminAuth } from './AdminAuthProvider'
 
-const Header = ({ notifications, onClearNotifications }) => {
+function formatNotificationDate(value) {
+  const date = new Date(value)
+  if (!Number.isFinite(date.getTime())) return 'უცნობია'
+
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Tbilisi',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(date)
+      .map(({ type, value: partValue }) => [type, partValue])
+  )
+  return `${parts.day}/${parts.month}/${parts.year} - ${parts.hour}:${parts.minute}`
+}
+
+const Header = ({ notifications, notificationError, onClearNotifications }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const notificationWrapperRef = useRef(null)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
@@ -82,13 +101,16 @@ const Header = ({ notifications, onClearNotifications }) => {
                     გასუფთავება
                   </ClearButton>
                 </NotificationsHeader>
+                {notificationError && (
+                  <NotificationError role="alert">{notificationError}</NotificationError>
+                )}
                 {notifications.length === 0 ? (
                   <EmptyNotifications>შეტყობინებები არ არის</EmptyNotifications>
                 ) : (
                   <NotificationList>
                     {notifications.map((notification) => (
                       <NotificationItem key={notification.id}>
-                        ახალი გემი: <NotificationShipName>{notification.shipName}</NotificationShipName>, IMO: {notification.imo}, დროშა: {notification.flag}
+                        ახალი გემი: <NotificationShipName>{notification.shipName}</NotificationShipName>, IMO: {notification.imo}, დროშა: {notification.flag}, თარიღი: {formatNotificationDate(notification.detectedAt)}
                       </NotificationItem>
                     ))}
                   </NotificationList>
@@ -275,6 +297,13 @@ const EmptyNotifications = styled.p`
   color: #737791;
   font-size: 1.3rem;
   text-align: center;
+`
+
+const NotificationError = styled.p`
+  margin: 0;
+  padding: .8rem 1.6rem;
+  color: #b42318;
+  font-size: 1.2rem;
 `
 
 const Div3 = styled.div`

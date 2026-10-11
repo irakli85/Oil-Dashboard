@@ -12,6 +12,12 @@ import Map, { getVesselCountryName } from './Map'
 import ExportModule from './ExportModule'
 import InvoiceManagement from './InvoiceManagement'
 import { subscribeToBatumiVessels } from '../services/ais'
+import {
+  createNotification,
+  deleteNotifications,
+  fetchNotifications,
+  getNotificationClientId,
+} from '../services/notificationsApi'
 
 const SITE_URL = 'https://oil-dashboard.vercel.app'
 const ROUTE_METADATA = {
@@ -61,10 +67,23 @@ const ROUTE_METADATA = {
   },
 }
 
+function mergeNotifications(current, incoming) {
+  const notificationsById = new Map(incoming.map((notification) => [notification.id, notification]))
+  current.forEach((notification) => {
+    if (!notificationsById.has(notification.id)) {
+      notificationsById.set(notification.id, notification)
+    }
+  })
+  return [...notificationsById.values()].sort(
+    (first, second) => Date.parse(second.detectedAt) - Date.parse(first.detectedAt)
+  )
+}
 
 const Content = () => {
   const { pathname } = useLocation()
   const [notifications, setNotifications] = useState([])
+  const [notificationError, setNotificationError] = useState('')
+  const [notificationClientId] = useState(getNotificationClientId)
   const [liveVessels, setLiveVessels] = useState([])
   const [connectionState, setConnectionState] = useState('connecting')
   const [lastUpdated, setLastUpdated] = useState('')
@@ -88,21 +107,46 @@ const Content = () => {
     setCanonicalUrl(canonicalUrl)
   }, [pathname])
 
-  const handleNewVessel = useCallback((vessel) => {
+  useEffect(() => {
+    let isActive = true
+    fetchNotifications(notificationClientId)
+      .then((savedNotifications) => {
+        if (isActive) {
+          setNotifications((current) => mergeNotifications(current, savedNotifications))
+          setNotificationError('')
+        }
+      })
+      .catch((error) => {
+        console.error('[notifications load]', error)
+        if (isActive) setNotificationError('შეტყობინებების ჩატვირთვა ვერ მოხერხდა')
+      })
+
+    return () => {
+      isActive = false
+    }
+  }, [notificationClientId])
+
+  const handleNewVessel = useCallback(async (vessel) => {
     const shipName = vessel.shipName || 'უცნობი გემი'
     const imo = vessel.imo || 'უცნობია'
     const flag = vessel.countryName || 'უცნობია'
 
-    setNotifications((currentNotifications) => [
-      {
-        id: `${Date.now()}-${vessel.imo || vessel.mmsi || shipName}`,
+    try {
+      const notification = await createNotification({
+        clientId: notificationClientId,
         shipName,
         imo,
         flag,
-      },
-      ...currentNotifications,
-    ])
-  }, [])
+      })
+      setNotifications((currentNotifications) =>
+        mergeNotifications(currentNotifications, [notification])
+      )
+      setNotificationError('')
+    } catch (error) {
+      console.error('[notifications save]', error)
+      setNotificationError('შეტყობინების შენახვა ვერ მოხერხდა')
+    }
+  }, [notificationClientId])
 
   const handleVesselUpdate = useCallback((vessels) => {
     setLiveVessels(vessels)
@@ -144,6 +188,17 @@ const Content = () => {
     return () => source.close()
   }, [handleVesselUpdate])
 
+  const handleClearNotifications = useCallback(async () => {
+    try {
+      await deleteNotifications(notificationClientId)
+      setNotifications([])
+      setNotificationError('')
+    } catch (error) {
+      console.error('[notifications clear]', error)
+      setNotificationError('შეტყობინებების გასუფთავება ვერ მოხერხდა')
+    }
+  }, [notificationClientId])
+
   const handleVesselDismissed = useCallback((vessel) => {
     setLiveVessels((currentVessels) => currentVessels.filter((item) => {
       if (vessel.mmsi) return String(item.mmsi) !== String(vessel.mmsi)
@@ -156,7 +211,8 @@ const Content = () => {
     <ContentSty>
         <Header
           notifications={notifications}
-          onClearNotifications={() => setNotifications([])}
+          notificationError={notificationError}
+          onClearNotifications={handleClearNotifications}
         />
         <ContentDivSty>
           <Routes>

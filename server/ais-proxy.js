@@ -23,6 +23,12 @@ import {
   saveVesselRegistry,
   saveLatestVesselPositions,
 } from './vessel-registry.js';
+import {
+  clearNotifications,
+  createNotification,
+  getNotifications,
+  isValidNotificationClientId,
+} from './notification-store.js';
 
 for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
   process.env[key] ??= value;
@@ -47,7 +53,7 @@ let snapshotSavePromise = Promise.resolve();
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
 
   if (req.method === 'OPTIONS') {
@@ -56,6 +62,61 @@ app.use((req, res, next) => {
   }
 
   next();
+});
+
+app.get('/api/notifications', async (req, res) => {
+  const clientId = req.query?.clientId;
+  if (!isValidNotificationClientId(clientId)) {
+    return res.status(400).json({ error: 'Invalid notification client ID' });
+  }
+
+  try {
+    const notifications = await getNotifications(clientId);
+    return res.status(200).json({ notifications });
+  } catch (error) {
+    console.error('[notifications get]', error);
+    return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
+  }
+});
+
+app.post('/api/notifications', async (req, res) => {
+  const { clientId, shipName, imo, flag } = req.body || {};
+  if (!isValidNotificationClientId(clientId)) {
+    return res.status(400).json({ error: 'Invalid notification client ID' });
+  }
+  if (![shipName, imo, flag].every((value) =>
+    typeof value === 'string' && value.trim().length > 0 && value.length <= 200
+  )) {
+    return res.status(400).json({ error: 'Invalid notification details' });
+  }
+
+  try {
+    const notification = await createNotification({
+      clientId,
+      shipName: shipName.trim(),
+      imo: imo.trim(),
+      flag: flag.trim(),
+    });
+    return res.status(201).json({ notification });
+  } catch (error) {
+    console.error('[notifications create]', error);
+    return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
+  }
+});
+
+app.delete('/api/notifications', async (req, res) => {
+  const clientId = req.query?.clientId;
+  if (!isValidNotificationClientId(clientId)) {
+    return res.status(400).json({ error: 'Invalid notification client ID' });
+  }
+
+  try {
+    await clearNotifications(clientId);
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error('[notifications delete]', error);
+    return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
+  }
 });
 
 const BATUMI_PORT = {
