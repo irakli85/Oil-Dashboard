@@ -71,11 +71,14 @@ function normalizeVessel(raw, radiusKm) {
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null
 
   const distanceKm = haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, latitude, longitude)
-  if (distanceKm > radiusKm) return null
-
   const mmsi =
     readValue(meta, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string') ??
     readValue(raw, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string')
+
+  if (distanceKm > radiusKm) {
+    const outName = readValue(meta, 'ShipName', 'shipName', 'Name', 'name')
+    return { outOfRange: true, mmsi: mmsi ?? null, shipName: outName ? String(outName).trim() : null }
+  }
 
   const imo =
     readValue(meta, 'IMO', 'imo', 'IMO_Number', 'imo_number') ??
@@ -145,6 +148,7 @@ function normalizeStaticVessel(raw) {
 function collectVessels(radiusKm) {
   return new Promise((resolve, reject) => {
     const vessels = new Map()
+    const outOfRangeKeys = new Set()
     let settled = false
 
     const finish = () => {
@@ -183,12 +187,23 @@ function collectVessels(radiusKm) {
     socket.on('message', (data) => {
       try {
         const event = JSON.parse(data.toString())
-        const vessel = normalizeVessel(event, radiusKm)
+        const parsedVessel = normalizeVessel(event, radiusKm)
+        if (parsedVessel?.outOfRange) {
+          const outKey = parsedVessel.mmsi || parsedVessel.shipName
+          if (outKey) {
+            vessels.delete(outKey)
+            outOfRangeKeys.add(outKey)
+          }
+          return
+        }
+
+        const vessel = parsedVessel
         const staticVessel = vessel ? null : normalizeStaticVessel(event)
         const nextVessel = vessel || staticVessel
         if (nextVessel) {
           const key = nextVessel.mmsi || nextVessel.shipName
-          if (key) {
+          if (key && !(staticVessel && outOfRangeKeys.has(key))) {
+            outOfRangeKeys.delete(key)
             const currentVessel = vessels.get(key) || {}
             vessels.set(key, {
               ...currentVessel,

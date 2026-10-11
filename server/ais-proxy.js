@@ -120,11 +120,14 @@ function normalizeVessel(raw, radiusKm = MAX_RADIUS_KM) {
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
 
   const distanceKm = haversineKm(BATUMI_PORT.lat, BATUMI_PORT.lon, latitude, longitude);
-  if (distanceKm > radiusKm) return null;
-
   const mmsi =
     readValue(meta, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string') ??
     readValue(raw, 'MMSI', 'mmsi', 'MMSI_String', 'mmsi_string');
+
+  if (distanceKm > radiusKm) {
+    const outName = readValue(meta, 'ShipName', 'shipName', 'Name', 'name');
+    return { outOfRange: true, mmsi: mmsi ?? null, shipName: outName ? String(outName).trim() : null };
+  }
 
   const imo =
     readValue(meta, 'IMO', 'imo', 'IMO_Number', 'imo_number') ??
@@ -284,7 +287,25 @@ function connectAISStream() {
         });
       }
 
-      const vessel = normalizeVessel(event, MAX_RADIUS_KM);
+      const parsedVessel = normalizeVessel(event, MAX_RADIUS_KM);
+      if (parsedVessel?.outOfRange) {
+        const before = latestVessels.length;
+        latestVessels = latestVessels.filter((item) => {
+          return parsedVessel.mmsi ? String(item.mmsi) !== String(parsedVessel.mmsi) : item.shipName !== parsedVessel.shipName;
+        });
+        if (latestVessels.length !== before) {
+          scheduleSnapshotSave();
+          broadcast({
+            source: 'aisstream',
+            type: 'update',
+            updatedAt: new Date().toISOString(),
+            vessels: latestVessels,
+          });
+        }
+        return;
+      }
+
+      const vessel = parsedVessel;
       const staticVessel = vessel ? null : normalizeStaticVessel(event);
       const nextVessel = vessel || staticVessel;
       if (nextVessel) {
