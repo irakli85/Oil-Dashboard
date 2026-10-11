@@ -287,15 +287,17 @@ const Map = () => {
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
                 {hasVesselType(vessel.shipType) && <p>Type: {formatVesselType(vessel.shipType)}</p>}
               </div>
-              <RemoveButton
-                type="button"
-                disabled={!isAuthenticated || isRemoving}
-                onClick={() => setVesselToRemove(vessel)}
-                aria-label={`წაშლა: ${vessel.shipName}`}
-                title={isAuthenticated ? `წაშლა: ${vessel.shipName}` : 'ავტორიზაცია საჭიროა'}
-              >
-                🗑
-              </RemoveButton>
+              {isAuthenticated && (
+                <RemoveButton
+                  type="button"
+                  disabled={isRemoving}
+                  onClick={() => setVesselToRemove(vessel)}
+                  aria-label={`წაშლა: ${vessel.shipName}`}
+                  title={`წაშლა: ${vessel.shipName}`}
+                >
+                  🗑
+                </RemoveButton>
+              )}
             </VesselCard>
           ))
         )}
@@ -353,9 +355,11 @@ const Map = () => {
               <CancelButton type="button" disabled={isRemoving} onClick={() => setVesselToRemove(null)}>
                 გაუქმება
               </CancelButton>
-              <ConfirmButton type="button" disabled={!isAuthenticated || isRemoving} onClick={confirmVesselRemoval}>
-                {isRemoving ? 'ინახება...' : 'წაშლა'}
-              </ConfirmButton>
+              {isAuthenticated && (
+                <ConfirmButton type="button" disabled={isRemoving} onClick={confirmVesselRemoval}>
+                  {isRemoving ? 'ინახება...' : 'წაშლა'}
+                </ConfirmButton>
+              )}
             </ModalActions>
           </Modal>
         </ModalOverlay>
