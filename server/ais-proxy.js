@@ -220,28 +220,42 @@ function upsertVessel(vessel) {
   const key = vessel?.mmsi || vessel?.shipName;
   if (!key) return;
 
-  const current = latestVessels.find((item) => {
-    return (item.mmsi && item.mmsi === vessel.mmsi) || item.shipName === vessel.shipName;
-  });
+  const vesselMmsi = String(vessel.mmsi ?? '').trim();
+  const vesselImo = String(vessel.imo ?? '').trim();
+  const normalizedName = String(vessel.shipName ?? '').trim().replace(/\s+/g, ' ').toUpperCase();
+  const matchesVessel = (item) => {
+    if (vesselMmsi && String(item.mmsi ?? '').trim() === vesselMmsi) return true;
+    if (vesselImo && String(item.imo ?? '').trim() === vesselImo) return true;
+    const itemName = String(item.shipName ?? '').trim().replace(/\s+/g, ' ').toUpperCase();
+    return normalizedName && normalizedName !== 'UNKNOWN VESSEL' && itemName === normalizedName;
+  };
+  const matches = latestVessels.filter(matchesVessel);
+  const current = matches.find((item) => {
+    const name = String(item.shipName ?? '').trim();
+    return name && name.toUpperCase() !== 'UNKNOWN VESSEL';
+  }) || matches[0];
 
   if (!current) {
     latestVessels = [vessel, ...latestVessels].slice(0, 50);
     return;
   }
 
-  latestVessels = latestVessels.map((item) => {
-    if ((item.mmsi && item.mmsi === vessel.mmsi) || item.shipName === vessel.shipName) {
-      return {
-        ...item,
-        ...vessel,
-        imo: vessel.imo ?? item.imo ?? null,
-        shipType: vessel.shipType ?? item.shipType ?? null,
-        lastSeen: vessel.lastSeen ?? item.lastSeen,
-      };
-    }
-
-    return item;
-  });
+  const vesselName = String(vessel.shipName ?? '').trim();
+  const currentName = String(current.shipName ?? '').trim();
+  latestVessels = [
+    {
+      ...current,
+      ...vessel,
+      mmsi: vessel.mmsi ?? current.mmsi ?? null,
+      imo: vessel.imo ?? current.imo ?? null,
+      shipType: vessel.shipType ?? current.shipType ?? null,
+      shipName: vesselName && vesselName.toUpperCase() !== 'UNKNOWN VESSEL'
+        ? vesselName
+        : currentName || vesselName,
+      lastSeen: vessel.lastSeen ?? current.lastSeen,
+    },
+    ...latestVessels.filter((item) => !matchesVessel(item)),
+  ].slice(0, 50);
 }
 
 // Vessels that left the area stop sending positions, so no out-of-range report ever arrives for them.
@@ -377,7 +391,11 @@ function connectAISStream() {
 
 const snapshotReady = loadLatestVesselPositions()
   .then(async (savedVessels) => {
-    latestVessels = await filterDismissedVessels(savedVessels);
+    const visibleVessels = await filterDismissedVessels(savedVessels)
+    latestVessels = []
+    for (const vessel of [...visibleVessels].reverse()) {
+      upsertVessel(vessel)
+    }
     pruneStaleVessels();
     if (latestVessels.length !== savedVessels.length) scheduleSnapshotSave();
   })

@@ -201,6 +201,7 @@ const MID_COUNTRY_CODES = Object.fromEntries(
     '🇨🇩': '676',
     '🇿🇲': '678',
     '🇿🇼': '679',
+    '🇱🇷': '636',
     '🇦🇷': '701',
     '🇧🇷': '710',
     '🇧🇴': '720',
@@ -402,6 +403,7 @@ const COUNTRY_NAMES = {
   sl: 'Sierra Leone',
   st: 'São Tomé and Príncipe',
   sz: 'Eswatini',
+  lr: 'Liberia',
   td: 'Chad',
   tg: 'Togo',
   tn: 'Tunisia',
@@ -461,7 +463,13 @@ function normalizeVesselName(name) {
 }
 
 function getVesselKey(vessel) {
-  return vessel.mmsi ? `mmsi:${vessel.mmsi}` : `name:${normalizeVesselName(vessel.shipName)}`
+  const imo = String(vessel.imo ?? '').trim()
+  if (imo) return `imo:${imo}`
+
+  const mmsi = String(vessel.mmsi ?? '').trim()
+  if (mmsi) return `mmsi:${mmsi}`
+
+  return `name:${normalizeVesselName(vessel.shipName)}`
 }
 
 function getVesselCountryCode(mmsi) {

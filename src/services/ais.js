@@ -6,6 +6,54 @@ const BATUMI_AIS_STREAM_URL = `${AIS_API_BASE_URL}/api/ais/batumi/stream`
 const VESSEL_DISMISS_URL = `${AIS_API_BASE_URL}/api/ais/vessels/dismiss`
 const vesselNameLookups = new Map()
 
+function getVesselIdentity(vessel) {
+  const imo = String(vessel.imo ?? '').trim()
+  if (imo) return `imo:${imo}`
+
+  const mmsi = String(vessel.mmsi ?? '').trim()
+  if (mmsi) return `mmsi:${mmsi}`
+
+  const shipName = String(vessel.shipName ?? '').trim().replace(/\s+/g, ' ').toUpperCase()
+  return shipName ? `name:${shipName}` : null
+}
+
+function deduplicateVessels(vessels) {
+  const uniqueVessels = new Map()
+
+  for (const vessel of vessels) {
+    const identity = getVesselIdentity(vessel)
+    if (!identity) continue
+
+    const current = uniqueVessels.get(identity)
+    if (!current) {
+      uniqueVessels.set(identity, vessel)
+      continue
+    }
+
+    const currentName = String(current.shipName ?? '').trim()
+    const vesselName = String(vessel.shipName ?? '').trim()
+    const currentHasName = currentName && currentName.toUpperCase() !== 'UNKNOWN VESSEL'
+    const vesselHasName = vesselName && vesselName.toUpperCase() !== 'UNKNOWN VESSEL'
+    const currentLastSeen = Date.parse(current.lastSeen || '') || 0
+    const vesselLastSeen = Date.parse(vessel.lastSeen || '') || 0
+    const latestVessel = vesselLastSeen > currentLastSeen ? vessel : current
+
+    uniqueVessels.set(identity, {
+      ...current,
+      ...vessel,
+      ...latestVessel,
+      mmsi: latestVessel.mmsi ?? current.mmsi ?? vessel.mmsi,
+      imo: latestVessel.imo ?? current.imo ?? vessel.imo,
+      shipType: latestVessel.shipType ?? current.shipType ?? vessel.shipType,
+      shipName: (vesselHasName && (!currentHasName || vesselLastSeen >= currentLastSeen))
+        ? vesselName
+        : currentHasName ? currentName : vesselName || currentName,
+    })
+  }
+
+  return [...uniqueVessels.values()]
+}
+
 async function resolveMissingVesselNames(vessels) {
   return Promise.all(vessels.map(async (vessel) => {
     const shipName = String(vessel.shipName ?? '').trim()
@@ -47,7 +95,7 @@ export async function fetchBatumiVessels(radiusKm = 20) {
 
   const data = await response.json()
   return Array.isArray(data?.vessels)
-    ? resolveMissingVesselNames(data.vessels)
+    ? resolveMissingVesselNames(data.vessels).then(deduplicateVessels)
     : []
 }
 
@@ -91,7 +139,7 @@ export function subscribeToBatumiVessels(radiusKm = 20, onUpdate, onError) {
         if (data.type === 'error') {
           if (onError) onError(new Error('AIS stream unavailable'))
         } else if (Array.isArray(data.vessels)) {
-          resolveMissingVesselNames(data.vessels).then(onUpdate)
+          resolveMissingVesselNames(data.vessels).then(deduplicateVessels).then(onUpdate)
         }
       } catch (error) {
         if (onError) onError(error)
