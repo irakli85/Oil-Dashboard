@@ -4,6 +4,34 @@ const AIS_API_BASE_URL = (import.meta.env.VITE_AIS_API_URL || 'https://oil-dashb
 const BATUMI_AIS_URL = `${AIS_API_BASE_URL}/api/ais/batumi`
 const BATUMI_AIS_STREAM_URL = `${AIS_API_BASE_URL}/api/ais/batumi/stream`
 const VESSEL_DISMISS_URL = `${AIS_API_BASE_URL}/api/ais/vessels/dismiss`
+const vesselNameLookups = new Map()
+
+async function resolveMissingVesselNames(vessels) {
+  return Promise.all(vessels.map(async (vessel) => {
+    const shipName = String(vessel.shipName ?? '').trim()
+    const imo = String(vessel.imo ?? '').trim()
+    if (!imo || (shipName && shipName.toUpperCase() !== 'UNKNOWN VESSEL')) return vessel
+
+    let lookup = vesselNameLookups.get(imo)
+    if (!lookup) {
+      lookup = fetch(`/api/ais/vessel-name?imo=${encodeURIComponent(imo)}`, {
+        headers: { Accept: 'application/json' },
+      }).then(async (response) => {
+        if (!response.ok) throw new Error(`IMO lookup failed (${response.status})`)
+        const data = await response.json()
+        return typeof data?.shipName === 'string' ? data.shipName.trim() : ''
+      }).catch((error) => {
+        console.error(`[AIS vessel name lookup] IMO ${imo}:`, error)
+        vesselNameLookups.delete(imo)
+        return ''
+      })
+      vesselNameLookups.set(imo, lookup)
+    }
+
+    const knownName = await lookup
+    return knownName ? { ...vessel, shipName: knownName } : vessel
+  }))
+}
 
 export async function fetchBatumiVessels(radiusKm = 20) {
   const response = await fetch(`${BATUMI_AIS_URL}?radiusKm=${radiusKm}`, {
@@ -18,7 +46,9 @@ export async function fetchBatumiVessels(radiusKm = 20) {
   }
 
   const data = await response.json()
-  return Array.isArray(data?.vessels) ? data.vessels : []
+  return Array.isArray(data?.vessels)
+    ? resolveMissingVesselNames(data.vessels)
+    : []
 }
 
 export async function dismissBatumiVessel(vessel) {
@@ -61,7 +91,7 @@ export function subscribeToBatumiVessels(radiusKm = 20, onUpdate, onError) {
         if (data.type === 'error') {
           if (onError) onError(new Error('AIS stream unavailable'))
         } else if (Array.isArray(data.vessels)) {
-          onUpdate(data.vessels)
+          resolveMissingVesselNames(data.vessels).then(onUpdate)
         }
       } catch (error) {
         if (onError) onError(error)

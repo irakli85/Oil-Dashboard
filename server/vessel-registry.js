@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless'
+import tls from 'node:tls'
 
 let sql
 let initPromise
@@ -11,6 +12,14 @@ function getSql() {
   if (!sql) {
     const connectionString = process.env.POSTGRES_URL || process.env.DATABASE_URL
     if (!connectionString) throw new Error('database_not_configured')
+
+    if (process.platform === 'win32' && tls.getCACertificates && tls.setDefaultCACertificates) {
+      const systemCertificates = tls.getCACertificates('system')
+      if (systemCertificates.length > 0) {
+        tls.setDefaultCACertificates([...tls.getCACertificates(), ...systemCertificates])
+      }
+    }
+
     sql = neon(connectionString)
   }
   return sql
@@ -62,11 +71,18 @@ async function ensureReady() {
 
 function cacheVessel(vessel) {
   if (!vessel?.mmsi) return
-  registryCache.set(String(vessel.mmsi), {
-    imo: vessel.imo ?? null,
-    shipType: vessel.shipType ?? null,
-    shipName: vessel.shipName ?? null,
+  const key = String(vessel.mmsi)
+  const cached = registryCache.get(key)
+  registryCache.set(key, {
+    imo: vessel.imo ?? cached?.imo ?? null,
+    shipType: vessel.shipType ?? cached?.shipType ?? null,
+    shipName: getKnownShipName(vessel.shipName) ?? getKnownShipName(cached?.shipName),
   })
+}
+
+function getKnownShipName(value) {
+  const shipName = String(value ?? '').trim()
+  return shipName && shipName.toUpperCase() !== 'UNKNOWN VESSEL' ? shipName : null
 }
 
 export function getVesselIdentifiers(vessel) {
@@ -146,31 +162,47 @@ export async function enrichVessel(vessel) {
   if (!vessel?.mmsi) return vessel
   const key = String(vessel.mmsi)
   const cached = registryCache.get(key)
-  if (cached) {
+  const aisShipName = getKnownShipName(vessel.shipName)
+  const cachedShipName = getKnownShipName(cached?.shipName)
+  if (cached && (aisShipName || cachedShipName)) {
     return {
       ...vessel,
       imo: vessel.imo ?? cached.imo,
       shipType: vessel.shipType ?? cached.shipType,
-      shipName: vessel.shipName || cached.shipName || vessel.shipName,
+      shipName: aisShipName ?? cachedShipName,
     }
   }
 
   try {
     await ensureReady()
-    const rows = await getSql().query(
+    const mmsiRows = await getSql().query(
       'SELECT imo, ship_type, ship_name FROM vessel_registry WHERE mmsi = $1',
       [key]
     )
-    const row = rows[0]
-    if (!row) return vessel
+    let row = mmsiRows[0]
+
+    if (!getKnownShipName(row?.ship_name) && vessel.imo) {
+      const imoRows = await getSql().query(
+        `SELECT imo, ship_type, ship_name
+         FROM vessel_registry
+         WHERE TRIM(imo) = TRIM($1)
+           AND ship_name IS NOT NULL
+           AND BTRIM(ship_name) <> ''
+           AND UPPER(BTRIM(ship_name)) <> 'UNKNOWN VESSEL'
+         ORDER BY updated_at DESC
+         LIMIT 1`,
+        [String(vessel.imo)]
+      )
+      row = imoRows[0] ?? row
+    }
 
     const enriched = {
       ...vessel,
-      imo: vessel.imo ?? row.imo,
-      shipType: vessel.shipType ?? row.ship_type,
-      shipName: vessel.shipName || row.ship_name || vessel.shipName,
+      imo: vessel.imo ?? row?.imo ?? cached?.imo,
+      shipType: vessel.shipType ?? row?.ship_type ?? cached?.shipType,
+      shipName: aisShipName ?? getKnownShipName(row?.ship_name) ?? cachedShipName ?? vessel.shipName,
     }
-    cacheVessel(enriched)
+    if (row) cacheVessel(enriched)
     return enriched
   } catch (error) {
     if (!warnedDatabase) {
@@ -181,8 +213,28 @@ export async function enrichVessel(vessel) {
   }
 }
 
+export async function findVesselNameByImo(imo) {
+  const normalizedImo = String(imo ?? '').trim()
+  if (!/^\d{7}$/.test(normalizedImo)) return null
+
+  await ensureReady()
+  const rows = await getSql().query(
+    `SELECT ship_name
+     FROM vessel_registry
+     WHERE TRIM(imo) = TRIM($1)
+       AND ship_name IS NOT NULL
+       AND BTRIM(ship_name) <> ''
+       AND UPPER(BTRIM(ship_name)) <> 'UNKNOWN VESSEL'
+     ORDER BY updated_at DESC
+     LIMIT 1`,
+    [normalizedImo]
+  )
+  return getKnownShipName(rows[0]?.ship_name)
+}
+
 export async function saveVesselRegistry(vessel) {
-  if (!vessel?.mmsi || (!vessel.imo && !vessel.shipType && !vessel.shipName)) return
+  const shipName = getKnownShipName(vessel?.shipName)
+  if (!vessel?.mmsi || (!vessel.imo && !vessel.shipType && !shipName)) return
 
   try {
     await ensureReady()
@@ -195,9 +247,9 @@ export async function saveVesselRegistry(vessel) {
          ship_type = COALESCE(EXCLUDED.ship_type, vessel_registry.ship_type),
          ship_name = COALESCE(EXCLUDED.ship_name, vessel_registry.ship_name),
          updated_at = NOW()`,
-      [key, vessel.imo ?? null, vessel.shipType ?? null, vessel.shipName ?? null]
+      [key, vessel.imo ?? null, vessel.shipType ?? null, shipName]
     )
-    cacheVessel(vessel)
+    cacheVessel({ ...vessel, shipName })
   } catch (error) {
     if (!warnedDatabase) {
       console.error('[vessel registry] save unavailable:', error.message)

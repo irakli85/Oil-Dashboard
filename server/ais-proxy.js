@@ -15,6 +15,7 @@ import {
   dismissVessel,
   enrichVessel,
   filterDismissedVessels,
+  findVesselNameByImo,
   getVesselIdentifier,
   getVesselIdentifiers,
   isVesselDismissed,
@@ -435,6 +436,21 @@ app.get('/api/ais/batumi', async (req, res) => {
     return res.status(503).json({ error: 'Vessel exclusions are temporarily unavailable', vessels: [] });
   }
 });
+
+app.get('/api/ais/vessel-name', async (req, res) => {
+  const imo = String(req.query?.imo ?? '').trim()
+  if (!/^\d{7}$/.test(imo)) {
+    return res.status(400).json({ error: 'A valid 7-digit IMO is required' })
+  }
+
+  try {
+    const shipName = await findVesselNameByImo(imo)
+    return res.status(200).json({ shipName })
+  } catch (error) {
+    console.error('[ais vessel name lookup]', error)
+    return res.status(503).json({ error: 'Vessel name lookup is temporarily unavailable' })
+  }
+})
 
 app.get('/api/ais/health', async (req, res) => {
   await snapshotReady;
