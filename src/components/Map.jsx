@@ -269,6 +269,7 @@ const Map = () => {
           </StatusLabel>
         </StatusRow>
         <StatusText>{lastUpdated ? `ბოლო განახლება: ${lastUpdated}` : 'Waiting for data...'}</StatusText>
+        <StatusText>{`გემების რაოდენობა: ${vesselsWithDistance.length}`}</StatusText>
 
         {!dismissalsReady ? (
           <EmptyState>{removalError || 'Checking previously removed vessels...'}</EmptyState>
