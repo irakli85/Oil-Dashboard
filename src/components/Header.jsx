@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { HeadDivSty, HeadPsty } from '../styledComponents/StyledComponents'
 import styled from 'styled-components'
 import geo from '../assets/geo.svg'
@@ -10,12 +10,26 @@ import { useAdminAuth } from './AdminAuthProvider'
 
 const Header = ({ notifications, onClearNotifications }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+  const notificationWrapperRef = useRef(null)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [loginName, setLoginName] = useState('')
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const { authReady, isAuthenticated, username, login, logout } = useAdminAuth()
+
+  useEffect(() => {
+    if (!isNotificationsOpen) return undefined
+
+    const handleOutsideClick = (event) => {
+      if (!notificationWrapperRef.current?.contains(event.target)) {
+        setIsNotificationsOpen(false)
+      }
+    }
+
+    document.addEventListener('pointerdown', handleOutsideClick)
+    return () => document.removeEventListener('pointerdown', handleOutsideClick)
+  }, [isNotificationsOpen])
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -49,11 +63,11 @@ const Header = ({ notifications, onClearNotifications }) => {
               <Span>Eng(US)</Span>
             </Option>
           </Select>
-          <NotificationWrapper>
+          <NotificationWrapper ref={notificationWrapperRef}>
             <BellButton
               type="button"
               onClick={() => setIsNotificationsOpen((isOpen) => !isOpen)}
-              aria-label={`ნოტიფიკაციები: ${notifications.length}`}
+              aria-label={`შეტყობინებები: ${notifications.length}`}
               aria-expanded={isNotificationsOpen}
               aria-controls="notifications-panel"
             >
@@ -61,15 +75,15 @@ const Header = ({ notifications, onClearNotifications }) => {
               <Strong>{notifications.length > 99 ? '99+' : notifications.length}</Strong>
             </BellButton>
             {isNotificationsOpen && (
-              <NotificationsPanel id="notifications-panel" role="region" aria-label="ნოტიფიკაციები">
+              <NotificationsPanel id="notifications-panel" role="region" aria-label="შეტყობინებები">
                 <NotificationsHeader>
-                  <strong>ნოტიფიკაციები</strong>
+                  <strong>შეტყობინებები</strong>
                   <ClearButton type="button" onClick={onClearNotifications}>
                     გასუფთავება
                   </ClearButton>
                 </NotificationsHeader>
                 {notifications.length === 0 ? (
-                  <EmptyNotifications>ნოტიფიკაციები არ არის</EmptyNotifications>
+                  <EmptyNotifications>შეტყობინებები არ არის</EmptyNotifications>
                 ) : (
                   <NotificationList>
                     {notifications.map((notification) => (
@@ -213,18 +227,20 @@ const NotificationsHeader = styled.div`
   padding: 1.4rem 1.6rem;
   border-bottom: 1px solid #e2e8f0;
   font-size: 1.4rem;
+  strong { font-size: 1.6rem; }
 `
 
 const ClearButton = styled.button`
   border: 0;
-  padding: .4rem;
+  border-radius: 6px;
+  padding: .6rem .8rem;
   background: transparent;
-  color: #087b58;
+  color: #FFA412;
   font: inherit;
   font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
-  &:hover { text-decoration: underline; }
+  &:hover { background: #FFFAF1; }
   &:focus-visible { outline: 2px solid #1aac83; outline-offset: 2px; }
 `
 
