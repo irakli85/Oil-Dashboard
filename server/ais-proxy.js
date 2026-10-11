@@ -30,6 +30,7 @@ for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), 
 const app = express();
 const port = process.env.PORT || 3001;
 const MAX_RADIUS_KM = 50;
+const STALE_VESSEL_MS = 3 * 60 * 60 * 1000;
 
 app.use(express.json());
 app.post('/api/auth/login', loginAdmin);
@@ -234,13 +235,35 @@ function upsertVessel(vessel) {
         ...vessel,
         imo: vessel.imo ?? item.imo ?? null,
         shipType: vessel.shipType ?? item.shipType ?? null,
-        lastSeen: new Date().toISOString(),
+        lastSeen: vessel.lastSeen ?? item.lastSeen,
       };
     }
 
     return item;
   });
 }
+
+// Vessels that left the area stop sending positions, so no out-of-range report ever arrives for them.
+function pruneStaleVessels() {
+  const cutoff = Date.now() - STALE_VESSEL_MS;
+  const before = latestVessels.length;
+  latestVessels = latestVessels.filter((vessel) => {
+    const seen = Date.parse(vessel.lastSeen);
+    return Number.isFinite(seen) && seen >= cutoff;
+  });
+  return latestVessels.length !== before;
+}
+
+setInterval(() => {
+  if (!pruneStaleVessels()) return;
+  scheduleSnapshotSave();
+  broadcast({
+    source: 'aisstream',
+    type: 'update',
+    updatedAt: new Date().toISOString(),
+    vessels: latestVessels,
+  });
+}, 60 * 1000).unref();
 
 function scheduleSnapshotSave() {
   if (snapshotSaveTimer) return;
@@ -354,6 +377,7 @@ function connectAISStream() {
 const snapshotReady = loadLatestVesselPositions()
   .then(async (savedVessels) => {
     latestVessels = await filterDismissedVessels(savedVessels);
+    pruneStaleVessels();
     if (latestVessels.length !== savedVessels.length) scheduleSnapshotSave();
   })
   .catch((error) => {
