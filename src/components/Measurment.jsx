@@ -5,12 +5,16 @@ import styled from 'styled-components'
 const Measurment = () => {
   const [docNum, setDocNum] = useState(null)
   const [realNum, setRealNum] = useState(null)
+  const [residualNum, setResidualNum] = useState(null)
 
   const inputEl1 = useRef(null)
   const inputEl2 = useRef(null)
 
-  let difference = Math.abs(docNum-realNum).toFixed(0)
-  let percentage = Math.abs(((docNum-realNum)/docNum) * 100).toFixed(2)
+  const effectiveRealNum = residualNum === null || residualNum === ''
+    ? realNum
+    : Number(realNum || 0) + Number(residualNum)
+  let difference = Math.abs(docNum-effectiveRealNum).toFixed(0)
+  let percentage = Math.abs(((docNum-effectiveRealNum)/docNum) * 100).toFixed(2)
 
   const handleFocus = (event) => event.target.select();
 
@@ -37,12 +41,13 @@ const Measurment = () => {
         <Hr/>
         <TableScroll><Table>
           <Tr>
-            <Th colSpan={2}>ნავთობპროდუქტების რაოდენობა</Th>
+            <Th colSpan={3}>ნავთობპროდუქტების რაოდენობა</Th>
             <Th colSpan={2}>ცდომილება</Th>
           </Tr>
           <Tr>
             <Td>დოკუმენტურად</Td>
             <Td>ფაქტიურად</Td>
+            <Td>ნარჩენი</Td>
             <Td>რაოდენობრივად</Td>
             <Td>პროცენტულად</Td>
           </Tr>
@@ -53,8 +58,11 @@ const Measurment = () => {
             <TdInp>
               <Input ref={inputEl2} type='number' max="10" onChange={(e) => setRealNum(e.target.value)} value={realNum} onFocus={handleFocus}/>
             </TdInp>
+            <TdInp>
+              <Input type='number' max="10" onChange={(e) => setResidualNum(e.target.value)} value={residualNum} onFocus={handleFocus}/>
+            </TdInp>
             <TdRes norm={percentage < 0.5 ? true : false }>{difference + ' კგ'} </TdRes>
-            <TdRes norm={percentage < 0.5 ? true : false }>{isNaN(percentage) ? (0 + '%') : (percentage + ' %')}</TdRes>
+            <TdRes norm={percentage < 0.5 ? true : false }>{percentage === 'Infinity' ? '' : isNaN(percentage) ? (0 + '%') : (percentage + ' %')}</TdRes>
           </Tr>
         </Table></TableScroll>
         <H2>აზომვის მეთოდები</H2>
@@ -217,7 +225,8 @@ export const Input = styled.input`
   height: 100%;
   padding-inline: 5rem;  
   &:focus{
-    outline: solid 4px #1aac83;
+    outline: none;
+    box-shadow: inset 0 0 0 3px #1aac83;
     background: #FFE2E5;
   }
 `
