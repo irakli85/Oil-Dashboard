@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://oil-dashboard.vercel.app/</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/wastage</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/oilprice</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/docs</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/terminals</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/sanctioned-vessels</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/export</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/export/archived</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/export/settings</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/invoices</loc>
+  </url>
+  <url>
+    <loc>https://oil-dashboard.vercel.app/livemap</loc>
+  </url>
+</urlset>

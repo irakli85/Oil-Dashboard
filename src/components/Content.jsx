@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ContentDivSty, ContentSty } from '../styledComponents/StyledComponents'
 import Header from './Header'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Measurment from './Measurment'
 import Wastage from './Wastage'
 import OilPrice from './OilPrice'
@@ -13,14 +13,80 @@ import ExportModule from './ExportModule'
 import InvoiceManagement from './InvoiceManagement'
 import { subscribeToBatumiVessels } from '../services/ais'
 
+const SITE_URL = 'https://oil-dashboard.vercel.app'
+const ROUTE_METADATA = {
+  '/': {
+    title: 'ბათუმის ნავთობტერმინალის მართვის პლატფორმა | Oil Dashboard',
+    description: 'ბათუმის ნავთობტერმინალის ოპერაციული dashboard: ნავთობპროდუქტების ფასები, ტერმინალები, დოკუმენტები და გემების ცოცხალი რუკა.',
+  },
+  '/wastage': {
+    title: 'ბუნებრივი დანაკარგები | Oil Dashboard',
+    description: 'ნავთობპროდუქტების ბუნებრივი დანაკარგების ნორმები და გამოთვლები ბათუმის ნავთობტერმინალისთვის.',
+  },
+  '/oilprice': {
+    title: 'ნავთობპროდუქტების ფასები | Oil Dashboard',
+    description: 'ნავთობპროდუქტების ფასების კონტროლი და მაქსიმალური ფასები კოდების მიხედვით.',
+  },
+  '/docs': {
+    title: 'დოკუმენტები | Oil Dashboard',
+    description: 'ბათუმის ნავთობტერმინალის ოპერაციებთან დაკავშირებული დოკუმენტები და ცნობარები.',
+  },
+  '/terminals': {
+    title: 'საბაჟო საწყობები და ტერმინალები | Oil Dashboard',
+    description: 'ინფორმაცია ბათუმის ნავთობტერმინალის საბაჟო საწყობებისა და ტერმინალების შესახებ.',
+  },
+  '/sanctioned-vessels': {
+    title: 'სანქცირებული გემები | Oil Dashboard',
+    description: 'სანქცირებული გემების სია და გემების შესახებ ხელმისაწვდომი ინფორმაცია.',
+  },
+  '/export': {
+    title: 'ექსპორტი | Oil Dashboard',
+    description: 'ექსპორტის აქტიური ოპერაციების მართვა ბათუმის ნავთობტერმინალში.',
+  },
+  '/export/archived': {
+    title: 'არქივირებული ექსპორტი | Oil Dashboard',
+    description: 'არქივირებული საექსპორტო ოპერაციების ნახვა და მართვა.',
+  },
+  '/export/settings': {
+    title: 'ექსპორტის პარამეტრები | Oil Dashboard',
+    description: 'ექსპორტის ოპერაციების და გემების პარამეტრების მართვა.',
+  },
+  '/invoices': {
+    title: 'ინვოისების მართვა | Oil Dashboard',
+    description: 'ინვოისებისა და გემების ოპერაციული მონაცემების მართვა.',
+  },
+  '/livemap': {
+    title: 'გემების ცოცხალი რუკა | Oil Dashboard',
+    description: 'ბათუმის პორტთან ახლოს მყოფი გემების ცოცხალი რუკა, პოზიციები და პორტამდე მანძილი.',
+  },
+}
+
 
 const Content = () => {
+  const { pathname } = useLocation()
   const [notifications, setNotifications] = useState([])
   const [liveVessels, setLiveVessels] = useState([])
   const [connectionState, setConnectionState] = useState('connecting')
   const [lastUpdated, setLastUpdated] = useState('')
   const notifiedVesselKeys = useRef(new Set())
   const hasReceivedInitialSnapshot = useRef(false)
+
+  useEffect(() => {
+    const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '')
+    const metadata = ROUTE_METADATA[normalizedPath]
+    const pageTitle = metadata?.title || 'გვერდი ვერ მოიძებნა | Oil Dashboard'
+    const description = metadata?.description || 'მოთხოვნილი გვერდი ვერ მოიძებნა.'
+    const canonicalUrl = new URL(normalizedPath, SITE_URL).href
+
+    document.documentElement.lang = 'ka'
+    document.title = pageTitle
+    setMetaContent('description', description)
+    setMetaContent('robots', metadata ? 'index,follow' : 'noindex,follow')
+    setMetaContent('og:title', pageTitle, 'property')
+    setMetaContent('og:description', description, 'property')
+    setMetaContent('og:url', canonicalUrl, 'property')
+    setCanonicalUrl(canonicalUrl)
+  }, [pathname])
 
   const handleNewVessel = useCallback((vessel) => {
     const shipName = vessel.shipName || 'უცნობი გემი'
@@ -128,6 +194,26 @@ function getVesselIdentity(vessel) {
 
   const shipName = String(vessel.shipName ?? '').trim().replace(/\s+/g, ' ').toUpperCase()
   return `name:${shipName}`
+}
+
+function setMetaContent(name, content, attribute = 'name') {
+  let meta = document.head.querySelector(`meta[${attribute}="${name}"]`)
+  if (!meta) {
+    meta = document.createElement('meta')
+    meta.setAttribute(attribute, name)
+    document.head.append(meta)
+  }
+  meta.setAttribute('content', content)
+}
+
+function setCanonicalUrl(url) {
+  let canonical = document.head.querySelector('link[rel="canonical"]')
+  if (!canonical) {
+    canonical = document.createElement('link')
+    canonical.rel = 'canonical'
+    document.head.append(canonical)
+  }
+  canonical.href = url
 }
 
 export default Content
