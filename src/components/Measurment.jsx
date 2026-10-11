@@ -11,13 +11,10 @@ const Measurment = () => {
   const inputEl2 = useRef(null)
 
   const updateNonNegativeValue = (setValue, value) => {
-    if (value === '') {
-      setValue('')
-      return
+    const normalizedValue = value.replace(/,/g, '.')
+    if (/^\d*\.?\d*$/.test(normalizedValue)) {
+      setValue(normalizedValue)
     }
-
-    const numericValue = Number(value)
-    setValue(Number.isFinite(numericValue) ? String(Math.max(0, numericValue)) : '')
   }
 
   const effectiveRealNum = residualNum === null || residualNum === ''
@@ -63,13 +60,13 @@ const Measurment = () => {
           </Tr>
           <Tr>
             <TdInp>
-              <Input ref={inputEl1} type='number' min="0" max="10" onChange={(e) => updateNonNegativeValue(setDocNum, e.target.value)} value={docNum} onFocus={handleFocus}/>
+              <Input ref={inputEl1} type='text' inputMode='decimal' onChange={(e) => updateNonNegativeValue(setDocNum, e.target.value)} value={docNum} onFocus={handleFocus}/>
             </TdInp>
             <TdInp>
-              <Input ref={inputEl2} type='number' min="0" max="10" onChange={(e) => updateNonNegativeValue(setRealNum, e.target.value)} value={realNum} onFocus={handleFocus}/>
+              <Input ref={inputEl2} type='text' inputMode='decimal' onChange={(e) => updateNonNegativeValue(setRealNum, e.target.value)} value={realNum} onFocus={handleFocus}/>
             </TdInp>
             <TdInp>
-              <Input type='number' min="0" max="10" onChange={(e) => updateNonNegativeValue(setResidualNum, e.target.value)} value={residualNum} onFocus={handleFocus}/>
+              <Input type='text' inputMode='decimal' onChange={(e) => updateNonNegativeValue(setResidualNum, e.target.value)} value={residualNum} onFocus={handleFocus}/>
             </TdInp>
             <TdRes norm={percentage < 0.5 ? true : false }>{difference + ' კგ'} </TdRes>
             <TdRes norm={percentage < 0.5 ? true : false }>{percentage === 'Infinity' ? '' : isNaN(percentage) ? (0 + '%') : (percentage + ' %')}</TdRes>
