@@ -68,7 +68,9 @@ const ROUTE_METADATA = {
 }
 
 function mergeNotifications(current, incoming) {
-  const notificationsById = new Map(incoming.map((notification) => [notification.id, notification]))
+  const notificationsById = new globalThis.Map(
+    incoming.map((notification) => [notification.id, notification])
+  )
   current.forEach((notification) => {
     if (!notificationsById.has(notification.id)) {
       notificationsById.set(notification.id, notification)
