@@ -87,7 +87,9 @@ const Header = ({ notifications, onClearNotifications }) => {
                 ) : (
                   <NotificationList>
                     {notifications.map((notification) => (
-                      <NotificationItem key={notification.id}>{notification.message}</NotificationItem>
+                      <NotificationItem key={notification.id}>
+                        ახალი გემი: <NotificationShipName>{notification.shipName}</NotificationShipName>, IMO: {notification.imo}, დროშა: {notification.flag}
+                      </NotificationItem>
                     ))}
                   </NotificationList>
                 )}
@@ -259,6 +261,12 @@ const NotificationItem = styled.li`
   line-height: 1.6;
   overflow-wrap: anywhere;
   &:last-child { border-bottom: 0; }
+`
+
+const NotificationShipName = styled.strong`
+  color: #192b32;
+  font-size: 1.5rem;
+  font-weight: 700;
 `
 
 const EmptyNotifications = styled.p`

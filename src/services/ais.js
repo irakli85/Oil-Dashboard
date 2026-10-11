@@ -119,6 +119,7 @@ export function subscribeToBatumiVessels(radiusKm = 20, onUpdate, onError) {
   let cancelled = false
   let timer = null
   let stream = null
+  let updateQueue = Promise.resolve()
 
   const poll = async () => {
     if (cancelled) return
@@ -139,7 +140,12 @@ export function subscribeToBatumiVessels(radiusKm = 20, onUpdate, onError) {
         if (data.type === 'error') {
           if (onError) onError(new Error('AIS stream unavailable'))
         } else if (Array.isArray(data.vessels)) {
-          resolveMissingVesselNames(data.vessels).then(deduplicateVessels).then(onUpdate)
+          updateQueue = updateQueue.then(async () => {
+            const vessels = await resolveMissingVesselNames(data.vessels)
+            if (!cancelled) onUpdate(deduplicateVessels(vessels))
+          }).catch((error) => {
+            if (!cancelled && onError) onError(error)
+          })
         }
       } catch (error) {
         if (onError) onError(error)

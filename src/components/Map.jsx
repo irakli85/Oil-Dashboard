@@ -430,7 +430,7 @@ const BERTHS = [
   { number: 1, latitude: 41.65018029609214, longitude: 41.64925556545735 },
   { number: 2, latitude: 41.65053303263249, longitude: 41.65195923214436 },
   { number: 3, latitude: 41.650885767241405, longitude: 41.65431835138273 },
-  { number: 4, latitude: 41.64982755762035, longitude: 41.65646542833763 },
+  { number: 4, latitude: 41.64982755762035, longitude: 41.65646542833763, orientation: 0 },
   { number: 5, latitude: 41.648576923838924, longitude: 41.657366514489446 },
   { number: 6, latitude: 41.646684893253514, longitude: 41.65710829100909 },
   { number: 7, latitude: 41.64636420459651, longitude: 41.65419077901581 },

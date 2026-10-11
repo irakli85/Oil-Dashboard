@@ -96,7 +96,9 @@ const Content = () => {
     setNotifications((currentNotifications) => [
       {
         id: `${Date.now()}-${vessel.imo || vessel.mmsi || shipName}`,
-        message: `ახალი გემი: ${shipName}, IMO: ${imo}, დროშა: ${flag}`,
+        shipName,
+        imo,
+        flag,
       },
       ...currentNotifications,
     ])
