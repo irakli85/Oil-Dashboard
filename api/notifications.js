@@ -1,13 +1,12 @@
 import {
   clearNotifications,
-  createNotification,
   getNotifications,
   isValidNotificationClientId,
   markNotificationSeen,
 } from '../server/notification-store.js'
 
 export default async function handler(req, res) {
-  const clientId = ['POST', 'PATCH'].includes(req.method)
+  const clientId = req.method === 'PATCH'
     ? req.body?.clientId
     : req.query?.clientId
   if (!isValidNotificationClientId(clientId)) {
@@ -18,23 +17,6 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
       const notifications = await getNotifications(clientId)
       return res.status(200).json({ notifications })
-    }
-
-    if (req.method === 'POST') {
-      const { shipName, imo, flag } = req.body || {}
-      if (![shipName, imo, flag].every((value) =>
-        typeof value === 'string' && value.trim().length > 0 && value.length <= 200
-      )) {
-        return res.status(400).json({ error: 'Invalid notification details' })
-      }
-
-      const notification = await createNotification({
-        clientId,
-        shipName: shipName.trim(),
-        imo: imo.trim(),
-        flag: flag.trim(),
-      })
-      return res.status(201).json({ notification })
     }
 
     if (req.method === 'PATCH') {
@@ -52,7 +34,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true })
     }
 
-    res.setHeader('Allow', 'GET, POST, PATCH, DELETE')
+    res.setHeader('Allow', 'GET, PATCH, DELETE')
     return res.status(405).json({ error: 'Method Not Allowed' })
   } catch (error) {
     console.error('[notifications api]', error)

@@ -25,7 +25,6 @@ import {
 } from './vessel-registry.js';
 import {
   clearNotifications,
-  createNotification,
   getNotifications,
   isValidNotificationClientId,
   markNotificationSeen,
@@ -78,31 +77,6 @@ app.get('/api/notifications', async (req, res) => {
     return res.status(200).json({ notifications });
   } catch (error) {
     console.error('[notifications get]', error);
-    return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
-  }
-});
-
-app.post('/api/notifications', async (req, res) => {
-  const { clientId, shipName, imo, flag } = req.body || {};
-  if (!isValidNotificationClientId(clientId)) {
-    return res.status(400).json({ error: 'Invalid notification client ID' });
-  }
-  if (![shipName, imo, flag].every((value) =>
-    typeof value === 'string' && value.trim().length > 0 && value.length <= 200
-  )) {
-    return res.status(400).json({ error: 'Invalid notification details' });
-  }
-
-  try {
-    const notification = await createNotification({
-      clientId,
-      shipName: shipName.trim(),
-      imo: imo.trim(),
-      flag: flag.trim(),
-    });
-    return res.status(201).json({ notification });
-  } catch (error) {
-    console.error('[notifications create]', error);
     return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
   }
 });

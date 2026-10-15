@@ -16,20 +16,6 @@ async function ensureReady() {
   if (!initPromise) {
     initPromise = (async () => {
       await pool.query(`
-        CREATE TABLE IF NOT EXISTS vessel_notifications (
-          id BIGSERIAL PRIMARY KEY,
-          client_id UUID NOT NULL,
-          ship_name TEXT NOT NULL,
-          imo TEXT NOT NULL,
-          flag TEXT NOT NULL,
-          detected_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-        )
-      `)
-      await pool.query(`
-        CREATE INDEX IF NOT EXISTS vessel_notifications_client_time_idx
-        ON vessel_notifications (client_id, detected_at DESC, id DESC)
-      `)
-      await pool.query(`
         CREATE TABLE IF NOT EXISTS vessel_notification_reads (
           client_id UUID NOT NULL,
           notification_id TEXT NOT NULL,
@@ -107,11 +93,6 @@ export async function getNotifications(clientId) {
             notification.flag, notification.event_type, notification.detected_at,
             (read_state.seen_at IS NOT NULL) AS is_read
      FROM (
-       SELECT id::TEXT AS id, NULL::TEXT AS mmsi, ship_name, imo, flag,
-              NULL::TEXT AS event_type, detected_at
-       FROM vessel_notifications
-       WHERE client_id = $1
-       UNION ALL
        SELECT 'arrival-' || event.id::TEXT AS id, event.mmsi, event.ship_name, event.imo,
               event.flag, event.event_type, event.detected_at
        FROM vessel_arrival_events AS event
@@ -122,21 +103,11 @@ export async function getNotifications(clientId) {
          (SELECT cleared_at FROM vessel_notification_clears WHERE client_id = $1),
          '-infinity'::timestamptz
        )
+       AND read_state.seen_at IS NULL
      ORDER BY notification.detected_at DESC, notification.id DESC`,
     [clientId]
   )
   return rows.map(mapRow)
-}
-
-export async function createNotification({ clientId, shipName, imo, flag }) {
-  await ensureReady()
-  const { rows } = await pool.query(
-    `INSERT INTO vessel_notifications (client_id, ship_name, imo, flag)
-     VALUES ($1, $2, $3, $4)
-     RETURNING id, ship_name, imo, flag, detected_at`,
-    [clientId, shipName, imo, flag]
-  )
-  return mapRow(rows[0])
 }
 
 export async function clearNotifications(clientId) {
@@ -150,7 +121,6 @@ export async function clearNotifications(clientId) {
        ON CONFLICT (client_id) DO UPDATE SET cleared_at = EXCLUDED.cleared_at`,
       [clientId]
     )
-    await client.query('DELETE FROM vessel_notifications WHERE client_id = $1', [clientId])
     await client.query('DELETE FROM vessel_notification_reads WHERE client_id = $1', [clientId])
     await client.query('COMMIT')
   } catch (error) {
@@ -167,39 +137,22 @@ export async function clearNotifications(clientId) {
 
 export async function markNotificationSeen(clientId, notificationId) {
   await ensureReady()
-  let targetId = notificationId
-  let sourceTable
-  if (/^arrival-\d+$/.test(notificationId)) {
-    targetId = notificationId.slice('arrival-'.length)
-    sourceTable = 'vessel_arrival_events'
-  } else if (/^\d+$/.test(notificationId)) {
-    sourceTable = 'vessel_notifications'
-  } else {
-    return false
-  }
+  if (!/^arrival-\d+$/.test(notificationId)) return false
+  const targetId = notificationId.slice('arrival-'.length)
 
-  const query = sourceTable === 'vessel_arrival_events'
-    ? `INSERT INTO vessel_notification_reads (client_id, notification_id)
-       SELECT $1, 'arrival-' || event.id::TEXT
-       FROM vessel_arrival_events AS event
-       WHERE event.id::TEXT = $2
-         AND event.detected_at > COALESCE(
-           (SELECT cleared_at FROM vessel_notification_clears WHERE client_id = $1),
-           '-infinity'::timestamptz
-         )
-       ON CONFLICT (client_id, notification_id) DO NOTHING
-       RETURNING notification_id`
-    : `INSERT INTO vessel_notification_reads (client_id, notification_id)
-       SELECT $1, notification.id::TEXT
-       FROM vessel_notifications AS notification
-       WHERE notification.id::TEXT = $2 AND notification.client_id = $1
-         AND notification.detected_at > COALESCE(
-           (SELECT cleared_at FROM vessel_notification_clears WHERE client_id = $1),
-           '-infinity'::timestamptz
-         )
-       ON CONFLICT (client_id, notification_id) DO NOTHING
-       RETURNING notification_id`
-  const { rows } = await pool.query(query, [clientId, targetId])
+  const { rows } = await pool.query(
+    `INSERT INTO vessel_notification_reads (client_id, notification_id)
+     SELECT $1, 'arrival-' || event.id::TEXT
+     FROM vessel_arrival_events AS event
+     WHERE event.id::TEXT = $2
+       AND event.detected_at > COALESCE(
+         (SELECT cleared_at FROM vessel_notification_clears WHERE client_id = $1),
+         '-infinity'::timestamptz
+       )
+     ON CONFLICT (client_id, notification_id) DO NOTHING
+     RETURNING notification_id`,
+    [clientId, targetId]
+  )
   if (rows.length > 0) return true
 
   const { rowCount } = await pool.query(

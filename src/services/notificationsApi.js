@@ -35,14 +35,6 @@ export async function fetchNotifications(clientId) {
   return data.notifications
 }
 
-export async function createNotification(notification) {
-  const data = await request('/api/notifications', {
-    method: 'POST',
-    body: JSON.stringify(notification),
-  })
-  return data.notification
-}
-
 export async function markNotificationSeen(clientId, notificationId) {
   await request('/api/notifications', {
     method: 'PATCH',

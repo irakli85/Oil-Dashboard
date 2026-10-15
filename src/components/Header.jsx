@@ -120,17 +120,15 @@ const Header = ({
                     {notifications.map((notification) => (
                       <NotificationItem key={notification.id} $isRead={notification.isRead}>
                         {notification.eventType === 'departure'
-                          ? 'გემი 2 კმ რადიუსიდან გავიდა: '
-                          : notification.eventType === 'arrival'
-                            ? 'გემი 2 კმ რადიუსში შემოვიდა: '
-                            : 'ახალი გემი: '}
+                          ? 'გემის გასვლა: '
+                          : 'ახალი გემი: '}
                         <NotificationShipName>{notification.shipName}</NotificationShipName>, IMO: {notification.imo}, დროშა: {notification.flag}, თარიღი: {formatNotificationDate(notification.detectedAt)}
                         <SeenButton
                           type="button"
                           disabled={notification.isRead || pendingSeenIds?.has(notification.id)}
                           onClick={() => onMarkNotificationSeen(notification.id)}
                         >
-                          {notification.isRead ? 'ნანახია' : 'ნახულად მონიშვნა'}
+                          ნანახია
                         </SeenButton>
                       </NotificationItem>
                     ))}

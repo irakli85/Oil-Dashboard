@@ -20,8 +20,8 @@ For a persistent local database, create `.env` in the project root:
 DATABASE_URL=postgres://user:password@localhost:5432/oil_dashboard
 ```
 
-Tables (`export_items`, `export_options`, `vessel_notifications`, and the AIS
-proximity notification tables) are created automatically when first needed.
+Tables (`export_items`, `export_options`, and the AIS proximity notification
+tables) are created automatically when first needed.
 AIS arrival and departure events are recorded once when a vessel crosses the
 2 km boundary, with the AIS position observation timestamp. Notifications
 remain available after refresh, can be marked as seen individually, and show

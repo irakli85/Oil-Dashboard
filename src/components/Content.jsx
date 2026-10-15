@@ -165,8 +165,8 @@ const Content = () => {
     setPendingSeenIds((current) => new Set(current).add(notificationId))
     try {
       await markNotificationSeenRequest(notificationClientId, notificationId)
-      setNotifications((current) => current.map((notification) =>
-        notification.id === notificationId ? { ...notification, isRead: true } : notification
+      setNotifications((current) => current.filter(
+        (notification) => notification.id !== notificationId
       ))
       setNotificationError('')
     } catch (error) {
