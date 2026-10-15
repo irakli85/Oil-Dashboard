@@ -28,6 +28,8 @@ import {
   createNotification,
   getNotifications,
   isValidNotificationClientId,
+  markNotificationSeen,
+  updateVesselProximity,
 } from './notification-store.js';
 
 for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
@@ -50,10 +52,11 @@ let latestVessels = [];
 let socket = null;
 let snapshotSaveTimer = null;
 let snapshotSavePromise = Promise.resolve();
+let aisMessageQueue = Promise.resolve();
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
 
   if (req.method === 'OPTIONS') {
@@ -100,6 +103,25 @@ app.post('/api/notifications', async (req, res) => {
     return res.status(201).json({ notification });
   } catch (error) {
     console.error('[notifications create]', error);
+    return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
+  }
+});
+
+app.patch('/api/notifications', async (req, res) => {
+  const { clientId, notificationId } = req.body || {};
+  if (!isValidNotificationClientId(clientId) ||
+    typeof notificationId !== 'string' ||
+    notificationId.length > 40
+  ) {
+    return res.status(400).json({ error: 'Invalid notification details' });
+  }
+
+  try {
+    const seen = await markNotificationSeen(clientId, notificationId);
+    if (!seen) return res.status(404).json({ error: 'Notification not found' });
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error('[notifications mark seen]', error);
     return res.status(503).json({ error: 'Notifications are temporarily unavailable' });
   }
 });
@@ -232,6 +254,7 @@ function normalizeVessel(raw, radiusKm = MAX_RADIUS_KM) {
     messageType: raw?.MessageType || 'PositionReport',
     lastSeen: new Date().toISOString(),
     distanceKm: Number(distanceKm.toFixed(2)),
+    distanceKmExact: distanceKm,
   };
 }
 
@@ -377,27 +400,83 @@ function connectAISStream() {
     );
   });
 
-  socket.on('message', async (data) => {
-    try {
-      const event = JSON.parse(data.toString());
+  socket.on('message', (data) => {
+    aisMessageQueue = aisMessageQueue.then(async () => {
+      try {
+        const event = JSON.parse(data.toString());
 
-      if (event && typeof event === 'object' && (event.MessageType === 'PositionReport' || event.MetaData || event.Message)) {
-        console.log('AIS raw event keys:', Object.keys(event));
-        console.log('AIS raw event sample:', {
-          messageType: event?.MessageType,
-          shipName: readValue(event?.MetaData || event, 'ShipName', 'shipName', 'Name', 'name'),
-          latitude: readValue(event?.MetaData || event, 'Latitude', 'latitude') ?? readValue(event?.Message?.PositionReport || event, 'Latitude', 'latitude'),
-          longitude: readValue(event?.MetaData || event, 'Longitude', 'longitude') ?? readValue(event?.Message?.PositionReport || event, 'Longitude', 'longitude'),
-        });
-      }
+        if (event && typeof event === 'object' && (event.MessageType === 'PositionReport' || event.MetaData || event.Message)) {
+          console.log('AIS raw event keys:', Object.keys(event));
+          console.log('AIS raw event sample:', {
+            messageType: event?.MessageType,
+            shipName: readValue(event?.MetaData || event, 'ShipName', 'shipName', 'Name', 'name'),
+            latitude: readValue(event?.MetaData || event, 'Latitude', 'latitude') ?? readValue(event?.Message?.PositionReport || event, 'Latitude', 'latitude'),
+            longitude: readValue(event?.MetaData || event, 'Longitude', 'longitude') ?? readValue(event?.Message?.PositionReport || event, 'Longitude', 'longitude'),
+          });
+        }
 
-      const parsedVessel = normalizeVessel(event, MAX_RADIUS_KM);
-      if (parsedVessel?.outOfRange) {
-        const before = latestVessels.length;
-        latestVessels = latestVessels.filter((item) => {
-          return parsedVessel.mmsi ? String(item.mmsi) !== String(parsedVessel.mmsi) : item.shipName !== parsedVessel.shipName;
-        });
-        if (latestVessels.length !== before) {
+        const parsedVessel = normalizeVessel(event, MAX_RADIUS_KM);
+        if (parsedVessel?.outOfRange) {
+          let notification = null;
+          try {
+            notification = await updateVesselProximity({
+              ...parsedVessel,
+              distanceKmExact: MAX_RADIUS_KM + 1,
+              lastSeen: new Date().toISOString(),
+            });
+          } catch (error) {
+            console.error('[ais proximity departure notification]', error);
+          }
+          const before = latestVessels.length;
+          latestVessels = latestVessels.filter((item) => {
+            return parsedVessel.mmsi ? String(item.mmsi) !== String(parsedVessel.mmsi) : item.shipName !== parsedVessel.shipName;
+          });
+          if (latestVessels.length !== before || notification) {
+            scheduleSnapshotSave();
+            broadcast({
+              source: 'aisstream',
+              type: 'update',
+              updatedAt: new Date().toISOString(),
+              vessels: latestVessels,
+              ...(notification ? { notification } : {}),
+            });
+          }
+          return;
+        }
+
+        const vessel = parsedVessel;
+        const staticVessel = vessel ? null : normalizeStaticVessel(event);
+        const nextVessel = vessel || staticVessel;
+        if (nextVessel) {
+          const identifiers = new Set(getVesselIdentifiers(nextVessel));
+          if (await isVesselDismissed(nextVessel)) {
+            latestVessels = latestVessels.filter((item) =>
+              !getVesselIdentifiers(item).some((identifier) => identifiers.has(identifier))
+            );
+          } else if (vessel) {
+            const enrichedVessel = await enrichVessel(vessel);
+            let notification = null;
+            try {
+              notification = await updateVesselProximity(enrichedVessel);
+            } catch (error) {
+              console.error('[ais proximity notification]', error);
+            }
+            if (vessel.imo || vessel.shipType) await saveVesselRegistry(enrichedVessel);
+            upsertVessel(enrichedVessel);
+            scheduleSnapshotSave();
+            broadcast({
+              source: 'aisstream',
+              type: 'update',
+              updatedAt: new Date().toISOString(),
+              vessels: latestVessels,
+              ...(notification ? { notification } : {}),
+            });
+            return;
+          } else {
+            const enrichedVessel = await enrichVessel(staticVessel);
+            await saveVesselRegistry(enrichedVessel);
+            upsertVessel(enrichedVessel);
+          }
           scheduleSnapshotSave();
           broadcast({
             source: 'aisstream',
@@ -406,38 +485,10 @@ function connectAISStream() {
             vessels: latestVessels,
           });
         }
-        return;
+      } catch (error) {
+        console.error('AIS parse error:', error);
       }
-
-      const vessel = parsedVessel;
-      const staticVessel = vessel ? null : normalizeStaticVessel(event);
-      const nextVessel = vessel || staticVessel;
-      if (nextVessel) {
-        const identifiers = new Set(getVesselIdentifiers(nextVessel));
-        if (await isVesselDismissed(nextVessel)) {
-          latestVessels = latestVessels.filter((item) =>
-            !getVesselIdentifiers(item).some((identifier) => identifiers.has(identifier))
-          );
-        } else if (vessel) {
-          const enrichedVessel = await enrichVessel(vessel);
-          if (vessel.imo || vessel.shipType) await saveVesselRegistry(enrichedVessel);
-          upsertVessel(enrichedVessel);
-        } else {
-          const enrichedVessel = await enrichVessel(staticVessel);
-          await saveVesselRegistry(enrichedVessel);
-          upsertVessel(enrichedVessel);
-        }
-        scheduleSnapshotSave();
-        broadcast({
-          source: 'aisstream',
-          type: 'update',
-          updatedAt: new Date().toISOString(),
-          vessels: latestVessels,
-        });
-      }
-    } catch (error) {
-      console.error('AIS parse error:', error);
-    }
+    });
   });
 
   socket.on('close', () => {
@@ -464,6 +515,23 @@ const snapshotReady = loadLatestVesselPositions()
     }
     pruneStaleVessels();
     if (latestVessels.length !== savedVessels.length) scheduleSnapshotSave();
+    for (const vessel of latestVessels) {
+      const distanceKmExact = haversineKm(
+        BATUMI_PORT.lat,
+        BATUMI_PORT.lon,
+        vessel.latitude,
+        vessel.longitude
+      );
+      if (distanceKmExact > 2) continue;
+      try {
+        await updateVesselProximity({
+          ...vessel,
+          distanceKmExact,
+        });
+      } catch (error) {
+        console.error('[ais initial proximity notification]', error);
+      }
+    }
   })
   .catch((error) => {
     console.error('[ais snapshot restore]', error);

@@ -20,14 +20,22 @@ function formatNotificationDate(value) {
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
+      second: '2-digit',
+      fractionalSecondDigits: 3,
       hourCycle: 'h23',
     }).formatToParts(date)
       .map(({ type, value: partValue }) => [type, partValue])
   )
-  return `${parts.day}/${parts.month}/${parts.year} - ${parts.hour}:${parts.minute}`
+  return `${parts.day}/${parts.month}/${parts.year} - ${parts.hour}:${parts.minute}:${parts.second}.${parts.fractionalSecond}`
 }
 
-const Header = ({ notifications, notificationError, onClearNotifications }) => {
+const Header = ({
+  notifications,
+  notificationError,
+  pendingSeenIds,
+  onClearNotifications,
+  onMarkNotificationSeen,
+}) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const notificationWrapperRef = useRef(null)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
@@ -36,6 +44,7 @@ const Header = ({ notifications, notificationError, onClearNotifications }) => {
   const [loginError, setLoginError] = useState('')
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const { authReady, isAuthenticated, username, login, logout } = useAdminAuth()
+  const unreadCount = notifications.filter((notification) => !notification.isRead).length
 
   useEffect(() => {
     if (!isNotificationsOpen) return undefined
@@ -86,12 +95,12 @@ const Header = ({ notifications, notificationError, onClearNotifications }) => {
             <BellButton
               type="button"
               onClick={() => setIsNotificationsOpen((isOpen) => !isOpen)}
-              aria-label={`შეტყობინებები: ${notifications.length}`}
+              aria-label={`შეტყობინებები: ${unreadCount} წაუკითხავი`}
               aria-expanded={isNotificationsOpen}
               aria-controls="notifications-panel"
             >
               <img src={bell} alt="" />
-              <Strong>{notifications.length > 99 ? '99+' : notifications.length}</Strong>
+              <Strong>{unreadCount > 99 ? '99+' : unreadCount}</Strong>
             </BellButton>
             {isNotificationsOpen && (
               <NotificationsPanel id="notifications-panel" role="region" aria-label="შეტყობინებები">
@@ -109,8 +118,20 @@ const Header = ({ notifications, notificationError, onClearNotifications }) => {
                 ) : (
                   <NotificationList>
                     {notifications.map((notification) => (
-                      <NotificationItem key={notification.id}>
-                        ახალი გემი: <NotificationShipName>{notification.shipName}</NotificationShipName>, IMO: {notification.imo}, დროშა: {notification.flag}, თარიღი: {formatNotificationDate(notification.detectedAt)}
+                      <NotificationItem key={notification.id} $isRead={notification.isRead}>
+                        {notification.eventType === 'departure'
+                          ? 'გემი 2 კმ რადიუსიდან გავიდა: '
+                          : notification.eventType === 'arrival'
+                            ? 'გემი 2 კმ რადიუსში შემოვიდა: '
+                            : 'ახალი გემი: '}
+                        <NotificationShipName>{notification.shipName}</NotificationShipName>, IMO: {notification.imo}, დროშა: {notification.flag}, თარიღი: {formatNotificationDate(notification.detectedAt)}
+                        <SeenButton
+                          type="button"
+                          disabled={notification.isRead || pendingSeenIds?.has(notification.id)}
+                          onClick={() => onMarkNotificationSeen(notification.id)}
+                        >
+                          {notification.isRead ? 'ნანახია' : 'ნახულად მონიშვნა'}
+                        </SeenButton>
                       </NotificationItem>
                     ))}
                   </NotificationList>
@@ -282,7 +303,25 @@ const NotificationItem = styled.li`
   font-size: 1.3rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
+  background: ${({ $isRead }) => ($isRead ? '#fff' : '#f8fbff')};
   &:last-child { border-bottom: 0; }
+`
+
+const SeenButton = styled.button`
+  display: block;
+  margin-top: .6rem;
+  padding: .4rem .6rem;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #16765d;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  &:disabled { color: #737791; cursor: default; }
+  &:not(:disabled):hover { background: #e7f5ef; }
+  &:focus-visible { outline: 2px solid #1aac83; outline-offset: 2px; }
 `
 
 const NotificationShipName = styled.strong`

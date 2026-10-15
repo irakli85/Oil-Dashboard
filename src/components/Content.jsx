@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ContentDivSty, ContentSty } from '../styledComponents/StyledComponents'
 import Header from './Header'
 import { Route, Routes, useLocation } from 'react-router-dom'
@@ -13,10 +13,10 @@ import ExportModule from './ExportModule'
 import InvoiceManagement from './InvoiceManagement'
 import { subscribeToBatumiVessels } from '../services/ais'
 import {
-  createNotification,
   deleteNotifications,
   fetchNotifications,
   getNotificationClientId,
+  markNotificationSeen as markNotificationSeenRequest,
 } from '../services/notificationsApi'
 
 const SITE_URL = 'https://oil-dashboard.vercel.app'
@@ -85,12 +85,11 @@ const Content = () => {
   const { pathname } = useLocation()
   const [notifications, setNotifications] = useState([])
   const [notificationError, setNotificationError] = useState('')
+  const [pendingSeenIds, setPendingSeenIds] = useState(() => new Set())
   const [notificationClientId] = useState(getNotificationClientId)
   const [liveVessels, setLiveVessels] = useState([])
   const [connectionState, setConnectionState] = useState('connecting')
   const [lastUpdated, setLastUpdated] = useState('')
-  const notifiedVesselKeys = useRef(new Set())
-  const hasReceivedInitialSnapshot = useRef(false)
 
   useEffect(() => {
     const normalizedPath = pathname === '/' ? '/' : pathname.replace(/\/+$/, '')
@@ -114,7 +113,9 @@ const Content = () => {
     fetchNotifications(notificationClientId)
       .then((savedNotifications) => {
         if (isActive) {
-          setNotifications((current) => mergeNotifications(current, savedNotifications))
+          setNotifications((current) =>
+            mergeNotifications(current, savedNotifications.map(enrichNotification))
+          )
           setNotificationError('')
         }
       })
@@ -128,59 +129,18 @@ const Content = () => {
     }
   }, [notificationClientId])
 
-  const handleNewVessel = useCallback(async (vessel) => {
-    const shipName = vessel.shipName || 'უცნობი გემი'
-    const imo = vessel.imo || 'უცნობია'
-    const flag = vessel.countryName || 'უცნობია'
-
-    try {
-      const notification = await createNotification({
-        clientId: notificationClientId,
-        shipName,
-        imo,
-        flag,
-      })
-      setNotifications((currentNotifications) =>
-        mergeNotifications(currentNotifications, [notification])
-      )
-      setNotificationError('')
-    } catch (error) {
-      console.error('[notifications save]', error)
-      setNotificationError('შეტყობინების შენახვა ვერ მოხერხდა')
-    }
-  }, [notificationClientId])
-
-  const handleVesselUpdate = useCallback((vessels) => {
+  const handleVesselUpdate = useCallback((vessels, notification) => {
     setLiveVessels(vessels)
     setLastUpdated(new Date().toLocaleTimeString())
     setConnectionState(vessels.length > 0 ? 'live' : 'idle')
 
-    const vesselsInNotificationRadius = vessels.filter((vessel) =>
-      vessel.distanceKm != null && vessel.distanceKm !== '' &&
-      Number.isFinite(Number(vessel.distanceKm)) && Number(vessel.distanceKm) <= 2
-    )
-
-    if (!hasReceivedInitialSnapshot.current) {
-      vesselsInNotificationRadius.forEach((vessel) => {
-        notifiedVesselKeys.current.add(getVesselIdentity(vessel))
-      })
-      hasReceivedInitialSnapshot.current = true
-      return
+    if (notification) {
+      setNotifications((currentNotifications) =>
+        mergeNotifications(currentNotifications, [enrichNotification(notification)])
+      )
+      setNotificationError('')
     }
-
-    vesselsInNotificationRadius.forEach((vessel) => {
-      const identity = getVesselIdentity(vessel)
-      if (notifiedVesselKeys.current.has(identity)) return
-
-      notifiedVesselKeys.current.add(identity)
-      handleNewVessel({
-        shipName: String(vessel.shipName ?? '').trim(),
-        imo: String(vessel.imo ?? '').trim(),
-        mmsi: vessel.mmsi,
-        countryName: getVesselCountryName(vessel.mmsi) || vessel.countryName || vessel.flag,
-      })
-    })
-  }, [handleNewVessel])
+  }, [])
 
   useEffect(() => {
     const source = subscribeToBatumiVessels(20, handleVesselUpdate, () => {
@@ -201,6 +161,26 @@ const Content = () => {
     }
   }, [notificationClientId])
 
+  const handleMarkNotificationSeen = useCallback(async (notificationId) => {
+    setPendingSeenIds((current) => new Set(current).add(notificationId))
+    try {
+      await markNotificationSeenRequest(notificationClientId, notificationId)
+      setNotifications((current) => current.map((notification) =>
+        notification.id === notificationId ? { ...notification, isRead: true } : notification
+      ))
+      setNotificationError('')
+    } catch (error) {
+      console.error('[notifications mark seen]', error)
+      setNotificationError('შეტყობინების ნახულად მონიშვნა ვერ მოხერხდა')
+    } finally {
+      setPendingSeenIds((current) => {
+        const next = new Set(current)
+        next.delete(notificationId)
+        return next
+      })
+    }
+  }, [notificationClientId])
+
   const handleVesselDismissed = useCallback((vessel) => {
     setLiveVessels((currentVessels) => currentVessels.filter((item) => {
       if (vessel.mmsi) return String(item.mmsi) !== String(vessel.mmsi)
@@ -214,7 +194,9 @@ const Content = () => {
         <Header
           notifications={notifications}
           notificationError={notificationError}
+          pendingSeenIds={pendingSeenIds}
           onClearNotifications={handleClearNotifications}
+          onMarkNotificationSeen={handleMarkNotificationSeen}
         />
         <ContentDivSty>
           <Routes>
@@ -245,15 +227,11 @@ const Content = () => {
   )
 }
 
-function getVesselIdentity(vessel) {
-  const imo = String(vessel.imo ?? '').trim()
-  if (imo) return `imo:${imo}`
-
-  const mmsi = String(vessel.mmsi ?? '').trim()
-  if (mmsi) return `mmsi:${mmsi}`
-
-  const shipName = String(vessel.shipName ?? '').trim().replace(/\s+/g, ' ').toUpperCase()
-  return `name:${shipName}`
+function enrichNotification(notification) {
+  return {
+    ...notification,
+    flag: getVesselCountryName(notification.mmsi) || notification.flag,
+  }
 }
 
 function setMetaContent(name, content, attribute = 'name') {

@@ -142,7 +142,7 @@ export function subscribeToBatumiVessels(radiusKm = 20, onUpdate, onError) {
         } else if (Array.isArray(data.vessels)) {
           updateQueue = updateQueue.then(async () => {
             const vessels = await resolveMissingVesselNames(data.vessels)
-            if (!cancelled) onUpdate(deduplicateVessels(vessels))
+            if (!cancelled) onUpdate(deduplicateVessels(vessels), data.notification ?? null)
           }).catch((error) => {
             if (!cancelled && onError) onError(error)
           })

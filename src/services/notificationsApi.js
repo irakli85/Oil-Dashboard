@@ -43,6 +43,13 @@ export async function createNotification(notification) {
   return data.notification
 }
 
+export async function markNotificationSeen(clientId, notificationId) {
+  await request('/api/notifications', {
+    method: 'PATCH',
+    body: JSON.stringify({ clientId, notificationId }),
+  })
+}
+
 export async function deleteNotifications(clientId) {
   const query = new URLSearchParams({ clientId })
   await request(`/api/notifications?${query}`, { method: 'DELETE' })
