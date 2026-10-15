@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently -k \"npm:dev:web\" \"npm:dev:api\"",
     "dev:web": "vite",
-    "dev:api": "node server/ais-proxy.js",
+    "dev:api": "node --use-system-ca server/ais-proxy.js",
     "start:ais": "node server/ais-proxy.js",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
@@ -16,8 +16,10 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@ai-sdk/google": "^2.0.103",
     "@neondatabase/serverless": "^1.1.0",
     "@vercel/analytics": "^2.0.1",
+    "ai": "^6.0.307",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "framer-motion": "^10.16.4",

@@ -9,6 +9,7 @@ import ScrollToTop from "./components/ScrollToTop"
 import { AdminAuthProvider } from "./components/AdminAuthProvider"
 import { Analytics } from "@vercel/analytics/react"
 import SvgWorld from "./styledComponents/svg/Svgworld"
+import Chatbot from "./components/Chatbot"
 
 const MobileFooter = styled.footer`
   display: none;
@@ -47,6 +48,7 @@ function App() {
           <GlobalStyles/>
             <Aside/>
             <Content/>
+            <Chatbot/>
             <ScrollToTop/>
         </MainSty>
         <MobileFooter>

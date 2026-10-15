@@ -1,6 +1,7 @@
 import express from 'express';
 import WebSocket from 'ws';
 import { loadEnv } from 'vite';
+import { chatHandler } from './chat-handler.js';
 import {
   listItems,
   createItem,
@@ -65,6 +66,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.post('/api/chat', chatHandler);
 
 app.get('/api/notifications', async (req, res) => {
   const clientId = req.query?.clientId;

@@ -10,6 +10,24 @@ npm run dev
 This starts both the Vite frontend and the API server (port 3001) together.
 The frontend proxies `/api/*` to the local server (see `vite.config.js`).
 
+### Chatbot
+
+The dashboard chatbot uses Google's Gemini 3.5 Flash-Lite model to answer
+questions about the terminal and the dashboard. Add a Gemini API key as the
+server-only `GOOGLE_GENERATIVE_AI_API_KEY` environment variable:
+
+- For local development, add it to the gitignored project-root `.env.local`.
+- For deployment, add it to the Vercel Production and Preview environment
+  variables, then redeploy.
+
+Create or rotate keys in [Google AI Studio](https://aistudio.google.com/app/apikey).
+Never add the key to a `VITE_` variable, frontend code, or source control. The
+model is available on Google's free tier subject to quotas; Google may use free
+tier API content to improve its products. See the
+[Gemini API pricing and terms](https://ai.google.dev/gemini-api/docs/pricing).
+If a key has been shared in chat or another public place, revoke it and create
+a replacement before configuring the chatbot.
+
 ### Database (optional locally)
 
 Without a database the export module uses an in-memory store (data resets on restart); persistent vessel notifications require a PostgreSQL connection.
