@@ -49,14 +49,20 @@ Deploy the persistent proxy as a Render web service:
 
 1. In Render, create a new Blueprint from this repository. Render will use
    `render.yaml` and start `npm run start:ais`.
-2. Wait for the health check at `/api/ais/health` to report `status: ok`.
-3. Add the Render service URL as the Vercel production environment variable:
+2. Add `AISSTREAM_API_KEY` to the Render service's environment variables using
+   an active key from AISstream.
+3. For local development, add `AISSTREAM_API_KEY=<your AISstream API key>` to
+   the gitignored project-root `.env.local` file.
+4. If deploying the Vercel Function at `api/ais/batumi.js`, also set
+   `AISSTREAM_API_KEY` in the Vercel Production and Preview environments.
+5. Wait for the Render health check at `/api/ais/health` to report `status: ok`.
+6. Add the Render service URL as the Vercel production environment variable:
 
 ```
 VITE_AIS_API_URL=https://oil-dashboard-ais.onrender.com
 ```
 
-4. Redeploy the Vercel frontend after adding the variable.
+7. Redeploy the Vercel frontend after adding the variable.
 
 The local frontend keeps using the Vite proxy when `VITE_AIS_API_URL` is not
 set. The Render free plan may sleep when idle; use an always-on plan for a

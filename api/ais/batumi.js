@@ -5,7 +5,7 @@ export const config = {
   maxDuration: 60,
 }
 
-const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0'
+const AISSTREAM_API_KEY = process.env.AISSTREAM_API_KEY
 const MAX_WINDOW_MS = 50000
 
 const BATUMI_PORT = {
@@ -236,6 +236,10 @@ export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET')
     return res.status(405).json({ error: 'Method Not Allowed' })
+  }
+
+  if (!AISSTREAM_API_KEY) {
+    return res.status(503).json({ error: 'AISSTREAM_API_KEY is not configured' })
   }
 
   const rawRadius = Number(req.query?.radiusKm ?? 20)

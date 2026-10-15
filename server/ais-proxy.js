@@ -44,7 +44,7 @@ app.post('/api/auth/login', loginAdmin);
 app.get('/api/auth/session', getAdminSession);
 app.use('/api/invoices', invoiceRoutes);
 
-const AISSTREAM_API_KEY = '363ba34a53c0ec1b727a67e2c2ae7132b49a8cb0';
+const AISSTREAM_API_KEY = process.env.AISSTREAM_API_KEY;
 const clients = new Map();
 let latestVessels = [];
 let socket = null;
@@ -351,6 +351,11 @@ function scheduleSnapshotSave() {
 }
 
 function connectAISStream() {
+  if (!AISSTREAM_API_KEY) {
+    console.error('[ais stream configuration] AISSTREAM_API_KEY is not configured');
+    return;
+  }
+
   if (socket && socket.readyState === WebSocket.OPEN) {
     return;
   }
@@ -533,12 +538,22 @@ app.get('/api/ais/vessel-name', async (req, res) => {
 
 app.get('/api/ais/health', async (req, res) => {
   await snapshotReady;
-  res.json({
+  const health = {
     status: 'ok',
     socket: socket?.readyState === WebSocket.OPEN ? 'connected' : 'connecting',
     vesselCount: latestVessels.length,
     updatedAt: new Date().toISOString(),
-  });
+  };
+
+  if (!AISSTREAM_API_KEY) {
+    return res.status(503).json({
+      ...health,
+      status: 'error',
+      error: 'AISSTREAM_API_KEY is not configured',
+    });
+  }
+
+  return res.json(health);
 });
 
 app.get('/api/ais/batumi/stream', async (req, res) => {
