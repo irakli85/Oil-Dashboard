@@ -2218,5 +2218,1195 @@ export default [
     "name": "Mikati",
     "imo": "9250892",
     "date": "20.7.2025’"
+  },
+  {
+    "name": "CAROLINE BEZENGI",
+    "imo": "9224439",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "FIRN",
+    "imo": "9224441",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "PRIMORYE",
+    "imo": "9236743",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "LONGEVITY 7",
+    "imo": "9240885",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ADONIA",
+    "imo": "9242223",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NEVSKIY PROSPECT",
+    "imo": "9256054",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "LITEYNY PROSPECT",
+    "imo": "9256078",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ARMADA LEADER",
+    "imo": "9260483",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "C VIKING",
+    "imo": "9261657",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SEA MAVERICK",
+    "imo": "9265885",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BELA",
+    "imo": "9270749",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SHANGRI LA",
+    "imo": "9274434",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ASTRAL",
+    "imo": "9274800",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SOFOS",
+    "imo": "9278064",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ATLANTICOS",
+    "imo": "9282986",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "PACIFICOS",
+    "imo": "9288930",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "CHONGCHON",
+    "imo": "9294123",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "LEONA",
+    "imo": "9299721",
+    "date": "24102025"
+  },
+  {
+    "name": "BREEZE",
+    "imo": "9305568",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ARYABHATA",
+    "imo": "9319882",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "RIMMA",
+    "imo": "9337901",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "LADOGA",
+    "imo": "9339313",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "LEVEL",
+    "imo": "9339325",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ELODIE I",
+    "imo": "9346873",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "INDUS 1",
+    "imo": "9360415",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BAI LU",
+    "imo": "9388780",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "JUPITER",
+    "imo": "9397535",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ANTARKTIKA",
+    "imo": "9413559",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BOBCAT (formerly BLOSSOM)",
+    "imo": "9422457",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "IVAN KRAMSKOY",
+    "imo": "9640499",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ALEKSEY SAVRASOV",
+    "imo": "9645061",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "YAZ",
+    "imo": "9735323",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ALARA",
+    "imo": "9741724",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NIKOLAY ANISHCHENKOV",
+    "imo": "9942392",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "APUS",
+    "imo": "9280885",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "AQUILLA II",
+    "imo": "9281152",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "CHENG HE",
+    "imo": "9304629",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "FURIA",
+    "imo": "9257802",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MANASLU",
+    "imo": "9388027",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MIRES",
+    "imo": "9299771",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MYRA",
+    "imo": "9336490",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "APATE",
+    "imo": "9433016",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "AZURE",
+    "imo": "9387255",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BAVLY",
+    "imo": "9621560",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "KYLO",
+    "imo": "9189146",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "PEGASUS",
+    "imo": "9276028",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SABINA",
+    "imo": "9524451",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "TEMPEST DREAM",
+    "imo": "9308132",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "TORX",
+    "imo": "9311610",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BOLU",
+    "imo": "9439539",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "AURA 1",
+    "imo": "9472634",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "GENERAL SKOBELEV",
+    "imo": "9503304",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "GAZPROMNEFT ZUID EAST",
+    "imo": "9537109",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "CENTURION I",
+    "imo": "9436020",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "TASSOS",
+    "imo": "9408695",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ADITYA",
+    "imo": "9323314",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BELOMOR",
+    "imo": "9384435",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "COATLICUE",
+    "imo": "9235000",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "DENVER",
+    "imo": "9382712",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ETHERA",
+    "imo": "9387279",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "GARUDA",
+    "imo": "9272931",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "GUANYIN",
+    "imo": "9299707",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "IRON WAVE",
+    "imo": "9248796",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "KATY",
+    "imo": "9323326",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "KAYSERI",
+    "imo": "9292199",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "KONYA",
+    "imo": "9290373",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MARQUISE",
+    "imo": "9315745",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ONEGA",
+    "imo": "9384459",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "OSCAR I",
+    "imo": "9314820",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "RAGNAR",
+    "imo": "9384095",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "RHEIN",
+    "imo": "9306562",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SAMOS",
+    "imo": "9408190",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SEAL",
+    "imo": "9252400",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SINO STAR",
+    "imo": "9263693",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SOFIA",
+    "imo": "9211999",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SOUTH STAR",
+    "imo": "9263186",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "STANISLAV GOVORUKHIN",
+    "imo": "9621596",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "TRANQUIL SEA",
+    "imo": "9323340",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "URIEL",
+    "imo": "9336517",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "VARG",
+    "imo": "9335094",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "XING CHEN",
+    "imo": "9550682",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ZAGATALA",
+    "imo": "9498171",
+    "date": ""
+  },
+  {
+    "name": "ANABAR",
+    "imo": "9194012",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BIRTHE THERESI",
+    "imo": "9083184",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BRIONT",
+    "imo": "9252955",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BRONCO",
+    "imo": "8808525",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "FLANDRIA",
+    "imo": "8414477",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MARINSTRAUM",
+    "imo": "9390317",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MAVERICK",
+    "imo": "9321562",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NAVIK",
+    "imo": "8920579",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NEMRUT",
+    "imo": "9439541",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NILANGA",
+    "imo": "9412452",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NORDSTRAUM",
+    "imo": "9036284",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NOYABRSK",
+    "imo": "8915550",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "OMNI",
+    "imo": "9400980",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "OPHELIA",
+    "imo": "8010427",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "REVANCHE",
+    "imo": "9297149",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "RN SAKHALIN",
+    "imo": "9650016",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SPIRIT 2",
+    "imo": "9409259",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "TAGOR",
+    "imo": "9282481",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "TANGO 2",
+    "imo": "9389071",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "BERGEN T",
+    "imo": "8918540",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "EVERDINE",
+    "imo": "9382073",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "NOVA CREST (formerly HASAN EAST)",
+    "imo": "9292046",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MEGION",
+    "imo": "9590137",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MELITO CARRIER",
+    "imo": "8920581",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "RYAZAN",
+    "imo": "8915548",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "SEA OWL I",
+    "imo": "9321172",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "THOTH",
+    "imo": "9164718",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "VANINO",
+    "imo": "8724779",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "VASILY LANOVOY",
+    "imo": "9621601",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "ZALE",
+    "imo": "9321718",
+    "date": "24.10.2025"
+  },
+  {
+    "name": "MATROS KOSHKA",
+    "imo": "9550137",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "MIKHAIL NENASHEV",
+    "imo": "9515539",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "ZAID",
+    "imo": "9715270",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "MATROS POZYNICH",
+    "imo": "9573816",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "ZAFAR",
+    "imo": "9720263",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "KAPITAN GOTSKY",
+    "imo": "9372559",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "GT HONOR",
+    "imo": "9258478",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "TIMOFEY GUZHENKO",
+    "imo": "9372561",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "HITIT",
+    "imo": "9311751",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "KHALASI",
+    "imo": "9293997",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "FENGHUANG",
+    "imo": "9236248",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "QUARTZ",
+    "imo": "9261401",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SINAR G",
+    "imo": "9323364",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SHTURMAN MALYGIN",
+    "imo": "9752096",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SHTURMAN OVTSYN",
+    "imo": "9752101",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SHTURMAN SHCHERBININ",
+    "imo": "9759927",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SANAR-14",
+    "imo": "9313589",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "VASILY DINKOV",
+    "imo": "9372547",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "INNOVATOR",
+    "imo": "9306809",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "AURA MARIS",
+    "imo": "9347308",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "KIRILL LAVROV",
+    "imo": "9333682",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "MIKHAIL ULYANOV",
+    "imo": "9333670",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SANAR-9",
+    "imo": "9300350",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "LADY LEILA",
+    "imo": "9683740",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "GAZPROMNEFT NORDEAST",
+    "imo": "9422653",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "JIN HUI",
+    "imo": "9430272",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "LADY SEVDA",
+    "imo": "9683738",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SHTURMAN KOSHELEV",
+    "imo": "9759939",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "JEWEL",
+    "imo": "9419450",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "TYCHE 1",
+    "imo": "9308077",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "OMSK",
+    "imo": "9418509",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "OLANGA",
+    "imo": "9286463",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "AS CALCUTTA",
+    "imo": "9037123",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "MURMANSK",
+    "imo": "9167930",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "ZAL PARS 3",
+    "imo": "9211896",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "HANSON",
+    "imo": "9237412",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "NP DIKSON",
+    "imo": "9255270",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "STAR MM",
+    "imo": "9186625",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "LADY RANIA",
+    "imo": "9784893",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "SANAR-15",
+    "imo": "9777670",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "BREEZ",
+    "imo": "9247778",
+    "date": "19.12.2025"
+  },
+  {
+    "name": "AUGA",
+    "imo": "9381732",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "BHILVA",
+    "imo": "9439383",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "DORRY",
+    "imo": "9298595",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "HE BO",
+    "imo": "9408554",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "INTEGRITY RACER",
+    "imo": "9270555",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "MARJORIE",
+    "imo": "9296377",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SANAR-10",
+    "imo": "9300348",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "TM HAI HA 568",
+    "imo": "9274082",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ABHRA",
+    "imo": "9282041",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "MIKHAIL LAZAREV",
+    "imo": "9837547",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ONEIROI",
+    "imo": "9390587",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SPARTA",
+    "imo": "9268710",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "VERSA",
+    "imo": "9379301",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "TIGER 6",
+    "imo": "9389083",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "LUNA LUSTER",
+    "imo": "9292187",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "AETHER",
+    "imo": "9328170",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ANIKA",
+    "imo": "9417464",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "DOVE",
+    "imo": "9297541",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "GLOBAL STAR",
+    "imo": "9198082",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "HORAE",
+    "imo": "9413004",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "IVAN AIVAZOVSKY",
+    "imo": "9876359",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "JUPITER I",
+    "imo": "9599341",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "STORMBRINGER (ex KRITI VIGOR)",
+    "imo": "9290397",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "KURDOS III",
+    "imo": "9380570",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "LING HONG",
+    "imo": "9408542",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SAKHALIN",
+    "imo": "9249128",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SANRAYZ",
+    "imo": "8862935",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "CAPELLA MB (formerly SEVEN PEARLS)",
+    "imo": "9343986",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "TOA PAYOH",
+    "imo": "9298492",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "VALENTIN PIKUL",
+    "imo": "9885879",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "VENUS III",
+    "imo": "9599353",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "MARVEN",
+    "imo": "9305556",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "TRUVOR",
+    "imo": "9676230",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "OCEAN II",
+    "imo": "9233777",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SILVAR",
+    "imo": "9291262",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "KAMELOT",
+    "imo": "9265873",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "KARAKUZ",
+    "imo": "9621558",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ELBUS",
+    "imo": "9290385",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ATMOS",
+    "imo": "9337418",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SEADAR",
+    "imo": "9333785",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "GRACEP",
+    "imo": "9252967",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SIREN II",
+    "imo": "9337195",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "SIG",
+    "imo": "9735335",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "STALINGRAD",
+    "imo": "9690212",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ASTORIA",
+    "imo": "9166314",
+    "date": "24.4.2026"
+  },
+  {
+    "name": "ALEKSEY KOSYGIN",
+    "imo": "9904546",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ANAYA",
+    "imo": "9326885",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "LUCH",
+    "imo": "9317315",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "DAKAR",
+    "imo": "9251743",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "PALLADA",
+    "imo": "9250050",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "SOLSTRAUM",
+    "imo": "9157014",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ERIDAN",
+    "imo": "9157002",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "G.ROSSINI",
+    "imo": "9156981",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "KORD ARCTIC",
+    "imo": "9036272",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "KORSAKOV",
+    "imo": "8724793",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ABRAU",
+    "imo": "9422964",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "BELLARIS",
+    "imo": "9332614",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "FLINT WIND",
+    "imo": "9314179",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ZHUO YUAN",
+    "imo": "9408683",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "DAPHNE V",
+    "imo": "9321677",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "YEHOPE",
+    "imo": "9243320",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "VASILY SURIKOV",
+    "imo": "9645023",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "PORT OLYA-3",
+    "imo": "9481910",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "MIDVOLGA-3",
+    "imo": "9735141",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ORENBURG",
+    "imo": "9687992",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "PIONEER",
+    "imo": "9255282",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ANDREY PERVOZVANNIY",
+    "imo": "9255268",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "AKKORD",
+    "imo": "9259599",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ADMIRAL",
+    "imo": "9274446",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "KUMANA",
+    "imo": "9809538",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "BILAL BEY",
+    "imo": "8984848",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "BEBEK-E",
+    "imo": "7808401",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "LADY JASMINE",
+    "imo": "1031537",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "OCEAN FORTUNE 18",
+    "imo": "1064493",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "VIRENT",
+    "imo": "9332171",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ABINSK",
+    "imo": "9303869",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ALEXANDER NEVSKIY",
+    "imo": "9356610",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "IRTYSH",
+    "imo": "9664976",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "KRASNODAR",
+    "imo": "9296781",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "SVYATOI KNYAZ VLADIMIR",
+    "imo": "9838864",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "ALBEDO",
+    "imo": "9213313",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "PERUN",
+    "imo": "9582776",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "IRKUTSK",
+    "imo": "9419084",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "DAMAS WAVE",
+    "imo": "8915299",
+    "date": "24.7.2026"
+  },
+  {
+    "name": "TAVIAN",
+    "imo": "9147447",
+    "date": "24.7.2026"
   }
 ];
