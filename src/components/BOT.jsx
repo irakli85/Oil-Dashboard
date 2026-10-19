@@ -19,7 +19,16 @@ const tankSections = [
   { id: 'baseOther', title: 'შლამსაცავი', items: data.baseOther, total: '9 000 მ³' },
 ]
 
-const mapSearchItems = tankSections.flatMap((section) => section.items.map((item) => {
+const mapSearchOnlySections = {
+  1: ['baseSeven'],
+  2: ['baseOne', 'baseSeven'],
+  3: ['baseSeven'],
+  12: ['baseSeven'],
+}
+
+const mapSearchItems = tankSections.flatMap((section) => section.items.filter((item) => (
+  !mapSearchOnlySections[item.tank] || mapSearchOnlySections[item.tank].includes(section.id)
+)).map((item) => {
   const point = section.id === 'baseEight'
     ? botMapCoordinates.baseEight.station
     : botMapCoordinates[section.id]?.[item.tank]

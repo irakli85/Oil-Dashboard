@@ -217,7 +217,7 @@ const MapViewer = ({ src, alt, pdfUrl, searchItems = [] }) => {
             />
             <SearchButton type='submit'>რუკაზე მოძებნა</SearchButton>
           </SearchForm>
-          {searchMessage && <SearchMessage role='status'>{searchMessage}</SearchMessage>}
+          {searchMessage && <SearchMessage role='status' $error={searchMessage.endsWith('ვერ მოიძებნა.')}>{searchMessage}</SearchMessage>}
           {searchResults.length > 0 && (
             <SearchResults aria-label='აირჩიეთ რეზერვუარის უბანი'>
               {searchResults.map((item) => (
@@ -386,7 +386,7 @@ const SearchButton = styled.button`
 
 const SearchMessage = styled.p`
   margin: 0.8rem 0 0;
-  color: #475569;
+  color: ${({ $error }) => ($error ? '#dc2626' : '#475569')};
   font-size: 1.3rem;
   line-height: 1.5;
 `
