@@ -238,7 +238,7 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                       whileHover={{ scale: 1.1, y: -2 }}
                       transition={{ duration: 0.25, ease: 'easeOut' }}
                     />
-                    <NavP text='სანქცირებული გემები' isClicked={isClicked6}/>
+                    <NavP text='სანქციები' isClicked={isClicked6}/>
                 </LinkSty>
             </motion.div>
 

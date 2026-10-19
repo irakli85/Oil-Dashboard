@@ -42,8 +42,8 @@ const ROUTE_METADATA = {
     description: 'ინფორმაცია ბათუმის ნავთობტერმინალის საბაჟო საწყობებისა და ტერმინალების შესახებ.',
   },
   '/sanctioned-vessels': {
-    title: 'სანქცირებული გემები | Oil Dashboard',
-    description: 'სანქცირებული გემების სია და გემების შესახებ ხელმისაწვდომი ინფორმაცია.',
+    title: 'სანქციები | Oil Dashboard',
+    description: 'სანქცირებული გემების და საქონლის საძიებო სია.',
   },
   '/export': {
     title: 'ექსპორტი | Oil Dashboard',
