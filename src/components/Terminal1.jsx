@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { H4, H2, Hr } from './Measurment'
 import ReservoirTable from './ReservoirTable'
 import data from '../../data'
-import terminal1 from '../../public/docs/terminal1.pdf'
+import MapViewer from './MapViewer'
 
 const Terminal1 = () => {
   return (
@@ -12,7 +12,11 @@ const Terminal1 = () => {
 
       <H4>სიტუაციური გეგმა</H4>
       <Hr/>
-      <Iframe src={terminal1} />
+      <MapViewer
+        src={`${import.meta.env.BASE_URL}maps/terminal-1.svg`}
+        alt='Terminal 1-ის სიტუაციური გეგმა'
+        pdfUrl={`${import.meta.env.BASE_URL}docs/terminal1.pdf`}
+      />
       <H2>რეზერვუარები</H2>
       <Hr/>
 
@@ -56,12 +60,4 @@ const P = styled.p`
 const Str = styled.strong`
   font-size: 1.8rem;
 `
-const Iframe = styled.iframe`
-  margin-top: 3rem;
-  width: 100%;
-  max-width: 100%;
-  height: 93rem;
-  object-fit: fill;
-`
-
 export default Terminal1

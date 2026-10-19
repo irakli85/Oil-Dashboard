@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { H4, H2, Hr } from './Measurment'
 import ReservoirTable from './ReservoirTable'
 import data from '../../data'
-import bot from '../../public/docs/bot.pdf'
+import MapViewer from './MapViewer'
+import botMapCoordinates from '../data/botMapCoordinates'
 
 const tankSections = [
   { id: 'baseOne', title: 'დიზელის საწვავისა და ნავთის მიღებისა და გადატვირთვის სადგური', items: data.baseOne, total: '50 000 მ³' },
@@ -17,6 +18,20 @@ const tankSections = [
   { id: 'baseWater', title: 'წყლისა და ქაფის რეზერვუარები', items: data.baseWater, total: '32 885 მ³' },
   { id: 'baseOther', title: 'შლამსაცავი', items: data.baseOther, total: '9 000 მ³' },
 ]
+
+const mapSearchItems = tankSections.flatMap((section) => section.items.map((item) => {
+  const point = section.id === 'baseEight'
+    ? botMapCoordinates.baseEight.station
+    : botMapCoordinates[section.id]?.[item.tank]
+
+  return {
+    id: `${section.id}-${item.count}`,
+    tank: String(item.tank),
+    section: section.title,
+    x: point?.[0],
+    y: point?.[1],
+  }
+}))
 
 const BOT = () => {
   return (
@@ -44,7 +59,12 @@ const BOT = () => {
 
       <H4>სიტუაციური გეგმა</H4>
       <Hr/>
-      <Iframe src={bot} />
+      <MapViewer
+        src={`${import.meta.env.BASE_URL}maps/batumi-oil-terminal.png`}
+        alt='ბათუმის ნავთობტერმინალის სიტუაციური გეგმა'
+        pdfUrl={`${import.meta.env.BASE_URL}docs/bot.pdf`}
+        searchItems={mapSearchItems}
+      />
       <H2>რეზერვუარები</H2>
       <Hr/>
 
@@ -83,13 +103,6 @@ const P = styled.p`
 `
 const Str = styled.strong`
   font-size: 1.8rem;
-`
-const Iframe = styled.iframe`
-  margin-top: 3rem;
-  width: 100%;
-  max-width: 100%;
-  height: 94rem;
-  object-fit: fill;
 `
 const Ul = styled.ul`
   margin-top: 2rem;
