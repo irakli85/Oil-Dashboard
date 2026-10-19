@@ -711,7 +711,7 @@ const InvoiceManagement = () => {
                 <label>რაოდენობა (კგ) *<input name="totalQty" type="number" min="0.01" step="0.01" required placeholder="0.00" /></label>
               </>}
               {modal.type === 'clearance' && <>
-                <label>საბაჟო დოკუმენტი (დეკლარაციის №) *<input name="doc" required placeholder="მაგ: 10293/0" /></label>
+                <label>საბაჟო დოკუმენტის № *<input name="doc" required placeholder="მაგ: C 2000" /></label>
                 <label>ჩამოსაწერი რაოდენობა (კგ) *<input name="qty" type="number" min="0.01" step="0.01" max={(selectedInvoice?.totalQty || 0) - sumClearances(selectedInvoice || { clearances: [] })} required placeholder="0.00" /></label>
               </>}
               {formError && <Message $error>{formError}</Message>}
