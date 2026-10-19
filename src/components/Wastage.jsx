@@ -1,7 +1,9 @@
 import React from 'react'
-import { Container, H2, H4, Table, Tr, Th, Td, Hr } from './Measurment'
+import { Container, H4, Table, Tr, Th, Td, Hr } from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import { WastBtn1, WastBtn2, WastBtn3, WastBtn4, WastBtnCont } from '../styledComponents/StyledComponents';
+import CategoryHeader from './CategoryHeader'
+import wastageIcon from '../assets/colba.svg'
 
 const buttonVariants = { 
     hover1: {
@@ -106,8 +108,11 @@ const Wastage = () => {
 
   return (
     <Container>       
-        <H2>ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები</H2>
-        <Hr/>
+        <CategoryHeader
+          title='ბუნებრივი დანაკარგები'
+          description='ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები'
+          icon={wastageIcon}
+        />
         <WastBtnCont>
             <WastBtn1 onClick={handleClickScroll1}
                 variants={buttonVariants}        

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
+import CategoryHeader from './CategoryHeader'
+import measureIcon from '../assets/measure.svg'
 
 
 const Measurment = () => {
@@ -44,8 +46,11 @@ const Measurment = () => {
    
   return (
     <Container>
-        <H2>ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმები</H2>
-        <Hr/>
+        <CategoryHeader
+          title='აზომვის ცდომილება'
+          description='ნავთობისა და ნავთობპროდუქტების რაოდენობის გაზომვის მეთოდების დასაშვები ცდომილების ნორმები'
+          icon={measureIcon}
+        />
         <TableScroll><Table>
           <Tr>
             <Th colSpan={3}>ნავთობპროდუქტების რაოდენობა</Th>

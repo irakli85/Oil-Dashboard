@@ -184,7 +184,7 @@ const DivBody = styled(motion.div)`
 
 const P = styled.p`
   width: min(100%, 100rem);
-  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  font-size: 2.7rem;
   color: #fff;
   font-weight: 900;
   position: absolute;
@@ -196,6 +196,10 @@ const P = styled.p`
 
   @media (max-width: 640px) {
     padding: 0 0.8rem;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 2.3rem;
   }
 `
 const DivItem = styled(motion.div)`

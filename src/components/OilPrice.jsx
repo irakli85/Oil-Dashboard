@@ -2,12 +2,20 @@ import React from 'react'
 import { Container, H2, Table, TableScroll, Tr, Td } from './Measurment'
 import PriceCalc from './PriceCalc'
 import DeepDive from '../styledComponents/DeepDive'
+import CategoryHeader from './CategoryHeader'
+import priceIcon from '../assets/price-header.svg'
 
 
 const OilPrice = () => {
   return (
     
 <Container>        
+    <CategoryHeader
+        title='ფასების კონტროლი'
+        description='ნავთობპროდუქტების ფასის გამოთვლა და მაქსიმალური ფასები კოდების მიხედვით'
+        icon={priceIcon}
+        preserveIconColors
+    />
     <PriceCalc/>
     <DeepDive compactMobileTitle text='ნავთობპროდუქტების მაქსიმალური ფასები კოდების მიხედვით'>
         <H2>ნედლი ნავთობის ფასი</H2>
