@@ -526,7 +526,7 @@ const ToggleButton = styled.button`
   place-items: center;
   border: 0.3rem solid #fff;
   border-radius: 50%;
-  background: #1aac83;
+  background: linear-gradient(135deg, #5da000 0%, #7bc00b 100%);
   box-shadow: 0 0.8rem 2.4rem rgba(21, 29, 72, 0.24);
   color: #fff;
   cursor: pointer;
@@ -534,7 +534,7 @@ const ToggleButton = styled.button`
 
   &:hover {
     transform: translateY(-0.2rem);
-    background: #138d6c;
+    background: linear-gradient(135deg, #4f8900 0%, #68a609 100%);
   }
 
   &:focus-visible {
