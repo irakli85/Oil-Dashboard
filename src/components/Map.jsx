@@ -24,7 +24,7 @@ const MID_COUNTRY_CODES = Object.fromEntries(
     '🇨🇾': '212',
     '🇬🇪': '213',
     '🇲🇩': '214',
-    '🇲🇹': '215 229 256',
+    '🇲🇹': '215 229 249 256',
     '🇦🇲': '216',
     '🇫🇮': '230',
     '🇫🇴': '231',
@@ -507,6 +507,7 @@ function hasVesselType(type) {
 function formatVesselType(type) {
   const stringType = String(type || '').trim()
   if (stringType.toLowerCase() === 'cargo - hazardous category 1') return 'Container Carrier'
+  if (/^tanker\s*-\s*hazardous category\s*\d+$/i.test(stringType)) return 'Tanker'
 
   const code = Number(stringType)
   if (!Number.isFinite(code)) return stringType
@@ -517,7 +518,7 @@ function formatVesselType(type) {
   if (code === 80 || code === 89) return 'Tanker'
   if (code === 71) return 'Container Carrier'
   if (code >= 72 && code <= 74) return `Cargo - hazardous category ${code - 70}`
-  if (code >= 81 && code <= 84) return `Tanker - hazardous category ${code - 80}`
+  if (code >= 81 && code <= 84) return 'Tanker'
   return stringType
 }
 
@@ -747,6 +748,7 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
               <Popup>
                 <strong>{vessel.shipName}</strong>
                 <br />
+                {getVesselCountryName(vessel.mmsi) && <>Flag state: {getVesselCountryName(vessel.mmsi)}<br /></>}
                 {getVesselImo(vessel) && <>IMO: {getVesselImo(vessel)}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
                 {hasVesselType(vessel.shipType) && <><br />Type: {formatVesselType(vessel.shipType)}</>}
