@@ -125,7 +125,7 @@ const Chatbot = () => {
             <Avatar aria-hidden='true'>ნ</Avatar>
             <HeaderText>
               <Title id='chatbot-title'>ასისტენტი</Title>
-              <Subtitle><OnlineIndicator /> მზად ვარ დაგეხმარო</Subtitle>
+              <Subtitle><OnlineIndicator /> live</Subtitle>
             </HeaderText>
             <CloseButton type='button' aria-label='ჩატის დახურვა' onClick={closeChat}>
               ×
@@ -137,7 +137,7 @@ const Chatbot = () => {
               <Welcome>
                 <WelcomeTitle>გამარჯობა! 👋</WelcomeTitle>
                 <WelcomeText>
-                  მკითხე ბათუმის ნავთობტერმინალის, რეზერვუარების ან ოპერაციების შესახებ.
+                  რით შემიძლია დაგეხმარო?
                 </WelcomeText>
                 <Suggestions>
                   <SuggestionHeading>ბუნებრივი დანაკარგები — აირჩიე პროდუქტი:</SuggestionHeading>
