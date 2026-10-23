@@ -8,7 +8,7 @@ function DeepDive({text, children, id, compactMobileTitle = false, compactMobile
   const [drop, setDrop] = useState(0)
 
   useEffect(() => {
-    if (openRequest?.id === id && openRequest.sequence > 0) {
+    if (openRequest && openRequest.id === id && openRequest.sequence > 0) {
       setClicked(true)
       setDrop(1)
     }
