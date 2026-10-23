@@ -1,11 +1,18 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import arrow from '../assets/white.svg'
 
 
-function DeepDive({text, children, id, compactMobileTitle = false, compactMobileButton = false}) {
+function DeepDive({text, children, id, compactMobileTitle = false, compactMobileButton = false, openRequest}) {
   const [clicked, setClicked] = useState(false)
   const [drop, setDrop] = useState(0)
+
+  useEffect(() => {
+    if (openRequest?.id === id && openRequest.sequence > 0) {
+      setClicked(true)
+      setDrop(1)
+    }
+  }, [id, openRequest])
 
   return (
     <DiveDivSt id={id}>      

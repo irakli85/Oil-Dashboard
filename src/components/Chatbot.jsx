@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { getWastageAnswer, WASTAGE_PRODUCTS } from '../data/wastage'
 
 const QUICK_QUESTIONS = [
   'რამდენი რეზერვუარია ტერმინალში?',
@@ -15,6 +16,7 @@ const Chatbot = () => {
   const [error, setError] = useState('')
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const requestControllerRef = useRef(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -24,6 +26,16 @@ const Chatbot = () => {
     if (isOpen) inputRef.current?.focus()
   }, [isOpen])
 
+  const closeChat = () => {
+    requestControllerRef.current?.abort()
+    requestControllerRef.current = null
+    setMessages([])
+    setInput('')
+    setError('')
+    setIsLoading(false)
+    setIsOpen(false)
+  }
+
   const sendMessage = async (event, suggestedMessage) => {
     event?.preventDefault()
     const content = (suggestedMessage ?? input).trim()
@@ -31,6 +43,18 @@ const Chatbot = () => {
 
     const userMessage = { role: 'user', content }
     const assistantId = `${Date.now()}-assistant`
+    const wastageAnswer = getWastageAnswer(content)
+    if (wastageAnswer) {
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        userMessage,
+        { id: assistantId, role: 'assistant', content: wastageAnswer },
+      ])
+      setInput('')
+      setError('')
+      return
+    }
+
     const conversation = [...messages, userMessage].slice(-12)
     if (conversation[0]?.role !== 'user') conversation.shift()
 
@@ -38,11 +62,14 @@ const Chatbot = () => {
     setInput('')
     setError('')
     setIsLoading(true)
+    const requestController = new AbortController()
+    requestControllerRef.current = requestController
 
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: requestController.signal,
         body: JSON.stringify({
           messages: conversation.map(({ role, content: messageContent }) => ({
             role,
@@ -83,11 +110,15 @@ const Chatbot = () => {
         )))
       }
     } catch (requestError) {
+      if (requestError.name === 'AbortError') return
       console.error('[chat request]', requestError)
       setMessages((currentMessages) => currentMessages.filter((message) => message.id !== assistantId))
       setError(requestError.message || 'მოთხოვნა ვერ შესრულდა. სცადეთ თავიდან.')
     } finally {
-      setIsLoading(false)
+      if (requestControllerRef.current === requestController) {
+        requestControllerRef.current = null
+        setIsLoading(false)
+      }
     }
   }
 
@@ -98,10 +129,10 @@ const Chatbot = () => {
           <PanelHeader>
             <Avatar aria-hidden='true'>ნ</Avatar>
             <HeaderText>
-              <Title id='chatbot-title'>ტერმინალის ასისტენტი</Title>
+              <Title id='chatbot-title'>ასისტენტი</Title>
               <Subtitle><OnlineIndicator /> მზად ვარ დაგეხმარო</Subtitle>
             </HeaderText>
-            <CloseButton type='button' aria-label='ჩატის დახურვა' onClick={() => setIsOpen(false)}>
+            <CloseButton type='button' aria-label='ჩატის დახურვა' onClick={closeChat}>
               ×
             </CloseButton>
           </PanelHeader>
@@ -124,6 +155,19 @@ const Chatbot = () => {
                       {question}
                     </Suggestion>
                   ))}
+                  <SuggestionHeading>ბუნებრივი დანაკარგები — აირჩიე პროდუქტი:</SuggestionHeading>
+                  <WastageSuggestions>
+                    {WASTAGE_PRODUCTS.map(({ name: product }) => (
+                      <Suggestion
+                        key={product}
+                        type='button'
+                        disabled={isLoading}
+                        onClick={(event) => sendMessage(event, `${product} ბუნებრივი დანაკარგები`)}
+                      >
+                        {product}
+                      </Suggestion>
+                    ))}
+                  </WastageSuggestions>
                 </Suggestions>
               </Welcome>
             )}
@@ -165,7 +209,7 @@ const Chatbot = () => {
         type='button'
         aria-label={isOpen ? 'ჩატის დახურვა' : 'ჩატის გახსნა'}
         aria-expanded={isOpen}
-        onClick={() => setIsOpen((isVisible) => !isVisible)}
+        onClick={() => (isOpen ? closeChat() : setIsOpen(true))}
       >
         {isOpen ? (
           <CloseIcon viewBox='0 0 24 24' aria-hidden='true'>
@@ -182,10 +226,10 @@ const Chatbot = () => {
 }
 
 const MAX_INPUT_LENGTH = 2000
-const INTERNAL_ROUTES = new Set(['/oilprice', '/livemap', '/docs', '/sanctioned-vessels'])
+const INTERNAL_ROUTES = new Set(['/oilprice', '/livemap', '/docs', '/sanctioned-vessels', '/wastage'])
 
 function renderMessage(content) {
-  return content.split(/(\/oilprice|\/livemap|\/docs|\/sanctioned-vessels)/g).map((part, index) => (
+  return content.split(/(\/oilprice|\/livemap|\/docs|\/sanctioned-vessels|\/wastage)/g).map((part, index) => (
     INTERNAL_ROUTES.has(part)
       ? <ChatLink key={`${part}-${index}`} to={part}>{part}</ChatLink>
       : part
@@ -195,12 +239,12 @@ function renderMessage(content) {
 const Widget = styled.div`
   position: fixed;
   right: 2.4rem;
-  bottom: 2.4rem;
+  bottom: 14rem;
   z-index: 10000;
 
   @media (max-width: 640px) {
     right: 1.2rem;
-    bottom: 1.2rem;
+    bottom: 9rem;
   }
 `
 
@@ -325,6 +369,22 @@ const Suggestions = styled.div`
   align-items: flex-start;
   gap: 0.8rem;
   margin-top: 1.8rem;
+`
+
+const SuggestionHeading = styled.p`
+  margin-top: 0.8rem;
+  color: #475569;
+  font-size: 1.2rem;
+  font-weight: 700;
+`
+
+const WastageSuggestions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  max-height: 16rem;
+  overflow-y: auto;
+  padding: 0.2rem 0.2rem 0.4rem 0;
 `
 
 const Suggestion = styled.button`

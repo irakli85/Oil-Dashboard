@@ -11,6 +11,7 @@ import SanctionedVessels from './SanctionedVessels'
 import Map, { getVesselCountryName } from './Map'
 import ExportModule from './ExportModule'
 import InvoiceManagement from './InvoiceManagement'
+import Chatbot from './Chatbot'
 import { subscribeToBatumiVessels } from '../services/ais'
 import {
   deleteNotifications,
@@ -223,6 +224,7 @@ const Content = () => {
             />
           </Routes>
         </ContentDivSty>
+        <Chatbot />
     </ContentSty>
   )
 }

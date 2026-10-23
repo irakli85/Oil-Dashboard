@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container, H4, Table, Tr, Th, Td, Hr } from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import { WastBtn1, WastBtn2, WastBtn3, WastBtn4, WastBtnCont } from '../styledComponents/StyledComponents';
@@ -30,81 +30,31 @@ const buttonVariants = {
 
 
 const Wastage = () => {
-    
-    const handleClickScroll1 = () => {
-        const crudle = document.getElementById('crudle');        
-        crudle.scrollIntoView({ behavior: 'smooth' });        
-      };
+    const [openRequest, setOpenRequest] = useState({ id: '', sequence: 0 })
 
-      const handleClickScroll2 = () => {
-        const dizel = document.getElementById('dizel');        
-        dizel.scrollIntoView({ behavior: 'smooth' });        
-      };
+    const handleClickScroll = (id) => {
+        const section = document.getElementById(id)
+        if (!section) return
 
-      const handleClickScroll3 = () => {
-        const kerosine = document.getElementById('kerosine');        
-        kerosine.scrollIntoView({ behavior: 'smooth' });        
-      };
+        section.scrollIntoView({ behavior: 'smooth' })
+        setOpenRequest((request) => ({ id, sequence: request.sequence + 1 }))
+    }
 
-      const handleClickScroll4 = () => {
-        const fuel = document.getElementById('fuel');        
-        fuel.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll5 = () => {
-        const oil = document.getElementById('oil');        
-        oil.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll6 = () => {
-        const benzol = document.getElementById('benzol');        
-        benzol.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll7 = () => {
-        const vgo = document.getElementById('vgo');        
-        vgo.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll8 = () => {
-        const air = document.getElementById('air');        
-        air.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll9 = () => {
-        const oilair = document.getElementById('oilair');        
-        oilair.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll10 = () => {
-        const aceclic = document.getElementById('aceclic');        
-        aceclic.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll11 = () => {
-        const propil = document.getElementById('propil');        
-        propil.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll12 = () => {
-        const metil = document.getElementById('metil');        
-        metil.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll13 = () => {
-        const paraqsilol = document.getElementById('paraqsilol');        
-        paraqsilol.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll14 = () => {
-        const piroliz = document.getElementById('piroliz');        
-        piroliz.scrollIntoView({ behavior: 'smooth' });        
-      };
-
-      const handleClickScroll15 = () => {
-        const mtbe = document.getElementById('mtbe');        
-        mtbe.scrollIntoView({ behavior: 'smooth' });        
-      };
+    const handleClickScroll1 = () => handleClickScroll('crudle')
+    const handleClickScroll2 = () => handleClickScroll('dizel')
+    const handleClickScroll3 = () => handleClickScroll('kerosine')
+    const handleClickScroll4 = () => handleClickScroll('fuel')
+    const handleClickScroll5 = () => handleClickScroll('oil')
+    const handleClickScroll6 = () => handleClickScroll('benzol')
+    const handleClickScroll7 = () => handleClickScroll('vgo')
+    const handleClickScroll8 = () => handleClickScroll('air')
+    const handleClickScroll9 = () => handleClickScroll('oilair')
+    const handleClickScroll10 = () => handleClickScroll('aceclic')
+    const handleClickScroll11 = () => handleClickScroll('propil')
+    const handleClickScroll12 = () => handleClickScroll('metil')
+    const handleClickScroll13 = () => handleClickScroll('paraqsilol')
+    const handleClickScroll14 = () => handleClickScroll('piroliz')
+    const handleClickScroll15 = () => handleClickScroll('mtbe')
 
   return (
     <Container>       
@@ -191,7 +141,7 @@ const Wastage = () => {
 
         </WastBtnCont>
 
-        <DeepDive text='ბენზინი' id='gasoline'>
+        <DeepDive text='ბენზინი' id='gasoline' openRequest={openRequest}>
             <Hr/>
             <H4>სეს ესნ კოდები: 2710 12 110, 2710 12 410, 2710 12 450, 2710 12 490</H4>
             <Table>
@@ -226,7 +176,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ნედლი ნავთობი' id='crudle'>
+        <DeepDive text='ნედლი ნავთობი' id='crudle' openRequest={openRequest}>
             <Hr/>
             <H4>სეს ესნ კოდი: 2709 00 900</H4>
             <Table>
@@ -246,7 +196,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='დიზელი' id='dizel'>
+        <DeepDive text='დიზელი' id='dizel' openRequest={openRequest}>
             <Hr/>   
             <H4>სეს ესნ კოდები: 2710 19 430, 2710 19 460, 2710 19 470, 2710 19 480</H4>
             <Table>
@@ -276,7 +226,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ნავთი' id='kerosine'>
+        <DeepDive text='ნავთი' id='kerosine' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდები: 2710 19 210, 2710 19 250</H4>
             <Table>
@@ -306,7 +256,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='მაზუთი' id='fuel'>
+        <DeepDive text='მაზუთი' id='fuel' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდები: 2710 19 620, 2710 19 660, 2710 19 670</H4>
             <Table>
@@ -326,7 +276,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='საპოხი ზეთი' id='oil'>
+        <DeepDive text='საპოხი ზეთი' id='oil' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2710 19 990</H4>
             <Table>
@@ -353,7 +303,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ბენზოლი' id='benzol'>
+        <DeepDive text='ბენზოლი' id='benzol' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2902 20 000</H4>
             <Table>
@@ -369,7 +319,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ვაკუუმური გაზოილი' id='vgo'>
+        <DeepDive text='ვაკუუმური გაზოილი' id='vgo' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდები: 2710 19 310, 2710 19 350</H4>
             <Table>
@@ -389,7 +339,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='აირის კონდენსატი ბუნებრივი' id='air'>
+        <DeepDive text='აირის კონდენსატი ბუნებრივი' id='air' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2709 00 100</H4>
             <Table>
@@ -404,7 +354,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ნავთობის აირები გათხევადებული' id='oilair'>
+        <DeepDive text='ნავთობის აირები გათხევადებული' id='oilair' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2711</H4>
             <Table>
@@ -423,7 +373,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='ნახშირწყალბადები აცეკლური' id='aceclic'>
+        <DeepDive text='ნახშირწყალბადები აცეკლური' id='aceclic' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2901</H4>
             <Table>
@@ -442,7 +392,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='პროპილისა და იზოპროპილის სპირტი' id='propil'>
+        <DeepDive text='პროპილისა და იზოპროპილის სპირტი' id='propil' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2905 12</H4>
             <Table>
@@ -457,7 +407,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='მეთილის სპირტი' id='metil'>
+        <DeepDive text='მეთილის სპირტი' id='metil' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2905 11</H4>
             <Table>
@@ -472,7 +422,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='პარაქსილოლი' id='paraqsilol'>
+        <DeepDive text='პარაქსილოლი' id='paraqsilol' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2902 43</H4>
             <Table>
@@ -487,7 +437,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='პიროლიზური ფისი' id='piroliz'>
+        <DeepDive text='პიროლიზური ფისი' id='piroliz' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 3911 90 990</H4>
             <Table>
@@ -502,7 +452,7 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
-        <DeepDive text='მეთილ-ტრეტ ბუტილეთინის ეთერი' id='mtbe'>
+        <DeepDive text='მეთილ-ტრეტ ბუტილეთინის ეთერი' id='mtbe' openRequest={openRequest}>
             <Hr/> 
             <H4>სეს ესნ კოდი: 2909 19 90</H4>
             <Table>
