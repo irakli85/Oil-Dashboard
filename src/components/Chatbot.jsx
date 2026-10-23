@@ -3,11 +3,6 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { getWastageAnswer, WASTAGE_PRODUCTS } from '../data/wastage'
 
-const QUICK_QUESTIONS = [
-  'რამდენი რეზერვუარია ტერმინალში?',
-  'რა სიჩქარით იტვირთება დიზელი?',
-]
-
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([])
@@ -145,16 +140,6 @@ const Chatbot = () => {
                   მკითხე ბათუმის ნავთობტერმინალის, რეზერვუარების ან ოპერაციების შესახებ.
                 </WelcomeText>
                 <Suggestions>
-                  {QUICK_QUESTIONS.map((question) => (
-                    <Suggestion
-                      key={question}
-                      type='button'
-                      disabled={isLoading}
-                      onClick={(event) => sendMessage(event, question)}
-                    >
-                      {question}
-                    </Suggestion>
-                  ))}
                   <SuggestionHeading>ბუნებრივი დანაკარგები — აირჩიე პროდუქტი:</SuggestionHeading>
                   <WastageSuggestions>
                     {WASTAGE_PRODUCTS.map(({ name: product }) => (
@@ -278,7 +263,7 @@ const PanelHeader = styled.div`
   align-items: center;
   gap: 1.2rem;
   padding: 1.6rem;
-  background: #151d48;
+  background: linear-gradient(135deg, #5da000 0%, #7bc00b 100%);
   color: #fff;
 `
 
@@ -332,7 +317,7 @@ const CloseButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(77, 132, 0, 0.35);
   }
 `
 
@@ -399,8 +384,9 @@ const Suggestion = styled.button`
   cursor: pointer;
 
   &:hover:not(:disabled) {
-    border-color: #1aac83;
-    color: #087f5b;
+    border-color: #5da000;
+    background: linear-gradient(135deg, #5da000 0%, #7bc00b 100%);
+    color: #fff;
   }
 `
 
@@ -484,9 +470,13 @@ const SendButton = styled.button`
   flex: 0 0 3.8rem;
   place-items: center;
   border-radius: 1.1rem;
-  background: #1aac83;
+  background: linear-gradient(135deg, #5da000 0%, #7bc00b 100%);
   color: #fff;
   cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #4f8900 0%, #68a609 100%);
+  }
 
   &:disabled {
     background: #cbd5e1;
@@ -517,6 +507,10 @@ const ChatLink = styled(Link)`
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 0.2rem;
+
+  &:hover {
+    color: #5da000;
+  }
 `
 
 const ToggleButton = styled.button`
