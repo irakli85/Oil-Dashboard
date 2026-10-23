@@ -27,10 +27,10 @@ const SANCTIONS_RESOURCES = [
   {
     title: 'პირების და კომპანიების სანქციების საძიებო სისტემები',
     links: [
-      { label: 'სანქციების საძიებო — დიდი ბრიტანეთი (OFSI)', url: 'https://sanctionssearchapp.ofsi.hmtreasury.gov.uk/' },
-      { label: 'სანქციების საძიებო — ევროკავშირი', url: 'https://www.sanctionsmap.eu/' },
       { label: 'ფიზიკური პირების და კომპანიების საძიებო — აშშ (OFAC)', url: 'https://sanctionssearch.ofac.treas.gov/' },
       { label: 'სანქციების საძიებო — დიდი ბრიტანეთი', url: 'https://search-uk-sanctions-list.service.gov.uk/' },
+      { label: 'სანქციების საძიებო — ევროკავშირი', url: 'https://www.sanctionsmap.eu/' },
+      { label: 'სანქციების საძიებო — დიდი ბრიტანეთი (OFSI)', url: 'https://sanctionssearchapp.ofsi.hmtreasury.gov.uk/' },
     ],
   },
   {
@@ -208,7 +208,6 @@ const SanctionedVessels = () => {
   return (
     <Container>
       <PageIntro>
-        <Breadcrumb><span>საწყისი გვერდი</span><BreadcrumbDivider>/</BreadcrumbDivider>სანქციები</Breadcrumb>
         <Header>
           <LogoFrame>
             <SanctionLogo src={sanctionIcon} alt='' />
@@ -611,24 +610,6 @@ const SanctionLogo = styled.img`
 
 const HeaderText = styled.div`
   min-width: 0;
-`
-
-const Breadcrumb = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 1rem;
-  color: #586578;
-  font-size: 1.3rem;
-  font-weight: 500;
-
-  span {
-    color: #8490a0;
-  }
-`
-
-const BreadcrumbDivider = styled.span`
-  color: #b2bac5 !important;
 `
 
 const PageTitle = styled(H2)`
