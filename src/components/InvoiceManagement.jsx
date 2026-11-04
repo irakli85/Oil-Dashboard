@@ -736,6 +736,7 @@ const InvoiceManagement = () => {
                 <label>აქტის № *<input name="num" required placeholder="მაგ: ACT-001" /></label>
                 <label>თარიღი *<input name="date" type="date" required defaultValue={today()} /></label>
                 <label>რაოდენობა (კგ) *<input name="totalQty" type="number" min="0.01" step="0.01" required placeholder="0.00" /></label>
+                <label>ნორმა (%) <input name="wastePercent" type="text" inputMode="decimal" placeholder="0.00" /></label>
               </>}
               {modal.type === 'edit-invoice' && selectedInvoice && <>
                 <label>ინვოისის ნომერი *<input name="num" required placeholder="INV-2026-001" defaultValue={selectedInvoice.num} /></label>
@@ -759,34 +760,41 @@ const InvoiceManagement = () => {
             <h2 id="invoice-history-title">{selectedInvoice.isWastage ? 'ბუნებრივი დანაკარგი - გაანგარიშება' : 'ჩამოწერების ისტორია'}</h2><p>ინვოისი № {selectedInvoice.num}</p>
             {selectedInvoice.isWastage ? (
               <div style={{ padding: '2rem', border: '1px solid #dce7e4', borderRadius: '.8rem', background: '#fafbfa' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-                  <span style={{ minWidth: '15rem', fontWeight: 700 }}>ნორმა (%) *</span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    min="0"
-                    max="100"
-                    placeholder="0.00"
-                    value={wastagePercent}
-                    onChange={(e) => {
-                      let val = e.target.value.replace(',', '.')
-                      if (!/^[\d.]*$/.test(val)) val = val.slice(0, -1)
-                      setWastagePercent(val)
-                    }}
-                    onFocus={() => setWastagePercent('')}
-                    style={{ flex: 1, padding: '.8rem', fontSize: '1.4rem', border: '1px solid #dce7e4', borderRadius: '.4rem' }}
-                  />
-                </label>
-                <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#087b58', padding: '1.2rem', background: '#fff', borderRadius: '.4rem', minHeight: '5.6rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent: 'center' }}>
-                  {wastagePercent ? (
-                    <>
-                      <div>ნორმა ({wastagePercent}%) - {number((selectedVessel?.totalQty || 0) * (Number(wastagePercent) / 100))} კგ</div>
-                      <div style={{ fontSize: '1.4rem', color: '#728188' }}>ჩამოწერილი რაოდენობა - {number(selectedInvoice.totalQty)} კგ</div>
-                    </>
-                  ) : (
-                    'გაანგარიშების შედეგი'
-                  )}
-                </div>
+                {selectedInvoice.wastePercent ? (
+                  <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#087b58', padding: '1.2rem', background: '#fff', borderRadius: '.4rem', minHeight: '5.6rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent: 'center' }}>
+                    <div>ნორმა ({selectedInvoice.wastePercent}%) - {number((selectedVessel?.totalQty || 0) * (selectedInvoice.wastePercent / 100))} კგ</div>
+                    <div style={{ fontSize: '1.4rem', color: '#728188' }}>ჩამოწერილი რაოდენობა - {number(selectedInvoice.totalQty)} კგ</div>
+                  </div>
+                ) : (
+                  <>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
+                      <span style={{ minWidth: '15rem', fontWeight: 700 }}>ნორმა (%) *</span>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        placeholder="0.00"
+                        value={wastagePercent}
+                        onChange={(e) => {
+                          let val = e.target.value.replace(',', '.')
+                          if (!/^[\d.]*$/.test(val)) val = val.slice(0, -1)
+                          setWastagePercent(val)
+                        }}
+                        onFocus={() => setWastagePercent('')}
+                        style={{ flex: 1, padding: '.8rem', fontSize: '1.4rem', border: '1px solid #dce7e4', borderRadius: '.4rem' }}
+                      />
+                    </label>
+                    <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#087b58', padding: '1.2rem', background: '#fff', borderRadius: '.4rem', minHeight: '5.6rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent: 'center' }}>
+                      {wastagePercent ? (
+                        <>
+                          <div>ნორმა ({wastagePercent}%) - {number((selectedVessel?.totalQty || 0) * (Number(wastagePercent) / 100))} კგ</div>
+                          <div style={{ fontSize: '1.4rem', color: '#728188' }}>ჩამოწერილი რაოდენობა - {number(selectedInvoice.totalQty)} კგ</div>
+                        </>
+                      ) : (
+                        'გაანგარიშების შედეგი'
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <TableWrap><Table style={{ minWidth: '54rem' }}><thead><tr><th>თარიღი/დრო</th><th>საბაჟო დოკუმენტი</th><th>რაოდენობა</th><th aria-label="მოქმედებები" /></tr></thead>
