@@ -100,6 +100,9 @@ async function ensureReady() {
       await database.query(
         'ALTER TABLE vessel_invoices ADD COLUMN IF NOT EXISTS is_wastage BOOLEAN NOT NULL DEFAULT false'
       )
+      await database.query(
+        'ALTER TABLE vessel_invoices ADD COLUMN IF NOT EXISTS waste_percent NUMERIC(5, 2)'
+      )
     })().catch((error) => {
       initPromise = null
       throw error
@@ -128,6 +131,7 @@ function rowToInvoice(row) {
     date: row.invoice_date,
     totalQty: Number(row.total_qty),
     isWastage: row.is_wastage || false,
+    wastePercent: row.waste_percent ? Number(row.waste_percent) : null,
     clearances: [],
   }
 }
@@ -250,11 +254,12 @@ export const invoiceDb = {
     const isWastage = data.isWastage === true
 
     if (isWastage) {
+      const wastePercent = data.wastePercent ? Number(data.wastePercent) : null
       const { rows } = await database.query(
-        `INSERT INTO vessel_invoices (vessel_id, invoice_num, invoice_date, total_qty, is_wastage)
-        VALUES ($1, $2, $3, $4, true)
+        `INSERT INTO vessel_invoices (vessel_id, invoice_num, invoice_date, total_qty, is_wastage, waste_percent)
+        VALUES ($1, $2, $3, $4, true, $5)
         RETURNING *`,
-        [Number(vesselId), invoiceNum, invoiceDate, quantity]
+        [Number(vesselId), invoiceNum, invoiceDate, quantity, wastePercent]
       )
       if (rows.length === 0) throw validationError('ინვოისის დამატება ვერ მოხერხდა')
       return rowToInvoice(rows[0])
