@@ -412,7 +412,7 @@ const toMinorUnits = (value) => {
 const sumInvoices = (vessel) => vessel.invoices.filter(i => !i.isWastage).reduce((sum, invoice) => sum + invoice.totalQty, 0)
 const clearanceMinorUnits = (invoice) => invoice.clearances.reduce((sum, clearance) => sum + toMinorUnits(clearance.qty), 0)
 const sumClearances = (invoice) => clearanceMinorUnits(invoice) / 100
-const sumClearancesForStat = (vessel) => vessel.invoices.filter(i => !i.isWastage).reduce((sum, invoice) => sum + sumClearances(invoice), 0)
+const sumClearancesForStat = (vessel) => vessel.invoices.reduce((sum, invoice) => sum + (invoice.isWastage ? invoice.totalQty : sumClearances(invoice)), 0)
 const exportInvoices = (selectedVessel) => {
   if (!selectedVessel) return
 
