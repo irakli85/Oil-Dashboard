@@ -97,6 +97,9 @@ async function ensureReady() {
       await database.query(
         'CREATE INDEX IF NOT EXISTS invoice_clearances_invoice_id_idx ON invoice_clearances (invoice_id)'
       )
+      await database.query(
+        'ALTER TABLE vessel_invoices ADD COLUMN IF NOT EXISTS is_wastage BOOLEAN NOT NULL DEFAULT false'
+      )
     })().catch((error) => {
       initPromise = null
       throw error
@@ -124,6 +127,7 @@ function rowToInvoice(row) {
     num: row.invoice_num,
     date: row.invoice_date,
     totalQty: Number(row.total_qty),
+    isWastage: row.is_wastage || false,
     clearances: [],
   }
 }
@@ -243,6 +247,19 @@ export const invoiceDb = {
     const quantity = requireQuantity(data.totalQty)
     const invoiceNum = requireText(data.num, 'ინვოისის ნომერი')
     const invoiceDate = requireDate(data.date)
+    const isWastage = data.isWastage === true
+
+    if (isWastage) {
+      const { rows } = await database.query(
+        `INSERT INTO vessel_invoices (vessel_id, invoice_num, invoice_date, total_qty, is_wastage)
+        VALUES ($1, $2, $3, $4, true)
+        RETURNING *`,
+        [Number(vesselId), invoiceNum, invoiceDate, quantity]
+      )
+      if (rows.length === 0) throw validationError('ინვოისის დამატება ვერ მოხერხდა')
+      return rowToInvoice(rows[0])
+    }
+
     const { rows } = await database.query(
       `WITH reserved AS (
         UPDATE invoice_vessels
@@ -250,8 +267,8 @@ export const invoiceDb = {
         WHERE id = $1 AND invoiced_qty + $2 <= total_qty
         RETURNING id
       )
-      INSERT INTO vessel_invoices (vessel_id, invoice_num, invoice_date, total_qty)
-      SELECT id, $3, $4, $2 FROM reserved
+      INSERT INTO vessel_invoices (vessel_id, invoice_num, invoice_date, total_qty, is_wastage)
+      SELECT id, $3, $4, $2, false FROM reserved
       RETURNING *`,
       [Number(vesselId), quantity, invoiceNum, invoiceDate]
     )
@@ -279,10 +296,10 @@ export const invoiceDb = {
     const { rows } = await database.query(
       `WITH deleted AS (
         DELETE FROM vessel_invoices WHERE id = $1
-        RETURNING id, vessel_id, total_qty
+        RETURNING id, vessel_id, total_qty, is_wastage
       ), adjusted AS (
         UPDATE invoice_vessels
-        SET invoiced_qty = GREATEST(0, invoiced_qty - (SELECT total_qty FROM deleted))
+        SET invoiced_qty = GREATEST(0, invoiced_qty - (CASE WHEN (SELECT is_wastage FROM deleted) THEN 0 ELSE (SELECT total_qty FROM deleted) END))
         WHERE id = (SELECT vessel_id FROM deleted)
         RETURNING id
       )

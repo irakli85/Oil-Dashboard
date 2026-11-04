@@ -315,8 +315,8 @@ const Badge = styled.span`
   display: inline-block;
   padding: .5rem .75rem;
   border-radius: 2rem;
-  background: ${({ $tone }) => $tone === 'done' ? '#d8f2ef' : $tone === 'partial' ? '#fff1d6' : $tone === 'new' ? '#fde7e3' : '#fde7e3'};
-  color: ${({ $tone }) => $tone === 'done' ? '#08766f' : $tone === 'partial' ? '#8c5d00' : $tone === 'new' ? '#a74438' : '#a74438'};
+  background: ${({ $tone }) => $tone === 'done' ? '#d8f2ef' : $tone === 'partial' ? '#fff1d6' : $tone === 'wastage' ? '#f5d6d6' : '#fde7e3'};
+  color: ${({ $tone }) => $tone === 'done' ? '#08766f' : $tone === 'partial' ? '#8c5d00' : $tone === 'wastage' ? '#c63c3c' : '#a74438'};
   white-space: nowrap;
   font-size: 1.3rem;
   font-weight: 700;
@@ -409,9 +409,10 @@ const toMinorUnits = (value) => {
   const [whole, fraction = ''] = String(value ?? 0).split('.')
   return Number(whole) * 100 + Number(`${fraction}00`.slice(0, 2))
 }
-const sumInvoices = (vessel) => vessel.invoices.reduce((sum, invoice) => sum + invoice.totalQty, 0)
+const sumInvoices = (vessel) => vessel.invoices.filter(i => !i.isWastage).reduce((sum, invoice) => sum + invoice.totalQty, 0)
 const clearanceMinorUnits = (invoice) => invoice.clearances.reduce((sum, clearance) => sum + toMinorUnits(clearance.qty), 0)
 const sumClearances = (invoice) => clearanceMinorUnits(invoice) / 100
+const sumClearancesForStat = (vessel) => vessel.invoices.filter(i => !i.isWastage).reduce((sum, invoice) => sum + sumClearances(invoice), 0)
 const exportInvoices = (selectedVessel) => {
   if (!selectedVessel) return
 
@@ -508,6 +509,7 @@ const InvoiceManagement = () => {
     try {
       if (modal.type === 'vessel') await createVessel(values)
       if (modal.type === 'invoice') await createInvoice(selectedVesselId, values)
+      if (modal.type === 'wastage') await createInvoice(selectedVesselId, { ...values, isWastage: true })
       if (modal.type === 'edit-invoice') await updateInvoice(modal.invoiceId, values)
       if (modal.type === 'clearance') await createClearance(modal.invoiceId, values)
       setModal(null)
@@ -629,7 +631,7 @@ const InvoiceManagement = () => {
         <>
           {(() => {
             const invoiced = sumInvoices(selectedVessel)
-            const cleared = selectedVessel.invoices.reduce((sum, invoice) => sum + sumClearances(invoice), 0)
+            const cleared = sumClearancesForStat(selectedVessel)
             return (
               <StatGrid>
                 <Stat><p>გემის დასახელება</p><strong>{selectedVessel.name}</strong><small>რეგ. თარიღი: {formatDate(selectedVessel.date)}</small></Stat>
@@ -651,6 +653,14 @@ const InvoiceManagement = () => {
                 >
                   + ინვოისის დამატება
                 </Button>
+                <Button
+                  $tone="green"
+                  disabled={!isAuthenticated}
+                  title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'}
+                  onClick={() => openModal('wastage')}
+                >
+                  + ბუნებრივი დანაკარგი
+                </Button>
                 <Button type="button" disabled={!selectedVessel.invoices.length} onClick={() => exportInvoices(selectedVessel)}>↓ ექსელში ექსპორტი</Button>
               </PanelActions>
             </PanelHead>
@@ -659,29 +669,32 @@ const InvoiceManagement = () => {
                 <thead><tr><th>№</th><th>ინვოისის №</th><th>თარიღი</th><th>ინვოისის რაოდენობა</th><th>განაშთული</th><th>დარჩენილი</th><th>პროგრესი</th><th>სტატუსი</th><th aria-label="მოქმედებები" /></tr></thead>
                 <tbody>
                   {selectedVessel.invoices.length === 0 ? <tr><td colSpan="9"><Empty>ინვოისები ჯერ არ არის დამატებული</Empty></td></tr> : selectedVessel.invoices.map((invoice, index) => {
+                    const isWastage = invoice.isWastage || false
                     const totalMinorUnits = toMinorUnits(invoice.totalQty)
                     const clearedMinorUnits = clearanceMinorUnits(invoice)
                     const cleared = clearedMinorUnits / 100
                     const remaining = (totalMinorUnits - clearedMinorUnits) / 100
                     const complete = clearedMinorUnits === totalMinorUnits
                     const progress = complete ? 100 : Math.min(99, Math.round((clearedMinorUnits / totalMinorUnits) * 100))
-                    const status = progress === 100
+                    const status = isWastage
+                      ? ['ბუნებრივი დანაკარგი', 'wastage']
+                      : progress === 100
                       ? ['დასრულებული', 'done']
                       : progress === 0 ? ['ახალი', 'new'] : ['ნაწილობრივი', 'partial']
                     return <tr key={invoice.id}>
                       <td>{index + 1}</td><td><strong>{invoice.num}</strong></td><td>{formatDate(invoice.date)}</td>
-                      <td><div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', justifyContent: 'space-between' }}><span>{number(invoice.totalQty)} კგ</span><Button $tone="light" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'რედაქტირება' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის რედაქტირება`} onClick={() => openModal('edit-invoice', invoice.id)}><EditIcon /></Button></div></td><td style={{ color: '#087b58' }}>{number(cleared)} კგ</td><td style={{ color: '#9b6500' }}>{number(remaining)} კგ</td>
-                      <td><Progress $tone={status[1]}><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress></td>
-                      <td><Badge $tone={status[1]}>{status[0]}</Badge></td>
+                      <td><div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', justifyContent: 'space-between' }}><span>{isWastage ? '-' : number(invoice.totalQty) + ' კგ'}</span>{!isWastage && <Button $tone="light" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'რედაქტირება' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის რედაქტირება`} onClick={() => openModal('edit-invoice', invoice.id)}><EditIcon /></Button>}</div></td><td style={{ color: isWastage ? '#c63c3c' : '#087b58' }}>{isWastage ? number(invoice.totalQty) : number(cleared)} კგ</td><td style={{ color: '#9b6500' }}>{isWastage ? '-' : number(remaining)} კგ</td>
+                      <td>{isWastage ? '-' : <Progress $tone={status[1]}><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress>}</td>
+                      <td><Badge $tone={isWastage ? 'wastage' : status[1]}>{status[0]}</Badge></td>
                       <td><Actions>
-                        <Button
+                        {!isWastage && <Button
                           $tone="green"
                           disabled={!isAuthenticated || remaining <= 0}
                           title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'}
                           onClick={() => openModal('clearance', invoice.id)}
                         >
                           განაშთვა
-                        </Button>
+                        </Button>}
                         <Button onClick={() => openModal('history', invoice.id)}>დოკუმენტები ({invoice.clearances.length})</Button>
                         <Button $tone="danger" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'ინვოისის წაშლა' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
@@ -692,7 +705,7 @@ const InvoiceManagement = () => {
                   <td colSpan="3" style={{ textAlign: 'right' }}>სულ ჯამი:</td>
                   <td>{number(sumInvoices(selectedVessel))} კგ</td>
                   <td>{number(selectedVessel.invoices.reduce((sum, invoice) => sum + sumClearances(invoice), 0))} კგ</td>
-                  <td>{number(selectedVessel.invoices.reduce((sum, invoice) => sum + invoice.totalQty - sumClearances(invoice), 0))} კგ</td>
+                  <td>{number(selectedVessel.invoices.filter(i => !i.isWastage).reduce((sum, invoice) => sum + invoice.totalQty - sumClearances(invoice), 0))} კგ</td>
                   <td colSpan="3" />
                 </tr></tfoot>}
               </Table>
@@ -704,8 +717,8 @@ const InvoiceManagement = () => {
       {modal && modal.type !== 'history' && modal.type !== 'delete' && modal.type !== 'delete-vessel' && (
         <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget && !saving) setModal(null) }}>
           <Dialog role="dialog" aria-modal="true" aria-labelledby="invoice-dialog-title">
-            <h2 id="invoice-dialog-title">{modal.type === 'vessel' ? 'ახალი გემის რეგისტრაცია' : modal.type === 'invoice' ? 'ინვოისის დამატება' : modal.type === 'edit-invoice' ? 'ინვოისის რედაქტირება' : 'ინვოისის განაშთვა'}</h2>
-            <p>{modal.type === 'vessel' ? 'შეიყვანეთ გემის და ტვირთის მონაცემები' : modal.type === 'invoice' ? `არჩეული გემი: ${selectedVessel?.name}` : modal.type === 'edit-invoice' ? `ინვოისი № ${selectedInvoice?.num}. გაწერილია: ${number(sumClearances(selectedInvoice || { clearances: [] }))} კგ` : `ინვოისი № ${selectedInvoice?.num}. დარჩენილი: ${number((selectedInvoice?.totalQty || 0) - sumClearances(selectedInvoice || { clearances: [] }))} კგ`}</p>
+            <h2 id="invoice-dialog-title">{modal.type === 'vessel' ? 'ახალი გემის რეგისტრაცია' : modal.type === 'invoice' ? 'ინვოისის დამატება' : modal.type === 'wastage' ? 'ბუნებრივი დანაკარგი' : modal.type === 'edit-invoice' ? 'ინვოისის რედაქტირება' : 'ინვოისის განაშთვა'}</h2>
+            <p>{modal.type === 'vessel' ? 'შეიყვანეთ გემის და ტვირთის მონაცემები' : modal.type === 'invoice' ? `არჩეული გემი: ${selectedVessel?.name}` : modal.type === 'wastage' ? `არჩეული გემი: ${selectedVessel?.name}` : modal.type === 'edit-invoice' ? `ინვოისი № ${selectedInvoice?.num}. გაწერილია: ${number(sumClearances(selectedInvoice || { clearances: [] }))} კგ` : `ინვოისი № ${selectedInvoice?.num}. დარჩენილი: ${number((selectedInvoice?.totalQty || 0) - sumClearances(selectedInvoice || { clearances: [] }))} კგ`}</p>
             <Form onSubmit={submit}>
               {modal.type === 'vessel' && <>
                 <label>გემის სახელი *<input name="name" required placeholder="M/V MAERSK BATUMI" /></label>
@@ -715,6 +728,11 @@ const InvoiceManagement = () => {
               </>}
               {modal.type === 'invoice' && <>
                 <label>ინვოისის ნომერი *<input name="num" required placeholder="INV-2026-001" /></label>
+                <label>თარიღი *<input name="date" type="date" required defaultValue={today()} /></label>
+                <label>რაოდენობა (კგ) *<input name="totalQty" type="number" min="0.01" step="0.01" required placeholder="0.00" /></label>
+              </>}
+              {modal.type === 'wastage' && <>
+                <label>აქტის № *<input name="num" required placeholder="მაგ: ACT-001" /></label>
                 <label>თარიღი *<input name="date" type="date" required defaultValue={today()} /></label>
                 <label>რაოდენობა (კგ) *<input name="totalQty" type="number" min="0.01" step="0.01" required placeholder="0.00" /></label>
               </>}
@@ -728,7 +746,7 @@ const InvoiceManagement = () => {
                 <label>ჩამოსაწერი რაოდენობა (კგ) *<input name="qty" type="number" min="0.01" step="0.01" max={(selectedInvoice?.totalQty || 0) - sumClearances(selectedInvoice || { clearances: [] })} required placeholder="0.00" /></label>
               </>}
               {formError && <Message $error>{formError}</Message>}
-              <FormActions><Button type="button" disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button type="submit" $tone="green" disabled={saving}>{saving ? 'ინახება...' : modal.type === 'clearance' ? 'ჩამოწერა' : modal.type === 'edit-invoice' ? 'განახლება' : 'შენახვა'}</Button></FormActions>
+              <FormActions><Button type="button" disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button type="submit" $tone="green" disabled={saving}>{saving ? 'ინახება...' : modal.type === 'clearance' ? 'ჩამოწერა' : modal.type === 'edit-invoice' ? 'განახლება' : modal.type === 'wastage' ? 'რეგისტრაცია' : 'შენახვა'}</Button></FormActions>
             </Form>
           </Dialog>
         </Overlay>
