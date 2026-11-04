@@ -409,10 +409,10 @@ const toMinorUnits = (value) => {
   const [whole, fraction = ''] = String(value ?? 0).split('.')
   return Number(whole) * 100 + Number(`${fraction}00`.slice(0, 2))
 }
-const sumInvoices = (vessel) => vessel.invoices.filter(i => i.isWastage !== true).reduce((sum, invoice) => sum + invoice.totalQty, 0)
+const sumInvoices = (vessel) => vessel.invoices.filter(i => !i.isWastage).reduce((sum, invoice) => sum + invoice.totalQty, 0)
 const clearanceMinorUnits = (invoice) => invoice.clearances.reduce((sum, clearance) => sum + toMinorUnits(clearance.qty), 0)
 const sumClearances = (invoice) => clearanceMinorUnits(invoice) / 100
-const sumClearancesForStat = (vessel) => vessel.invoices.reduce((sum, invoice) => sum + (invoice.isWastage === true ? invoice.totalQty : sumClearances(invoice)), 0)
+const sumClearancesForStat = (vessel) => vessel.invoices.reduce((sum, invoice) => sum + (invoice.isWastage ? invoice.totalQty : sumClearances(invoice)), 0)
 const exportInvoices = (selectedVessel) => {
   if (!selectedVessel) return
 
@@ -722,7 +722,7 @@ const InvoiceManagement = () => {
                 {selectedVessel.invoices.length > 0 && <tfoot><tr>
                   <td colSpan="3" style={{ textAlign: 'right' }}>სულ ჯამი:</td>
                   <td>{number(sumInvoices(selectedVessel))} კგ</td>
-                  <td>{number(selectedVessel.invoices.reduce((sum, invoice) => sum + (invoice.isWastage === true ? invoice.totalQty : sumClearances(invoice)), 0))} კგ</td>
+                  <td>{number(selectedVessel.invoices.reduce((sum, invoice) => sum + (invoice.isWastage ? invoice.totalQty : sumClearances(invoice)), 0))} კგ</td>
                   <td />
                   <td colSpan="3" />
                 </tr></tfoot>}
