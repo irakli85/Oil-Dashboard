@@ -762,13 +762,17 @@ const InvoiceManagement = () => {
                 <label style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
                   <span style={{ minWidth: '15rem', fontWeight: 700 }}>ნორმა (%) *</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     min="0"
                     max="100"
-                    step="0.01"
                     placeholder="0.00"
                     value={wastagePercent}
-                    onChange={(e) => setWastagePercent(e.target.value)}
+                    onChange={(e) => {
+                      let val = e.target.value.replace(',', '.')
+                      if (!/^[\d.]*$/.test(val)) val = val.slice(0, -1)
+                      setWastagePercent(val)
+                    }}
                     onFocus={() => setWastagePercent('')}
                     style={{ flex: 1, padding: '.8rem', fontSize: '1.4rem', border: '1px solid #dce7e4', borderRadius: '.4rem' }}
                   />
