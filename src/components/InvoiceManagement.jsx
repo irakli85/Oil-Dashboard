@@ -315,8 +315,8 @@ const Badge = styled.span`
   display: inline-block;
   padding: .5rem .75rem;
   border-radius: 2rem;
-  background: ${({ $tone }) => $tone === 'done' ? '#d8f2ef' : $tone === 'partial' ? '#fff1d6' : $tone === 'wastage' ? '#f5d6d6' : '#fde7e3'};
-  color: ${({ $tone }) => $tone === 'done' ? '#08766f' : $tone === 'partial' ? '#8c5d00' : $tone === 'wastage' ? '#c63c3c' : '#a74438'};
+  background: ${({ $tone }) => $tone === 'done' ? '#d8f2ef' : $tone === 'partial' ? '#fff1d6' : $tone === 'wastage' ? '#f5d6d6' : $tone === 'danger' ? '#f5d6d6' : '#fde7e3'};
+  color: ${({ $tone }) => $tone === 'done' ? '#08766f' : $tone === 'partial' ? '#8c5d00' : $tone === 'wastage' ? '#c63c3c' : $tone === 'danger' ? '#c63c3c' : '#a74438'};
   white-space: nowrap;
   font-size: 1.3rem;
   font-weight: 700;
@@ -683,11 +683,22 @@ const InvoiceManagement = () => {
                     const remaining = (totalMinorUnits - clearedMinorUnits) / 100
                     const complete = clearedMinorUnits === totalMinorUnits
                     const progress = complete ? 100 : Math.min(99, Math.round((clearedMinorUnits / totalMinorUnits) * 100))
-                    const status = isWastage
-                      ? ['ბუნებრივი დანაკარგი', 'wastage']
-                      : progress === 100
-                      ? ['დასრულებული', 'done']
-                      : progress === 0 ? ['ახალი', 'new'] : ['ნაწილობრივი', 'partial']
+                    let status
+                    if (isWastage) {
+                      if (invoice.wastePercent) {
+                        const expectedWastage = (selectedVessel?.totalQty || 0) * (invoice.wastePercent / 100)
+                        const recordedWastage = invoice.totalQty
+                        status = recordedWastage <= expectedWastage
+                          ? ['ნორმაშია', 'done']
+                          : ['ნორმაზე მეტია', 'danger']
+                      } else {
+                        status = ['ბუნებრივი დანაკარგი', 'wastage']
+                      }
+                    } else {
+                      status = progress === 100
+                        ? ['დასრულებული', 'done']
+                        : progress === 0 ? ['ახალი', 'new'] : ['ნაწილობრივი', 'partial']
+                    }
                     return <tr key={invoice.id}>
                       <td>{index + 1}</td><td><strong>{invoice.num}</strong></td><td>{formatDate(invoice.date)}</td>
                       <td><div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', justifyContent: 'space-between' }}><span>{isWastage ? '' : number(invoice.totalQty) + ' კგ'}</span>{!isWastage && <Button $tone="light" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'რედაქტირება' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის რედაქტირება`} onClick={() => openModal('edit-invoice', invoice.id)}><EditIcon /></Button>}</div></td><td style={{ color: isWastage ? '#c63c3c' : '#087b58' }}>{isWastage ? number(invoice.totalQty) : number(cleared)} კგ</td><td style={{ color: '#9b6500' }}>{isWastage ? '' : number(remaining) + ' კგ'}</td>
