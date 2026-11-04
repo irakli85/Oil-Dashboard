@@ -777,8 +777,15 @@ const InvoiceManagement = () => {
                     style={{ flex: 1, padding: '.8rem', fontSize: '1.4rem', border: '1px solid #dce7e4', borderRadius: '.4rem' }}
                   />
                 </label>
-                <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#087b58', padding: '1.2rem', background: '#fff', borderRadius: '.4rem', minHeight: '2.8rem', display: 'flex', alignItems: 'center' }}>
-                  {wastagePercent ? `${wastagePercent}% - ${number((selectedVessel?.totalQty || 0) * (Number(wastagePercent) / 100))} კგ` : 'გაანგარიშების შედეგი'}
+                <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#087b58', padding: '1.2rem', background: '#fff', borderRadius: '.4rem', minHeight: '5.6rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent: 'center' }}>
+                  {wastagePercent ? (
+                    <>
+                      <div>ნორმა ({wastagePercent}%) - {number((selectedVessel?.totalQty || 0) * (Number(wastagePercent) / 100))} კგ</div>
+                      <div style={{ fontSize: '1.4rem', color: '#728188' }}>ჩამოწერილი რაოდენობა - {number(sumClearances(selectedInvoice))} კგ</div>
+                    </>
+                  ) : (
+                    'გაანგარიშების შედეგი'
+                  )}
                 </div>
               </div>
             ) : (
