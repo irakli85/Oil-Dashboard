@@ -650,7 +650,7 @@ const InvoiceManagement = () => {
           })()}
           <Panel>
             <PanelHead>
-              <div><h2>გემის ინვოისები</h2><p>ინვოისები, საბაჟო დოკუმენტები და განაშთვის სტატუსები</p></div>
+              <div><h2>ინვოისები</h2><p>ინვოისები, საბაჟო დოკუმენტები და განაშთვის სტატუსები</p></div>
               <PanelActions>
                 <Button
                   $tone="green"
