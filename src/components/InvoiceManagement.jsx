@@ -695,7 +695,7 @@ const InvoiceManagement = () => {
                         >
                           განაშთვა
                         </Button>}
-                        <Button onClick={() => openModal('history', invoice.id)}>{isWastage ? 'დეტალურად' : `დოკუმენტები (${invoice.clearances.length})`}</Button>
+                        <Button onClick={() => openModal('history', invoice.id)}>დეტალურად</Button>
                         <Button $tone="danger" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'ინვოისის წაშლა' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
                     </tr>
