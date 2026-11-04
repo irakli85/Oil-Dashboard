@@ -611,7 +611,7 @@ const InvoiceManagement = () => {
             <VesselGrid>
               {filteredVessels.map((vessel) => {
                 const invoiced = sumInvoices(vessel)
-                const cleared = vessel.invoices.reduce((sum, invoice) => sum + sumClearances(invoice), 0)
+                const cleared = sumClearancesForStat(vessel)
                 return (
                   <VesselCard key={vessel.id}>
                     <VesselOpenButton type="button" onClick={() => setSelectedVesselId(vessel.id)} aria-label={`${vessel.name}-ის დეტალების ნახვა`}>
