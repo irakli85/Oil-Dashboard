@@ -683,8 +683,8 @@ const InvoiceManagement = () => {
                       : progress === 0 ? ['ახალი', 'new'] : ['ნაწილობრივი', 'partial']
                     return <tr key={invoice.id}>
                       <td>{index + 1}</td><td><strong>{invoice.num}</strong></td><td>{formatDate(invoice.date)}</td>
-                      <td><div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', justifyContent: 'space-between' }}><span>{isWastage ? '-' : number(invoice.totalQty) + ' კგ'}</span>{!isWastage && <Button $tone="light" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'რედაქტირება' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის რედაქტირება`} onClick={() => openModal('edit-invoice', invoice.id)}><EditIcon /></Button>}</div></td><td style={{ color: isWastage ? '#c63c3c' : '#087b58' }}>{isWastage ? number(invoice.totalQty) : number(cleared)} კგ</td><td style={{ color: '#9b6500' }}>{isWastage ? '-' : number(remaining)} კგ</td>
-                      <td>{isWastage ? '-' : <Progress $tone={status[1]}><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress>}</td>
+                      <td><div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', justifyContent: 'space-between' }}><span>{isWastage ? '' : number(invoice.totalQty) + ' კგ'}</span>{!isWastage && <Button $tone="light" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'რედაქტირება' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის რედაქტირება`} onClick={() => openModal('edit-invoice', invoice.id)}><EditIcon /></Button>}</div></td><td style={{ color: isWastage ? '#c63c3c' : '#087b58' }}>{isWastage ? number(invoice.totalQty) : number(cleared)} კგ</td><td style={{ color: '#9b6500' }}>{isWastage ? '' : number(remaining) + ' კგ'}</td>
+                      <td>{isWastage ? '' : <Progress $tone={status[1]}><div><i style={{ width: `${progress}%` }} /></div><span>{progress}%</span></Progress>}</td>
                       <td><Badge $tone={isWastage ? 'wastage' : status[1]}>{status[0]}</Badge></td>
                       <td><Actions>
                         {!isWastage && <Button
@@ -695,7 +695,7 @@ const InvoiceManagement = () => {
                         >
                           განაშთვა
                         </Button>}
-                        <Button onClick={() => openModal('history', invoice.id)}>დოკუმენტები ({invoice.clearances.length})</Button>
+                        <Button onClick={() => openModal('history', invoice.id)}>{isWastage ? 'დეტალურად' : `დოკუმენტები (${invoice.clearances.length})`}</Button>
                         <Button $tone="danger" $iconOnly disabled={!isAuthenticated} title={isAuthenticated ? 'ინვოისის წაშლა' : 'ავტორიზაცია საჭიროა'} aria-label={`${invoice.num}-ის წაშლა`} onClick={() => openModal('delete', invoice.id)}><TrashIcon /></Button>
                       </Actions></td>
                     </tr>
