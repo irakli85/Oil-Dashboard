@@ -344,4 +344,52 @@ export const invoiceDb = {
     )
     if (rows.length === 0) throw validationError('ჩამოწერა ვერ მოიძებნა', 'NOT_FOUND')
   },
+
+  async updateInvoice(invoiceId, data) {
+    const database = await ensureReady()
+    const newQuantity = requireQuantity(data.totalQty)
+    const invoiceNum = requireText(data.num, 'ინვოისის ნომერი')
+    const invoiceDate = requireDate(data.date)
+
+    const { rows: currentRows } = await database.query(
+      'SELECT total_qty, vessel_id FROM vessel_invoices WHERE id = $1',
+      [Number(invoiceId)]
+    )
+    if (currentRows.length === 0) throw validationError('ინვოისი ვერ მოიძებნა', 'NOT_FOUND')
+
+    const currentQuantity = Number(currentRows[0].total_qty)
+    const vesselId = Number(currentRows[0].vessel_id)
+    const quantityDifference = newQuantity - currentQuantity
+
+    const { rows } = await database.query(
+      `WITH updated AS (
+        UPDATE vessel_invoices
+        SET invoice_num = $2, invoice_date = $3, total_qty = $4
+        WHERE id = $1
+        RETURNING *
+      ), adjusted AS (
+        UPDATE invoice_vessels
+        SET invoiced_qty = invoiced_qty + $5
+        WHERE id = $6 AND invoiced_qty + $5 >= 0 AND invoiced_qty + $5 <= total_qty
+        RETURNING id
+      )
+      SELECT * FROM updated`,
+      [Number(invoiceId), invoiceNum, invoiceDate, newQuantity, quantityDifference, vesselId]
+    )
+
+    if (rows.length === 0) {
+      const { rows: vesselRows } = await database.query(
+        'SELECT total_qty, invoiced_qty FROM invoice_vessels WHERE id = $1',
+        [vesselId]
+      )
+      if (vesselRows.length === 0) throw validationError('გემი ვერ მოიძებნა', 'NOT_FOUND')
+      const { total_qty, invoiced_qty } = vesselRows[0]
+      const remaining = Number(total_qty) - (Number(invoiced_qty) + quantityDifference)
+      if (quantityDifference > 0 && quantityDifference > remaining) {
+        throw validationError(`რაოდენობა აჭარბებს გემის დარჩენილ ტვირთს (${remaining} კგ)`, 'QUANTITY_EXCEEDED')
+      }
+      throw validationError('ინვოისის განახლება ვერ მოხერხდა')
+    }
+    return rowToInvoice(rows[0])
+  },
 }

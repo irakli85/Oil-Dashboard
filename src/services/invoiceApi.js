@@ -79,3 +79,11 @@ export async function createClearance(invoiceId, clearance) {
 export async function deleteClearance(clearanceId) {
   return request(`/clearances/${clearanceId}`, { method: 'DELETE' })
 }
+
+export async function updateInvoice(invoiceId, invoice) {
+  const data = await request(`/invoices/${invoiceId}`, {
+    method: 'PUT',
+    body: JSON.stringify(invoice),
+  })
+  return data.invoice
+}

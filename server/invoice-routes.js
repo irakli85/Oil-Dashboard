@@ -58,6 +58,7 @@ function handleError(res, error) {
 
 export default async function invoiceRoutes(req, res) {
   if (req.method === 'DELETE' && !requireAdmin(req, res)) return
+  if (req.method === 'PUT' && !requireAdmin(req, res)) return
   try {
     const requestUrl = new URL(req.originalUrl || req.url, 'http://localhost')
     const pathname = requestUrl.pathname
@@ -95,6 +96,13 @@ export default async function invoiceRoutes(req, res) {
     if (req.method === 'DELETE' && invoiceDelete) {
       await invoiceDb.deleteInvoice(invoiceDelete[1])
       sendJson(res, 200, { deleted: true })
+      return
+    }
+
+    const invoiceUpdate = route.match(/^\/invoices\/(\d+)$/)
+    if (req.method === 'PUT' && invoiceUpdate) {
+      const invoice = await invoiceDb.updateInvoice(invoiceUpdate[1], await readBody(req))
+      sendJson(res, 200, { invoice })
       return
     }
 
