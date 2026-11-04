@@ -18,6 +18,8 @@
   "dependencies": {
     "@ai-sdk/google": "^2.0.103",
     "@neondatabase/serverless": "^1.1.0",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@vercel/analytics": "^2.0.1",
     "ai": "^6.0.307",
     "cors": "^2.8.6",
@@ -32,6 +34,7 @@
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.17.0",
     "styled-components": "^6.1.0",
+    "three": "^0.160.1",
     "ws": "^8.21.3",
     "xlsx": "^0.18.5"
   },

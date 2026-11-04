@@ -11,6 +11,7 @@ import SanctionedVessels from './SanctionedVessels'
 import Map, { getVesselCountryName } from './Map'
 import ExportModule from './ExportModule'
 import InvoiceManagement from './InvoiceManagement'
+import TankFarm3D from './TankFarm3D'
 import Chatbot from './Chatbot'
 import { subscribeToBatumiVessels } from '../services/ais'
 import {
@@ -61,6 +62,10 @@ const ROUTE_METADATA = {
   '/invoices': {
     title: 'ინვოისების მართვა | Oil Dashboard',
     description: 'ინვოისებისა და გემების ოპერაციული მონაცემების მართვა.',
+  },
+  '/tank-farm': {
+    title: 'რეზერვუარების 3D დაფა | Oil Dashboard',
+    description: 'ბათუმის ნავთობტერმინალის რეზერვუარების პარკის 3D ვიზუალიზაცია და დონეების მონიტორინგი.',
   },
   '/livemap': {
     title: 'გემების ცოცხალი რუკა | Oil Dashboard',
@@ -211,6 +216,7 @@ const Content = () => {
             <Route path='/export/archived' element={<ExportModule tab='archived'/>}/>
             <Route path='/export/settings' element={<ExportModule tab='settings'/>}/>
             <Route path='/invoices' element={<InvoiceManagement/>}/>
+            <Route path='/tank-farm' element={<TankFarm3D/>}/>
             <Route
               path='/livemap'
               element={(
