@@ -510,7 +510,13 @@ const InvoiceManagement = () => {
     try {
       if (modal.type === 'vessel') await createVessel(values)
       if (modal.type === 'invoice') await createInvoice(selectedVesselId, values)
-      if (modal.type === 'wastage') await createInvoice(selectedVesselId, { ...values, isWastage: true })
+      if (modal.type === 'wastage') {
+        const wastageData = { ...values, isWastage: true }
+        if (wastageData.wastePercent) {
+          wastageData.wastePercent = wastageData.wastePercent.replace(',', '.')
+        }
+        await createInvoice(selectedVesselId, wastageData)
+      }
       if (modal.type === 'edit-invoice') await updateInvoice(modal.invoiceId, values)
       if (modal.type === 'clearance') await createClearance(modal.invoiceId, values)
       setModal(null)
