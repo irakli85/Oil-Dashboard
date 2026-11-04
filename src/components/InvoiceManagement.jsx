@@ -753,7 +753,7 @@ const InvoiceManagement = () => {
                 <label>აქტის № *<input name="num" required placeholder="მაგ: ACT-001" /></label>
                 <label>თარიღი *<input name="date" type="date" required defaultValue={today()} /></label>
                 <label>რაოდენობა (კგ) *<input name="totalQty" type="number" min="0.01" step="0.01" required placeholder="0.00" /></label>
-                <label>ნორმა (%) <input name="wastePercent" type="text" inputMode="decimal" placeholder="0.00" /></label>
+                <label>ბუნებრივი დანაკარგი ნორმა (%) <input name="wastePercent" type="text" inputMode="decimal" placeholder="0.00" /></label>
               </>}
               {modal.type === 'edit-invoice' && selectedInvoice && <>
                 <label>ინვოისის ნომერი *<input name="num" required placeholder="INV-2026-001" defaultValue={selectedInvoice.num} /></label>
@@ -765,7 +765,7 @@ const InvoiceManagement = () => {
                 <label>ჩამოსაწერი რაოდენობა (კგ) *<input name="qty" type="number" min="0.01" step="0.01" max={(selectedInvoice?.totalQty || 0) - sumClearances(selectedInvoice || { clearances: [] })} required placeholder="0.00" /></label>
               </>}
               {formError && <Message $error>{formError}</Message>}
-              <FormActions><Button type="button" disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button type="submit" $tone="green" disabled={saving}>{saving ? 'ინახება...' : modal.type === 'clearance' ? 'ჩამოწერა' : modal.type === 'edit-invoice' ? 'განახლება' : modal.type === 'wastage' ? 'რეგისტრაცია' : 'შენახვა'}</Button></FormActions>
+              <FormActions><Button type="button" disabled={saving} onClick={() => setModal(null)}>გაუქმება</Button><Button type="submit" $tone="green" disabled={saving}>{saving ? 'ინახება...' : modal.type === 'clearance' ? 'ჩამოწერა' : modal.type === 'edit-invoice' ? 'განახლება' : modal.type === 'wastage' ? 'დამატება' : 'შენახვა'}</Button></FormActions>
             </Form>
           </Dialog>
         </Overlay>
