@@ -781,7 +781,7 @@ const InvoiceManagement = () => {
                   {wastagePercent ? (
                     <>
                       <div>ნორმა ({wastagePercent}%) - {number((selectedVessel?.totalQty || 0) * (Number(wastagePercent) / 100))} კგ</div>
-                      <div style={{ fontSize: '1.4rem', color: '#728188' }}>ჩამოწერილი რაოდენობა - {number(sumClearances(selectedInvoice))} კგ</div>
+                      <div style={{ fontSize: '1.4rem', color: '#728188' }}>ჩამოწერილი რაოდენობა - {number(selectedInvoice.totalQty)} კგ</div>
                     </>
                   ) : (
                     'გაანგარიშების შედეგი'
