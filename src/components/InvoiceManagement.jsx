@@ -474,6 +474,7 @@ const InvoiceManagement = () => {
   const [loadError, setLoadError] = useState('')
   const [modal, setModal] = useState(null)
   const [formError, setFormError] = useState('')
+  const [wastagePercent, setWastagePercent] = useState('')
 
   const loadVessels = async () => {
     setLoadError('')
@@ -755,12 +756,34 @@ const InvoiceManagement = () => {
       {modal?.type === 'history' && selectedInvoice && (
         <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget) setModal(null) }}>
           <Dialog $wide role="dialog" aria-modal="true" aria-labelledby="invoice-history-title">
-            <h2 id="invoice-history-title">ჩამოწერების ისტორია</h2><p>ინვოისი № {selectedInvoice.num}</p>
-            <TableWrap><Table style={{ minWidth: '54rem' }}><thead><tr><th>თარიღი/დრო</th><th>საბაჟო დოკუმენტი</th><th>რაოდენობა</th><th aria-label="მოქმედებები" /></tr></thead>
-              <tbody>{selectedInvoice.clearances.length === 0 ? <tr><td colSpan="4"><Empty>ჩამოწერები არ მოიძებნა</Empty></td></tr> : selectedInvoice.clearances.map((clearance) => <tr key={clearance.id}>
-                <td>{new Date(clearance.timestamp).toLocaleString('ka-GE')}</td><td><strong>{clearance.doc}</strong></td><td>{number(clearance.qty)} კგ</td><td><Button $tone="danger" disabled={!isAuthenticated} title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'} onClick={() => removeClearance(clearance.id)}>წაშლა</Button></td>
-              </tr>)}</tbody></Table></TableWrap>
-            <FormActions><Button onClick={() => setModal(null)}>დახურვა</Button></FormActions>
+            <h2 id="invoice-history-title">{selectedInvoice.isWastage ? 'ბუნებრივი დანაკარგი - გაანგარიშება' : 'ჩამოწერების ისტორია'}</h2><p>ინვოისი № {selectedInvoice.num}</p>
+            {selectedInvoice.isWastage ? (
+              <div style={{ padding: '2rem', border: '1px solid #dce7e4', borderRadius: '.8rem', background: '#fafbfa' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
+                  <span style={{ minWidth: '15rem', fontWeight: 700 }}>ნორმა (%) *</span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={wastagePercent}
+                    onChange={(e) => setWastagePercent(e.target.value)}
+                    onFocus={() => setWastagePercent('')}
+                    style={{ flex: 1, padding: '.8rem', fontSize: '1.4rem', border: '1px solid #dce7e4', borderRadius: '.4rem' }}
+                  />
+                </label>
+                <div style={{ fontSize: '1.6rem', fontWeight: 700, color: '#087b58', padding: '1.2rem', background: '#fff', borderRadius: '.4rem', minHeight: '2.8rem', display: 'flex', alignItems: 'center' }}>
+                  {wastagePercent ? `${wastagePercent}% - ${number((selectedVessel?.totalQty || 0) * (Number(wastagePercent) / 100))} კგ` : 'გაანგარიშების შედეგი'}
+                </div>
+              </div>
+            ) : (
+              <TableWrap><Table style={{ minWidth: '54rem' }}><thead><tr><th>თარიღი/დრო</th><th>საბაჟო დოკუმენტი</th><th>რაოდენობა</th><th aria-label="მოქმედებები" /></tr></thead>
+                <tbody>{selectedInvoice.clearances.length === 0 ? <tr><td colSpan="4"><Empty>ჩამოწერები არ მოიძებნა</Empty></td></tr> : selectedInvoice.clearances.map((clearance) => <tr key={clearance.id}>
+                  <td>{new Date(clearance.timestamp).toLocaleString('ka-GE')}</td><td><strong>{clearance.doc}</strong></td><td>{number(clearance.qty)} კგ</td><td><Button $tone="danger" disabled={!isAuthenticated} title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'} onClick={() => removeClearance(clearance.id)}>წაშლა</Button></td>
+                </tr>)}</tbody></Table></TableWrap>
+            )}
+            <FormActions><Button onClick={() => { setWastagePercent(''); setModal(null) }}>დახურვა</Button></FormActions>
           </Dialog>
         </Overlay>
       )}
