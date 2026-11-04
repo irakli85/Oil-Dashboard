@@ -654,7 +654,7 @@ const InvoiceManagement = () => {
                   + ინვოისის დამატება
                 </Button>
                 <Button
-                  $tone="green"
+                  style={{ background: '#d9860f', color: '#fff' }}
                   disabled={!isAuthenticated}
                   title={isAuthenticated ? '' : 'ავტორიზაცია საჭიროა'}
                   onClick={() => openModal('wastage')}
