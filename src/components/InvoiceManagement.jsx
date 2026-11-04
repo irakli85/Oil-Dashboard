@@ -705,7 +705,7 @@ const InvoiceManagement = () => {
                   <td colSpan="3" style={{ textAlign: 'right' }}>სულ ჯამი:</td>
                   <td>{number(sumInvoices(selectedVessel))} კგ</td>
                   <td>{number(selectedVessel.invoices.reduce((sum, invoice) => sum + (invoice.isWastage ? invoice.totalQty : sumClearances(invoice)), 0))} კგ</td>
-                  <td>-</td>
+                  <td />
                   <td colSpan="3" />
                 </tr></tfoot>}
               </Table>
