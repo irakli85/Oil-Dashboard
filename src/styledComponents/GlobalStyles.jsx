@@ -55,44 +55,82 @@ const GlobalStyles = createGlobalStyle`
     background-color: #fff !important;
 }
 
-.vessel-map-label {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.15s ease;
+.vessel-map-icon {
+  overflow: visible !important;
 }
 
-.vessel-map-icon i::before,
-.vessel-map-icon i::after {
+.vessel-map-marker {
   position: absolute;
-  inset: -2px;
-  z-index: 0;
-  border: 1px solid var(--marker-color);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--marker-color);
+  pointer-events: auto;
+}
+
+.vessel-map-marker::before,
+.vessel-map-marker::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--marker-color);
   border-radius: 50%;
   content: '';
+  opacity: 0;
   pointer-events: none;
-  animation: vessel-marker-pulse 2s ease-out infinite;
+  transform: translate(-50%, -50%) scale(0.7);
+  animation: vessel-map-ring-pulse 2s ease-out infinite;
 }
 
-.vessel-map-icon i::after {
+.vessel-map-marker::after {
   animation-delay: 1s;
 }
 
-@keyframes vessel-marker-pulse {
-  from {
-    transform: scale(1);
-    opacity: 0.7;
+.vessel-map-direction {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 24px;
+  height: 22px;
+}
+
+.vessel-map-direction path {
+  fill: var(--marker-color);
+  stroke: #fff;
+  stroke-linejoin: round;
+  stroke-width: 1.25px;
+}
+
+@keyframes vessel-map-ring-pulse {
+  0% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(0.7);
   }
-  to {
-    transform: scale(2.8);
+  100% {
     opacity: 0;
+    transform: translate(-50%, -50%) scale(2.8);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .vessel-map-icon i::before,
-  .vessel-map-icon i::after {
-    animation: none;
-  }
+.vessel-map-label {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 17px);
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: rgba(17, 24, 39, 0.88);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -109,6 +147,15 @@ const GlobalStyles = createGlobalStyle`
 .vessel-map-icon:focus-visible .vessel-map-label {
   opacity: 1;
   visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vessel-map-label,
+  .vessel-map-marker::before,
+  .vessel-map-marker::after {
+    transition: none;
+    animation: none;
+  }
 }
 
 `;
