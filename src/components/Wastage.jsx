@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { Container, H4, Table, Tr, Th, Td, Hr } from './Measurment'
 import DeepDive from '../styledComponents/DeepDive'
 import { WastBtn1, WastBtn2, WastBtn3, WastBtn4, WastBtnCont } from '../styledComponents/StyledComponents';
@@ -31,6 +32,17 @@ const buttonVariants = {
 
 const Wastage = () => {
     const [openRequest, setOpenRequest] = useState({ id: '', sequence: 0 })
+    const [calculatorOpen, setCalculatorOpen] = useState(false)
+    const [quantity, setQuantity] = useState('')
+    const [lossPercent, setLossPercent] = useState('')
+    const quantityValue = Number(quantity)
+    const lossPercentValue = Number(lossPercent)
+    const hasCalculation = quantity !== '' && lossPercent !== '' &&
+        Number.isFinite(quantityValue) && Number.isFinite(lossPercentValue) &&
+        quantityValue >= 0 && lossPercentValue >= 0
+    const maximumLoss = hasCalculation
+        ? (quantityValue * lossPercentValue / 100).toLocaleString('ka-GE', { maximumFractionDigits: 6 })
+        : null
 
     const handleClickScroll = (id) => {
         const section = document.getElementById(id)
@@ -63,6 +75,11 @@ const Wastage = () => {
           description='ნედლი ნავთობისა და ნავთობპროდუქტების ბუნებრივი დანაკარგის მაქსიმალური ზღვრული ნორმები'
           icon={wastageIcon}
         />
+        <CalculatorToolbar>
+            <CalculatorButton type="button" onClick={() => setCalculatorOpen(true)}>
+                კალკულატორი
+            </CalculatorButton>
+        </CalculatorToolbar>
         <WastBtnCont>
             <WastBtn1 onClick={handleClickScroll1}
                 variants={buttonVariants}        
@@ -467,9 +484,189 @@ const Wastage = () => {
             </Table>
         </DeepDive>
 
+        {calculatorOpen && (
+            <CalculatorOverlay
+                role="presentation"
+                onClick={(event) => {
+                    if (event.target === event.currentTarget) setCalculatorOpen(false)
+                }}
+            >
+                <CalculatorDialog
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="wastage-calculator-title"
+                    onKeyDown={(event) => {
+                        if (event.key === 'Escape') setCalculatorOpen(false)
+                    }}
+                >
+                    <CalculatorHeader>
+                        <CalculatorTitle id="wastage-calculator-title">ბუნებრივი დანაკარგის კალკულატორი</CalculatorTitle>
+                        <CalculatorClose type="button" onClick={() => setCalculatorOpen(false)} aria-label="დახურვა">
+                            ×
+                        </CalculatorClose>
+                    </CalculatorHeader>
+                    <CalculatorFields>
+                        <CalculatorLabel>
+                            საქონლის რაოდენობა
+                            <CalculatorInput
+                                type="text"
+                                inputMode="decimal"
+                                value={quantity}
+                                onClick={() => setQuantity('')}
+                                onChange={(event) => setQuantity(event.target.value.replace(/,/g, '.'))}
+                                autoFocus
+                            />
+                        </CalculatorLabel>
+                        <CalculatorLabel>
+                            ბუნებრივი დანაკარგის %
+                            <CalculatorInput
+                                type="text"
+                                inputMode="decimal"
+                                value={lossPercent}
+                                onClick={() => setLossPercent('')}
+                                onChange={(event) => setLossPercent(event.target.value.replace(/,/g, '.'))}
+                            />
+                        </CalculatorLabel>
+                    </CalculatorFields>
+                    <CalculatorResult aria-live="polite">
+                        <span>ბუნებრივი დანაკარგის<br />მაქსიმალური ნორმა</span>
+                        <strong>{hasCalculation ? maximumLoss : ''}</strong>
+                    </CalculatorResult>
+                </CalculatorDialog>
+            </CalculatorOverlay>
+        )}
 
     </Container>
   )
 }
+
+const CalculatorToolbar = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 1.5rem;
+`
+
+const CalculatorButton = styled.button`
+    padding: 1rem 1.8rem;
+    border: 1px solid #5da000;
+    border-radius: 0.8rem;
+    background: linear-gradient(135deg, #5da000 0%, #7bc00b 100%);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: linear-gradient(135deg, #4f8900 0%, #68a609 100%);
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba(12, 124, 89, 0.3);
+        outline-offset: 2px;
+    }
+`
+
+const CalculatorOverlay = styled.div`
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.6rem;
+    background: rgba(15, 23, 42, 0.48);
+`
+
+const CalculatorDialog = styled.div`
+    width: min(100%, 48rem);
+    padding: 2.4rem;
+    border-radius: 1.2rem;
+    background: #fff;
+    box-shadow: 0 2rem 5rem rgba(15, 23, 42, 0.24);
+`
+
+const CalculatorHeader = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.6rem;
+    margin-bottom: 2rem;
+`
+
+const CalculatorTitle = styled.h2`
+    color: #111827;
+    font-size: 2rem;
+    line-height: 1.4;
+`
+
+const CalculatorClose = styled.button`
+    flex: 0 0 auto;
+    padding: 0 0.4rem;
+    background: transparent;
+    color: #64748b;
+    font-size: 2.8rem;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+        color: #111827;
+    }
+`
+
+const CalculatorFields = styled.div`
+    display: grid;
+    gap: 1.6rem;
+`
+
+const CalculatorLabel = styled.label`
+    display: grid;
+    gap: 0.7rem;
+    color: #374151;
+    font-size: 1.4rem;
+    font-weight: 600;
+`
+
+const CalculatorInput = styled.input`
+    width: 100%;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.7rem;
+    color: #111827;
+    font-size: 1.6rem;
+
+    &:focus {
+        outline: 3px solid rgba(12, 124, 89, 0.18);
+        border-color: #0c7c59;
+    }
+`
+
+const CalculatorResult = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    background: #ecfdf5;
+    color: #065f46;
+    font-size: 1.6rem;
+    line-height: 1.5;
+
+    span {
+        font-size: 1.6rem;
+    }
+
+    strong {
+        flex: 0 0 auto;
+        font-size: 2rem;
+    }
+
+    @media (max-width: 480px) {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+`
 
 export default Wastage
