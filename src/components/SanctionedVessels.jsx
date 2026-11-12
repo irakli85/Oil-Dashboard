@@ -291,7 +291,7 @@ const SanctionedVessels = () => {
           </SearchPanel>
 
           <ResultMeta>
-            <span aria-live='polite'>{filteredShips.length} სანქცირებული გემი</span>
+            <span aria-live='polite'>{filteredShips.length} ჩანაწერი</span>
             <ClearButton type='button' onClick={clearVesselSearch}>
               გასუფთავება
             </ClearButton>
@@ -831,7 +831,7 @@ const ResultMeta = styled.div`
   gap: 1.5rem;
   padding: 1rem 0;
   color: #13845f;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 700;
 `
 
