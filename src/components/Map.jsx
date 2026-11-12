@@ -9,6 +9,13 @@ import { useAdminAuth } from './AdminAuthProvider'
 
 const DISMISSED_VESSELS_KEY = 'oil-dashboard-dismissed-vessels'
 const vesselIconCache = new globalThis.Map()
+const VESSEL_DIRECTION_PATH = 'M25 12 3 22 6 12 3 2 25 12Z'
+const VESSEL_TYPE_LEGEND = [
+  { type: 'Tanker', color: '#d92d20' },
+  { type: 'Bulker', color: '#16a34a' },
+  { type: 'Ro-Ro', color: '#2563eb' },
+  { type: 'Container', color: '#f97316' },
+]
 const MID_COUNTRY_CODES = Object.fromEntries(
   Object.entries({
     '🇦🇱': '201',
@@ -513,6 +520,7 @@ function formatVesselType(type) {
   if (code === 0) return 'Other'
   if (code === 1) return 'Livestock Carrier'
   if (code === 60 || code === 69) return 'Ro-Ro'
+  if (code === 76) return 'Container'
   if (code === 70 || code === 79 || code === 90) return 'Bulker'
   if (code === 80 || code === 89) return 'Tanker'
   if (code === 71) return 'Container Carrier'
@@ -525,13 +533,15 @@ function getVesselMarkerColor(type) {
   const code = Number(type)
   if (Number.isFinite(code)) {
     if (code >= 80 && code <= 89) return '#d92d20'
-    if (code === 60) return '#2563eb'
+    if (code === 71 || code === 76) return '#f97316'
+    if (code === 60 || code === 69) return '#2563eb'
     return '#16a34a'
   }
 
   const normalizedType = String(type || '').toLowerCase()
   if (normalizedType.includes('tanker')) return '#d92d20'
   if (normalizedType.includes('ro-ro') || normalizedType.includes('roro')) return '#2563eb'
+  if (normalizedType.includes('container')) return '#f97316'
   return '#16a34a'
 }
 
@@ -558,7 +568,7 @@ function createVesselIcon(shipName, shipType) {
 
   const icon = L.divIcon({
     className: 'vessel-map-icon',
-    html: `<span class="vessel-map-marker" style="--marker-color:${markerColor}"><svg class="vessel-map-direction" viewBox="0 0 26 24" aria-hidden="true"><path d="M25 12 3 22 6 12 3 2 25 12Z"/></svg><b class="vessel-map-label">${escapeHtml(iconName)}</b></span>`,
+    html: `<span class="vessel-map-marker" style="--marker-color:${markerColor}"><svg class="vessel-map-direction" viewBox="0 0 26 24" aria-hidden="true"><path d="${VESSEL_DIRECTION_PATH}"/></svg><b class="vessel-map-label">${escapeHtml(iconName)}</b></span>`,
     iconSize: [32, 32],
     iconAnchor: [16, 16],
   })
@@ -716,6 +726,22 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
 
       <Content>
         <LiveMap center={[41.6494, 41.6594]} zoom={15} scrollWheelZoom>
+          <VesselLegend aria-label="Vessel type legend">
+            <LegendTitle>გემის ტიპები</LegendTitle>
+            {VESSEL_TYPE_LEGEND.map(({ type, color }) => (
+              <LegendItem key={type}>
+                <svg
+                  className="vessel-map-direction"
+                  viewBox="0 0 26 24"
+                  style={{ '--marker-color': color }}
+                  aria-hidden="true"
+                >
+                  <path d={VESSEL_DIRECTION_PATH} />
+                </svg>
+                <span>{type}</span>
+              </LegendItem>
+            ))}
+          </VesselLegend>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -1040,6 +1066,47 @@ const LiveMap = styled(MapContainer)`
 
   && .leaflet-popup-close-button:hover {
     color: #d92d20;
+  }
+`
+
+const VesselLegend = styled.aside`
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: calc(100% - 70px);
+  padding: 9px 11px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+  pointer-events: none;
+
+  .vessel-map-direction {
+    flex: 0 0 22px;
+  }
+`
+
+const LegendTitle = styled.strong`
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.2;
+`
+
+const LegendItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  span {
+    font-size: 14px;
   }
 `
 
