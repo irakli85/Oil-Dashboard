@@ -47,6 +47,17 @@ function handleError(res, error) {
     sendJson(res, 400, { error: 'მნიშვნელობა ცარიელია' })
     return
   }
+  const connectionCodes = ['ETIMEDOUT', 'ECONNREFUSED', 'ECONNRESET', 'ENOTFOUND', 'EHOSTUNREACH']
+  const connectionFailure = (current) => current && (
+    connectionCodes.includes(current.code) ||
+    (Array.isArray(current.errors) && current.errors.some(connectionFailure)) ||
+    connectionFailure(current.cause)
+  )
+  if (connectionFailure(error)) {
+    console.error('[export api database connection]', error)
+    sendJson(res, 503, { error: 'მონაცემთა ბაზასთან კავშირი ვერ ხერხდება. შეამოწმეთ ქსელის კავშირი და Neon-ის მონაცემთა ბაზა.' })
+    return
+  }
   console.error('[export api]', error)
   sendJson(res, 500, { error: 'სერვერის შეცდომა' })
 }

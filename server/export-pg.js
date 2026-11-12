@@ -1,7 +1,8 @@
-import { Pool } from 'pg'
+import { neon } from '@neondatabase/serverless'
+import tls from 'node:tls'
 import { DEFAULT_DROPDOWNS, VALID_CATEGORIES } from './export-memory.js'
 
-let pool = null
+let sql = null
 let initPromise = null
 
 const CREATE_ITEMS_SQL = `
@@ -66,30 +67,50 @@ function rowToItem(row) {
 }
 
 export function createPgStore(connectionString) {
-  async function ensureReady() {
-    if (!pool) {
-      pool = new Pool({ connectionString, max: 3 })
+  function getDatabase() {
+    if (!sql) {
+      if (process.platform === 'win32' && tls.getCACertificates && tls.setDefaultCACertificates) {
+        const systemCertificates = tls.getCACertificates('system')
+        if (systemCertificates.length > 0) {
+          tls.setDefaultCACertificates([...tls.getCACertificates(), ...systemCertificates])
+        }
+      }
+
+      sql = neon(connectionString)
     }
+
+    return {
+      query(statement, parameters = []) {
+        return sql.query(statement, parameters, {
+          fullResults: true,
+          fetchOptions: { signal: AbortSignal.timeout(15000) },
+        })
+      },
+    }
+  }
+
+  async function ensureReady() {
+    const database = getDatabase()
     if (!initPromise) {
       initPromise = (async () => {
-        await pool.query(CREATE_ITEMS_SQL)
-        await pool.query(CREATE_OPTIONS_SQL)
-        await pool.query(CREATE_OPTIONS_META_SQL)
-        await pool.query(SEED_ITEMS_SQL)
-        const { rows: metaRows } = await pool.query(
+        await database.query(CREATE_ITEMS_SQL)
+        await database.query(CREATE_OPTIONS_SQL)
+        await database.query(CREATE_OPTIONS_META_SQL)
+        await database.query(SEED_ITEMS_SQL)
+        const { rows: metaRows } = await database.query(
           'SELECT id FROM export_options_meta WHERE id = 1 LIMIT 1'
         )
         if (metaRows.length === 0) {
-          const { rows: optionRows } = await pool.query(
+          const { rows: optionRows } = await database.query(
             'SELECT 1 FROM export_options LIMIT 1'
           )
-          await pool.query(
+          await database.query(
             'INSERT INTO export_options_meta (id) VALUES (1) ON CONFLICT (id) DO NOTHING'
           )
           if (optionRows.length === 0) {
             for (const category of VALID_CATEGORIES) {
               for (const value of DEFAULT_DROPDOWNS[category]) {
-                await pool.query(
+                await database.query(
                   'INSERT INTO export_options (category, value) VALUES ($1, $2) ON CONFLICT (category, value) DO NOTHING',
                   [category, value]
                 )
@@ -97,7 +118,10 @@ export function createPgStore(connectionString) {
             }
           }
         }
-      })()
+      })().catch((error) => {
+        initPromise = null
+        throw error
+      })
     }
     await initPromise
   }
@@ -105,7 +129,7 @@ export function createPgStore(connectionString) {
   return {
     async getItems() {
       await ensureReady()
-      const { rows } = await pool.query(
+      const { rows } = await getDatabase().query(
         'SELECT * FROM export_items ORDER BY created_at ASC, id ASC'
       )
       return rows.map(rowToItem)
@@ -113,7 +137,7 @@ export function createPgStore(connectionString) {
 
     async createItem(data) {
       await ensureReady()
-      const { rows } = await pool.query(
+      const { rows } = await getDatabase().query(
         `INSERT INTO export_items (
           exporter, declarant, goods, code, reg_date, declaration_num, days, exp_date, weight, status, ship_name, departure_date, note
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
@@ -139,7 +163,7 @@ export function createPgStore(connectionString) {
 
     async updateItem(id, patch) {
       await ensureReady()
-      const { rows } = await pool.query(
+      const { rows } = await getDatabase().query(
         `UPDATE export_items
          SET status = COALESCE($2, status),
              ship_name = COALESCE($3, ship_name),
@@ -159,7 +183,7 @@ export function createPgStore(connectionString) {
 
     async getOptions() {
       await ensureReady()
-      const { rows } = await pool.query(
+      const { rows } = await getDatabase().query(
         'SELECT category, value FROM export_options ORDER BY id ASC'
       )
       const options = { exporters: [], declarants: [], goods: [] }
@@ -184,11 +208,11 @@ export function createPgStore(connectionString) {
         error.code = 'EMPTY_VALUE'
         throw error
       }
-      await pool.query(
+      await getDatabase().query(
         'INSERT INTO export_options (category, value) VALUES ($1, $2) ON CONFLICT (category, value) DO NOTHING',
         [category, trimmed]
       )
-      const { rows } = await pool.query(
+      const { rows } = await getDatabase().query(
         'SELECT value FROM export_options WHERE category = $1 ORDER BY id ASC',
         [category]
       )
@@ -202,11 +226,11 @@ export function createPgStore(connectionString) {
         error.code = 'INVALID_CATEGORY'
         throw error
       }
-      await pool.query(
+      await getDatabase().query(
         'DELETE FROM export_options WHERE category = $1 AND value = $2',
         [category, value]
       )
-      const { rows } = await pool.query(
+      const { rows } = await getDatabase().query(
         'SELECT value FROM export_options WHERE category = $1 ORDER BY id ASC',
         [category]
       )

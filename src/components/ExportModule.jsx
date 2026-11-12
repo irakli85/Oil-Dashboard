@@ -103,8 +103,8 @@ const ExportModule = ({ tab = 'active' }) => {
       ])
       setItems(itemsData)
       setDropdowns(optionsData)
-    } catch {
-      setLoadError('მონაცემების ჩატვირთვა ვერ მოხერხდა. შეამოწმეთ, რომ სერვერი გაშვებულია (npm run dev).')
+    } catch (error) {
+      setLoadError(error?.serverMessage || 'მონაცემების ჩატვირთვა ვერ მოხერხდა.')
     } finally {
       setIsLoading(false)
     }
