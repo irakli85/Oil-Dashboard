@@ -874,7 +874,7 @@ const VesselCard = styled.div`
     gap: 4px;
     padding: 8px 0;
 
-    img {
+    > img {
       width: 18px;
       height: 18px;
       flex-basis: 18px;
@@ -893,9 +893,9 @@ const VesselCard = styled.div`
 const CountryFlag = styled.img`
   width: 16px;
   height: 11px;
-  flex: 0 0 16px;
+  flex: 0 0 auto;
   margin-right: 5px;
-  object-fit: cover;
+  object-fit: contain;
   vertical-align: middle;
 `
 
