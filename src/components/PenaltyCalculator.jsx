@@ -43,126 +43,132 @@ const PenaltyCalculator = () => {
         icon={calculatorIcon}
       />
 
-      <Card>
-        <CardHeading>
-          <CalculatorBadge aria-hidden='true'>
-            <CalculatorIcon />
-          </CalculatorBadge>
-          <div>
-            <CardTitle>საწყისი მონაცემები</CardTitle>
-          </div>
-        </CardHeading>
+      <Content>
+        <Card>
+          <CardHeading>
+            <CalculatorBadge aria-hidden='true'>
+              <CalculatorIcon />
+            </CalculatorBadge>
+            <div>
+              <CardTitle>საწყისი მონაცემები</CardTitle>
+            </div>
+          </CardHeading>
 
-        <Fields>
-          <Field>
-            <Label htmlFor='penalty-quantity'>
-              <span>საქონლის რაოდენობა</span>
-              <Unit>კილოგრამი</Unit>
-            </Label>
-            <Input
-              id='penalty-quantity'
-              name='quantity'
-              type='number'
-              min='0'
-              step='any'
-              inputMode='decimal'
-              placeholder='მაგ. 1000'
-              value={values.quantity}
-              onChange={updateValue}
-            />
-          </Field>
-          <Field>
-            <Label htmlFor='penalty-customs-value'>
-              <span>საქონლის საბაჟო ღირებულება</span>
-              <Unit>ლარი</Unit>
-            </Label>
-            <Input
-              id='penalty-customs-value'
-              name='customsValue'
-              type='number'
-              min='0'
-              step='any'
-              inputMode='decimal'
-              placeholder='მაგ. 1000'
-              value={values.customsValue}
-              onChange={updateValue}
-            />
-          </Field>
-          <Field>
-            <Label htmlFor='penalty-excise-rate'>
-              <span>აქციზის განაკვეთი</span>
-              <Unit>ლარი / ტონა</Unit>
-            </Label>
-            <Input
-              id='penalty-excise-rate'
-              name='exciseRate'
-              type='number'
-              min='0'
-              step='any'
-              inputMode='decimal'
-              placeholder='მაგ. 500'
-              value={values.exciseRate}
-              onChange={updateValue}
-            />
-          </Field>
-          <ClearButton
-            type='button'
-            onClick={() => setValues({ ...initialValues })}
-            aria-label='მონაცემების გასუფთავება'
-            title='მონაცემების გასუფთავება'
-          >
-            <ClearIcon aria-hidden='true' />
-            მონაცემების გასუფთავება
-          </ClearButton>
-        </Fields>
-      </Card>
+          <Fields>
+            <Field>
+              <Label htmlFor='penalty-quantity'>
+                <span>საქონლის რაოდენობა</span>
+                <Unit>კილოგრამი</Unit>
+              </Label>
+              <Input
+                id='penalty-quantity'
+                name='quantity'
+                type='number'
+                min='0'
+                step='any'
+                inputMode='decimal'
+                placeholder='მაგ. 1000'
+                value={values.quantity}
+                onChange={updateValue}
+              />
+            </Field>
+            <Field>
+              <Label htmlFor='penalty-customs-value'>
+                <span>საქონლის საბაჟო ღირებულება</span>
+                <Unit>ლარი</Unit>
+              </Label>
+              <Input
+                id='penalty-customs-value'
+                name='customsValue'
+                type='number'
+                min='0'
+                step='any'
+                inputMode='decimal'
+                placeholder='მაგ. 1000'
+                value={values.customsValue}
+                onChange={updateValue}
+              />
+            </Field>
+            <Field>
+              <Label htmlFor='penalty-excise-rate'>
+                <span>აქციზის განაკვეთი</span>
+                <Unit>ლარი / ტონა</Unit>
+              </Label>
+              <Input
+                id='penalty-excise-rate'
+                name='exciseRate'
+                type='number'
+                min='0'
+                step='any'
+                inputMode='decimal'
+                placeholder='მაგ. 500'
+                value={values.exciseRate}
+                onChange={updateValue}
+              />
+            </Field>
+            <ClearButton
+              type='button'
+              onClick={() => setValues({ ...initialValues })}
+              aria-label='მონაცემების გასუფთავება'
+              title='მონაცემების გასუფთავება'
+            >
+              <ClearIcon aria-hidden='true' />
+              მონაცემების გასუფთავება
+            </ClearButton>
+          </Fields>
+        </Card>
 
-      <Card>
-        <ResultsTitle>გამოთვლის შედეგები</ResultsTitle>
-        <ResultList>
-          <ResultRow>
-            <Step>1</Step>
-            <ResultDetails>
-              <ResultLabel>აქციზის გადასახადი</ResultLabel>
-              {hasExciseInputs && (
-                <Formula>
-                  {formatNumber(quantity)} კგ × ({formatCurrency(exciseRate)} / 1,000 კგ) = {formatCurrency(excise)}
-                </Formula>
-              )}
-            </ResultDetails>
-            <ResultAmount>{hasExciseInputs ? formatCurrency(excise) : '—'}</ResultAmount>
-          </ResultRow>
-          <ResultRow>
-            <Step>2</Step>
-            <ResultDetails>
-              <ResultLabel>დღგ (18%)</ResultLabel>
-              {hasAllInputs && (
-                <Formula>
-                  ({formatCurrency(customsValue)} + {formatCurrency(excise)}) × 18%
-                </Formula>
-              )}
-            </ResultDetails>
-            <ResultAmount>{hasAllInputs ? formatCurrency(vat) : '—'}</ResultAmount>
-          </ResultRow>
-          <ResultRow $total>
-            <Step>3</Step>
-            <ResultDetails>
-              <ResultLabel>ჯარიმის თანხა</ResultLabel>
-              {hasAllInputs && <Formula>{formatCurrency(excise)} + {formatCurrency(vat)}</Formula>}
-            </ResultDetails>
-            <ResultAmount $total>{hasAllInputs ? formatCurrency(total) : '—'}</ResultAmount>
-          </ResultRow>
-        </ResultList>
-      </Card>
+        <Card>
+          <ResultsTitle>გამოთვლის შედეგები</ResultsTitle>
+          <ResultList>
+            <ResultRow>
+              <Step>1</Step>
+              <ResultDetails>
+                <ResultLabel>აქციზის გადასახადი</ResultLabel>
+                {hasExciseInputs && (
+                  <Formula>
+                    {formatNumber(quantity)} კგ × ({formatCurrency(exciseRate)} / 1,000 კგ) = {formatCurrency(excise)}
+                  </Formula>
+                )}
+              </ResultDetails>
+              <ResultAmount>{hasExciseInputs ? formatCurrency(excise) : '—'}</ResultAmount>
+            </ResultRow>
+            <ResultRow>
+              <Step>2</Step>
+              <ResultDetails>
+                <ResultLabel>დღგ (18%)</ResultLabel>
+                {hasAllInputs && (
+                  <Formula>
+                    ({formatCurrency(customsValue)} + {formatCurrency(excise)}) × 18%
+                  </Formula>
+                )}
+              </ResultDetails>
+              <ResultAmount>{hasAllInputs ? formatCurrency(vat) : '—'}</ResultAmount>
+            </ResultRow>
+            <ResultRow $total>
+              <Step>3</Step>
+              <ResultDetails>
+                <ResultLabel>ჯარიმის თანხა</ResultLabel>
+                {hasAllInputs && <Formula>{formatCurrency(excise)} + {formatCurrency(vat)}</Formula>}
+              </ResultDetails>
+              <ResultAmount $total>{hasAllInputs ? formatCurrency(total) : '—'}</ResultAmount>
+            </ResultRow>
+          </ResultList>
+        </Card>
+      </Content>
     </Page>
   )
 }
 
 const Page = styled.div`
   width: 100%;
+  color: #273142;
+`
+
+const Content = styled.div`
+  width: 100%;
   max-width: 88rem;
   margin-inline: auto;
-  color: #273142;
 `
 
 const Card = styled.section`

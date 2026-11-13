@@ -17,6 +17,7 @@ export const AsideSty = styled.div`
         min-width: 0;
         border-radius: 1.5rem 1.5rem 0 0;
     }
+
 `
 
 export const ContentSty = styled.div`
@@ -30,6 +31,7 @@ export const ContentSty = styled.div`
         width: 100%;
         border-radius: 0 0 1.5rem 1.5rem;
     }
+
 `
 
 export const MainSty = styled.main`
@@ -105,6 +107,7 @@ export const HeadDivSty = styled.header`
         padding: 2rem 1.5rem;
         justify-content: center;
     }
+
 `
 
 export const HeadPsty = styled.p`
