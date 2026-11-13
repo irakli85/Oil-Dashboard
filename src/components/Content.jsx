@@ -11,6 +11,7 @@ import SanctionedVessels from './SanctionedVessels'
 import Map, { getVesselCountryName } from './Map'
 import ExportModule from './ExportModule'
 import InvoiceManagement from './InvoiceManagement'
+import PenaltyCalculator from './PenaltyCalculator'
 import TankFarm3D from './TankFarm3D'
 import Chatbot from './Chatbot'
 import { subscribeToBatumiVessels } from '../services/ais'
@@ -34,6 +35,10 @@ const ROUTE_METADATA = {
   '/oilprice': {
     title: 'ნავთობპროდუქტების ფასები | Oil Dashboard',
     description: 'ნავთობპროდუქტების ფასების კონტროლი და მაქსიმალური ფასები კოდების მიხედვით.',
+  },
+  '/penalty-calculator': {
+    title: 'ჯარიმის კალკულატორი | Oil Dashboard',
+    description: 'საბაჟო ღირებულების, აქციზისა და დღგ-ის გამოთვლა.',
   },
   '/docs': {
     title: 'დოკუმენტები | Oil Dashboard',
@@ -209,6 +214,7 @@ const Content = () => {
             <Route path='/' element={<Measurment/>}/>
             <Route path='/wastage' element={<Wastage/>}/>
             <Route path='/oilprice' element={<OilPrice/>}/>
+            <Route path='/penalty-calculator' element={<PenaltyCalculator/>}/>
             <Route path='/docs' element={<Docs/>}/>
             <Route path='/terminals' element={<Terminals/>}/>
             <Route path='/sanctioned-vessels' element={<SanctionedVessels/>}/>

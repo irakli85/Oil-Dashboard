@@ -125,6 +125,20 @@ const ExportNavIcon = styled(motion.span)`
   -webkit-mask: url(${exportIcon}) center / contain no-repeat;
 `
 
+const CalculatorNavIcon = styled.span`
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: 0 0 auto;
+  place-items: center;
+  color: ${({ $isActive }) => ($isActive ? '#1aac83' : '#737791')};
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`
+
 const ExportNavHeader = styled.div`
   display: flex;
   gap: 2.4rem;
@@ -167,6 +181,7 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
   const isClicked9 = pathname === '/export/archived'
   const isClicked10 = pathname === '/export/settings'
   const isClicked11 = pathname === '/invoices'
+  const isPenaltyCalculator = pathname === '/penalty-calculator'
   const [isExportOpen, setIsExportOpen] = useState(pathname.startsWith('/export'))
 
     const closeMenu = () => {
@@ -213,6 +228,18 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                     <SvgPrice isClicked={isClicked3}/>
                 <NavP text='ფასების კონტროლი' isClicked={isClicked3}/>
                 </LinkSty>
+            </motion.div>
+
+            <motion.div variants={childrenVariants}>
+              <LinkSty to='/penalty-calculator' onClick={closeMenu}>
+                <CalculatorNavIcon $isActive={isPenaltyCalculator} aria-hidden='true'>
+                  <svg viewBox='0 0 24 24' fill='none'>
+                    <rect x='5' y='3' width='14' height='18' rx='2' stroke='currentColor' strokeWidth='1.8' />
+                    <path d='M8 7h8M8 11h2m4 0h2m-8 4h2m4 0h2m-8 3h2m4 0h2' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' />
+                  </svg>
+                </CalculatorNavIcon>
+                <NavP text='ჯარიმის კალკულატორი' isClicked={isPenaltyCalculator}/>
+              </LinkSty>
             </motion.div>
 
             <motion.div variants={childrenVariants}>
