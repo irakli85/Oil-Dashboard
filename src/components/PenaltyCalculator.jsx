@@ -105,6 +105,15 @@ const PenaltyCalculator = () => {
               onChange={updateValue}
             />
           </Field>
+          <ClearButton
+            type='button'
+            onClick={() => setValues({ ...initialValues })}
+            aria-label='მონაცემების გასუფთავება'
+            title='მონაცემების გასუფთავება'
+          >
+            <ClearIcon aria-hidden='true' />
+            მონაცემების გასუფთავება
+          </ClearButton>
         </Fields>
       </Card>
 
@@ -151,6 +160,8 @@ const PenaltyCalculator = () => {
 
 const Page = styled.div`
   width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
   color: #273142;
 `
 
@@ -173,6 +184,48 @@ const CardHeading = styled.div`
   gap: 1.2rem;
   margin-bottom: 2rem;
 `
+
+const ClearButton = styled.button`
+  display: inline-flex;
+  min-height: 4.4rem;
+  justify-self: start;
+  align-self: end;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0 1.4rem;
+  border: 1px solid #278568;
+  border-radius: 0.8rem;
+  background: #e8f4ef;
+  color: #17684f;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    border-color: #dfe8e4;
+    background: #fff;
+    color: #53645d;
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(39, 133, 104, 0.25);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 0.8rem;
+    font-size: 1.1rem;
+  }
+`
+
+const ClearIcon = ({ ...props }) => (
+  <svg width='18' height='18' viewBox='0 0 24 24' fill='none' {...props}>
+    <path d='m3.5 14.5 8-8a2 2 0 0 1 2.8 0l6.2 6.2a2 2 0 0 1 0 2.8l-4.1 4.1H8.2l-4.7-4.7a.3.3 0 0 1 0-.4Z' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round' />
+    <path d='m9.2 8.8 6.1 6.1' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' />
+  </svg>
+)
 
 const CalculatorBadge = styled.span`
   display: grid;
@@ -231,6 +284,8 @@ const Unit = styled.span`
 `
 
 const Input = styled.input`
+  min-width: 0;
+  flex: 1;
   width: 100%;
   min-height: 4rem;
   padding: 0 1.2rem;
