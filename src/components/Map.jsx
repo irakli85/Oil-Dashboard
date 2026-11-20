@@ -15,6 +15,10 @@ const VESSEL_TYPE_LEGEND = [
   { type: 'Bulker', color: '#16a34a' },
   { type: 'Ro-Ro', color: '#2563eb' },
   { type: 'Container', color: '#f97316' },
+  { type: 'Live Stoke', color: '#BF83FF' },
+]
+const VESSEL_TYPE_OVERRIDES = [
+  { shipName: 'GAMMA STAR', imo: '7703259', type: 'Live Stoke' },
 ]
 const MID_COUNTRY_CODES = Object.fromEntries(
   Object.entries({
@@ -510,15 +514,26 @@ function hasVesselType(type) {
   return type !== null && type !== undefined && type !== ''
 }
 
+function getVesselType(vessel) {
+  const shipName = normalizeVesselName(vessel?.shipName)
+  const imo = String(vessel?.imo ?? '').trim()
+  const override = VESSEL_TYPE_OVERRIDES.find((entry) =>
+    shipName === entry.shipName || (imo && imo === entry.imo)
+  )
+
+  return override?.type ?? vessel?.shipType
+}
+
 function formatVesselType(type) {
   const stringType = String(type || '').trim()
   if (stringType.toLowerCase() === 'cargo - hazardous category 1') return 'Container Carrier'
   if (/^tanker\s*-\s*hazardous category\s*\d+$/i.test(stringType)) return 'Tanker'
+  if (/^livestock(?: carrier)?$/i.test(stringType)) return 'Live Stoke'
 
   const code = Number(stringType)
   if (!Number.isFinite(code)) return stringType
   if (code === 0) return 'Other'
-  if (code === 1) return 'Livestock Carrier'
+  if (code === 1) return 'Live Stoke'
   if (code === 60 || code === 69) return 'Ro-Ro'
   if (code === 76) return 'Container'
   if (code === 70 || code === 79 || code === 90) return 'Bulker'
@@ -532,6 +547,7 @@ function formatVesselType(type) {
 function getVesselMarkerColor(type) {
   const code = Number(type)
   if (Number.isFinite(code)) {
+    if (code === 1) return '#BF83FF'
     if (code >= 80 && code <= 89) return '#d92d20'
     if (code === 71 || code === 76) return '#f97316'
     if (code === 60 || code === 69) return '#2563eb'
@@ -539,6 +555,7 @@ function getVesselMarkerColor(type) {
   }
 
   const normalizedType = String(type || '').toLowerCase()
+  if (normalizedType.includes('live stoke') || normalizedType.includes('livestock')) return '#BF83FF'
   if (normalizedType.includes('tanker')) return '#d92d20'
   if (normalizedType.includes('ro-ro') || normalizedType.includes('roro')) return '#2563eb'
   if (normalizedType.includes('container')) return '#f97316'
@@ -706,7 +723,7 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
                 </strong>
                 {getVesselImo(vessel) && <p>IMO: {getVesselImo(vessel)}</p>}
                 <p>Distance: {vessel.distanceKm ?? 'N/A'} km</p>
-                {hasVesselType(vessel.shipType) && <p>Type: {formatVesselType(vessel.shipType)}</p>}
+                {hasVesselType(getVesselType(vessel)) && <p>Type: {formatVesselType(getVesselType(vessel))}</p>}
               </div>
               {isAuthenticated && (
                 <RemoveButton
@@ -768,7 +785,7 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
             <LeafletMarker
               key={getVesselKey(vessel)}
               position={[vessel.latitude, vessel.longitude]}
-              icon={createVesselIcon(vessel.shipName, vessel.shipType)}
+              icon={createVesselIcon(vessel.shipName, getVesselType(vessel))}
             >
               <Popup>
                 <strong>{vessel.shipName}</strong>
@@ -776,7 +793,7 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
                 {getVesselCountryName(vessel.mmsi) && <>Flag state: {getVesselCountryName(vessel.mmsi)}<br /></>}
                 {getVesselImo(vessel) && <>IMO: {getVesselImo(vessel)}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
-                {hasVesselType(vessel.shipType) && <><br />Type: {formatVesselType(vessel.shipType)}</>}
+                {hasVesselType(getVesselType(vessel)) && <><br />Type: {formatVesselType(getVesselType(vessel))}</>}
               </Popup>
             </LeafletMarker>
           ))}
