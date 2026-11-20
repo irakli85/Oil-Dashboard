@@ -19,6 +19,7 @@ const VESSEL_TYPE_LEGEND = [
 ]
 const VESSEL_TYPE_OVERRIDES = [
   { shipName: 'GAMMA STAR', imo: '7703259', type: 'Live Stoke' },
+  { shipName: 'SIDRA', imo: '7607429', type: 'Live Stoke' },
 ]
 const MID_COUNTRY_CODES = Object.fromEntries(
   Object.entries({
