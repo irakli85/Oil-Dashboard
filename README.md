@@ -13,3 +13,7 @@ Currently, two official plugins are available:
 - **Map tiles — OpenStreetMap:** [OpenStreetMap](https://www.openstreetmap.org/) provides the map data, delivered as tiles from `tile.openstreetmap.org`. Map data is maintained by the OpenStreetMap community.
 - **Distance to Batumi Port:** calculated by the app from the vessel coordinates and the port coordinates; it is not a separate AISstream field.
 
+## Tests
+
+The `/tests` page contains the searchable question bank in `src/data/quizData.js`. It supports category and answer filters, keyboard search shortcuts, and printing the current results.
+

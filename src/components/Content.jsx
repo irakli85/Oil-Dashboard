@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import { ContentDivSty, ContentSty } from '../styledComponents/StyledComponents'
 import Header from './Header'
 import { Route, Routes, useLocation } from 'react-router-dom'
@@ -22,6 +22,8 @@ import {
   markNotificationSeen as markNotificationSeenRequest,
 } from '../services/notificationsApi'
 
+const Tests = lazy(() => import('./Tests'))
+
 const SITE_URL = 'https://oil-dashboard.vercel.app'
 const ROUTE_METADATA = {
   '/': {
@@ -43,6 +45,10 @@ const ROUTE_METADATA = {
   '/docs': {
     title: 'დოკუმენტები | Oil Dashboard',
     description: 'ბათუმის ნავთობტერმინალის ოპერაციებთან დაკავშირებული დოკუმენტები და ცნობარები.',
+  },
+  '/tests': {
+    title: 'ტესტები | Oil Dashboard',
+    description: 'შრომის, პერსონალურ მონაცემთა და ინფორმაციული უსაფრთხოების კითხვებისა და პასუხების საძიებო ბაზა.',
   },
   '/terminals': {
     title: 'საბაჟო საწყობები და ტერმინალები | Oil Dashboard',
@@ -216,6 +222,7 @@ const Content = () => {
             <Route path='/oilprice' element={<OilPrice/>}/>
             <Route path='/penalty-calculator' element={<PenaltyCalculator/>}/>
             <Route path='/docs' element={<Docs/>}/>
+            <Route path='/tests' element={<Suspense fallback={<div>იტვირთება...</div>}><Tests/></Suspense>}/>
             <Route path='/terminals' element={<Terminals/>}/>
             <Route path='/sanctioned-vessels' element={<SanctionedVessels/>}/>
             <Route path='/export' element={<ExportModule tab='active'/>}/>

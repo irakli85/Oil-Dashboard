@@ -182,6 +182,7 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
   const isClicked10 = pathname === '/export/settings'
   const isClicked11 = pathname === '/invoices'
   const isPenaltyCalculator = pathname === '/penalty-calculator'
+  const isTests = pathname === '/tests'
   const [isExportOpen, setIsExportOpen] = useState(pathname.startsWith('/export'))
 
     const closeMenu = () => {
@@ -247,6 +248,17 @@ const Navigation = ({ isMenuOpen = true, onLinkClick }) => {
                     <SvgDocs isClicked={isClicked4}/>
                 <NavP text='დოკუმენტები' isClicked={isClicked4}/>
                 </LinkSty>
+            </motion.div>
+
+            <motion.div variants={childrenVariants}>
+              <LinkSty to='/tests' onClick={closeMenu}>
+                <CalculatorNavIcon $isActive={isTests} aria-hidden='true'>
+                  <svg viewBox='0 0 24 24' fill='none'>
+                    <path d='M9 12h6m-6 4h6M7 3h6l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round' />
+                  </svg>
+                </CalculatorNavIcon>
+                <NavP text='ტესტები' isClicked={isTests}/>
+              </LinkSty>
             </motion.div>
 
             <motion.div variants={childrenVariants}>
