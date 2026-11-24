@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import quizData from '../data/quizData'
+import testsIcon from '../assets/tests.svg'
+import CategoryHeader from './CategoryHeader'
 import './Tests.css'
 
 const categories = [
@@ -64,27 +66,23 @@ function Tests() {
 
   return (
     <section className='tests-page' aria-labelledby='tests-title'>
-      <header className='tests-controls'>
-        <div className='tests-heading'>
-          <div className='tests-heading-title'>
-            <span className='tests-title-icon' aria-hidden='true'>
-              <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
-                <path strokeLinecap='round' strokeLinejoin='round' d='M9 12h6m-6 4h6M7 3h6l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z' />
+      <div className='tests-page-heading'>
+        <CategoryHeader
+          title='ტესტების საძიებო ბაზა'
+          titleId='tests-title'
+          description='შრომის უსაფრთხოება • პერსონალურ მონაცემთა დაცვა • ინფორმაციული უსაფრთხოება (RS)'
+          icon={testsIcon}
+          action={(
+            <button type='button' className='tests-print' onClick={() => window.print()}>
+              <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' aria-hidden='true'>
+                <path strokeLinecap='round' strokeLinejoin='round' d='M17 17h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2m2 4h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2Zm8-12V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v4h10Z' />
               </svg>
-            </span>
-            <div>
-              <h1 id='tests-title'>ტესტების საძიებო ბაზა</h1>
-              <p>შრომის უსაფრთხოება • პერსონალურ მონაცემთა დაცვა • ინფორმაციული უსაფრთხოება (RS)</p>
-            </div>
-          </div>
-          <button type='button' className='tests-print' onClick={() => window.print()}>
-            <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' aria-hidden='true'>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M17 17h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2m2 4h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2Zm8-12V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v4h10Z' />
-            </svg>
-            ბეჭდვა
-          </button>
-        </div>
-
+              ბეჭდვა
+            </button>
+          )}
+        />
+      </div>
+      <header className='tests-controls'>
         <div className='tests-search'>
           <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' aria-hidden='true'>
             <path strokeLinecap='round' strokeLinejoin='round' d='m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z' />

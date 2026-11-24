@@ -1,21 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const CategoryHeader = ({ title, description, icon, preserveIconColors = false }) => (
-  <Header>
+const CategoryHeader = ({ title, titleId, description, icon, preserveIconColors = false, action }) => (
+  <Header $hasAction={Boolean(action)}>
     <IconFrame aria-hidden='true'>
       <Icon src={icon} alt='' $preserveColors={preserveIconColors} />
     </IconFrame>
-    <HeaderText>
-      <Title>{title}</Title>
+    <HeaderText $hasAction={Boolean(action)}>
+      <Title id={titleId}>{title}</Title>
       {description && <Description>{description}</Description>}
     </HeaderText>
+    {action}
   </Header>
 )
 
 const Header = styled.header`
   display: flex;
   align-items: center;
+  flex-wrap: ${({ $hasAction }) => $hasAction ? 'wrap' : 'nowrap'};
   gap: 2rem;
   width: 100%;
   min-height: 13rem;
@@ -65,6 +67,7 @@ const Icon = styled.img`
 
 const HeaderText = styled.div`
   min-width: 0;
+  flex: ${({ $hasAction }) => $hasAction ? '1 1 20rem' : '0 1 auto'};
 `
 
 const Title = styled.h1`

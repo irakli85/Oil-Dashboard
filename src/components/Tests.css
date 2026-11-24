@@ -35,8 +35,6 @@
   box-shadow: 0 1px 3px rgba(15, 23, 42, .08);
 }
 
-.tests-heading,
-.tests-heading-title,
 .tests-search,
 .tests-filter-row,
 .tests-card-meta {
@@ -44,30 +42,6 @@
   align-items: center;
   gap: 12px;
 }
-
-.tests-heading {
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.tests-heading-title {
-  min-width: 0;
-}
-.tests-heading-title > div { min-width: 0; }
-
-.tests-title-icon {
-  display: grid;
-  flex: 0 0 40px;
-  height: 40px;
-  place-items: center;
-  color: #fff;
-  background: #4f46e5;
-  border-radius: 12px;
-}
-
-.tests-title-icon svg { width: 24px; height: 24px; }
-.tests-heading h1 { font-size: 20px; font-weight: 700; line-height: 1.4; }
-.tests-heading p { font-size: 12px; color: #64748b; line-height: 1.5; }
 
 .tests-print,
 .tests-search button {
@@ -164,7 +138,6 @@
 
 @media (max-width: 600px) {
   .tests-controls, .tests-feed { padding-left: 16px; padding-right: 16px; }
-  .tests-heading h1 { font-size: 16px; }
   .tests-card { padding: 20px; }
   .tests-card h2 { font-size: 16px; }
   .tests-option { flex-wrap: wrap; }
@@ -179,7 +152,7 @@
   body:has(.tests-page) #root > main > :not(:nth-child(2)),
   body:has(.tests-page) #root > footer,
   body:has(.tests-page) #root > main > :nth-child(2) > :not(:has(.tests-page)),
-  .tests-controls, .tests-footer { display: none !important; }
+  .tests-page-heading, .tests-controls, .tests-footer { display: none !important; }
   body:has(.tests-page) #root > main > :nth-child(2),
   body:has(.tests-page) #root > main > :nth-child(2) > :has(.tests-page) { padding: 0; background: #fff; }
   .tests-page { max-width: none; overflow: visible; background: #fff; }
