@@ -98,7 +98,7 @@ function Tests() {
         <div className='tests-categories' aria-label='კატეგორიები'>
           {categories.map((item) => (
             <button type='button' key={item.id} aria-pressed={category === item.id}
-              className={category === item.id ? 'tests-category-selected' : ''}
+              className={`tests-badge-${item.id}${category === item.id ? ' tests-category-selected' : ''}`}
               onClick={() => setCategory(item.id)}>
               {item.label} <span>({item.id === 'all' ? quizData.length : quizData.filter((question) => question.category === item.id).length})</span>
             </button>
