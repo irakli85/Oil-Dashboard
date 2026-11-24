@@ -1,8 +1,12 @@
 .tests-page {
+  width: 100%;
+  color: #0f172a;
+}
+
+.tests-content {
   max-width: 1024px;
   margin: 0 auto;
   background: #f8fafc;
-  color: #0f172a;
   border-radius: 16px;
   overflow: clip;
 }
@@ -155,7 +159,7 @@
   .tests-page-heading, .tests-controls, .tests-footer { display: none !important; }
   body:has(.tests-page) #root > main > :nth-child(2),
   body:has(.tests-page) #root > main > :nth-child(2) > :has(.tests-page) { padding: 0; background: #fff; }
-  .tests-page { max-width: none; overflow: visible; background: #fff; }
+  .tests-content { max-width: none; overflow: visible; background: #fff; }
   .tests-feed { display: block; padding: 0; }
   .tests-card { break-inside: avoid; margin-bottom: 16px; border-color: #cbd5e1; box-shadow: none; }
 }

@@ -82,6 +82,7 @@ function Tests() {
           )}
         />
       </div>
+      <div className='tests-content'>
       <header className='tests-controls'>
         <div className='tests-search'>
           <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' aria-hidden='true'>
@@ -145,6 +146,7 @@ function Tests() {
         <span>სრული საძიებო კითხვარი: შრომის უსაფრთხოება (30) • პერსონალურ მონაცემთა დაცვა (50) • ინფორმაციული უსაფრთხოება (70)</span>
         <span>სულ: {quizData.length} კითხვა</span>
       </footer>
+      </div>
     </section>
   )
 }
