@@ -21,6 +21,9 @@ const VESSEL_TYPE_OVERRIDES = [
   { shipName: 'GAMMA STAR', imo: '7703259', type: 'Live Stoke' },
   { shipName: 'SIDRA', imo: '7607429', type: 'Live Stoke' },
 ]
+const VESSEL_FLAG_OVERRIDES = [
+  { imo: '9355135', countryCode: 'pa' },
+]
 const MID_COUNTRY_CODES = Object.fromEntries(
   Object.entries({
     '🇦🇱': '201',
@@ -492,6 +495,16 @@ function getVesselCountryCode(mmsi) {
   return /^\d{3}$/.test(mid) ? MID_COUNTRY_CODES[mid] || '' : ''
 }
 
+function getVesselCountryCodeForVessel(vessel) {
+  const imo = String(vessel?.imo ?? '').trim()
+  const override = VESSEL_FLAG_OVERRIDES.find((entry) => entry.imo === imo)
+  return override?.countryCode || getVesselCountryCode(vessel?.mmsi)
+}
+
+function getVesselCountryNameForVessel(vessel) {
+  return COUNTRY_NAMES[getVesselCountryCodeForVessel(vessel)] || ''
+}
+
 export function getVesselCountryName(mmsi) {
   const countryCode = getVesselCountryCode(mmsi)
   return COUNTRY_NAMES[countryCode] || ''
@@ -717,11 +730,11 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
               <img src={ship} alt="ship" />
               <div>
                 <strong>
-                  {getVesselCountryCode(vessel.mmsi) && (
+                  {getVesselCountryCodeForVessel(vessel) && (
                     <CountryFlag
-                      src={`https://flagcdn.com/w40/${getVesselCountryCode(vessel.mmsi)}.png`}
+                      src={`https://flagcdn.com/w40/${getVesselCountryCodeForVessel(vessel)}.png`}
                       alt=""
-                      title={COUNTRY_NAMES[getVesselCountryCode(vessel.mmsi)] || 'Unknown country'}
+                      title={getVesselCountryNameForVessel(vessel) || 'Unknown country'}
                     />
                   )}
                   {vessel.shipName}
@@ -795,7 +808,7 @@ const Map = ({ vessels, connectionState, lastUpdated, onVesselDismissed }) => {
               <Popup>
                 <strong>{vessel.shipName}</strong>
                 <br />
-                {getVesselCountryName(vessel.mmsi) && <>Flag state: {getVesselCountryName(vessel.mmsi)}<br /></>}
+                {getVesselCountryNameForVessel(vessel) && <>Flag state: {getVesselCountryNameForVessel(vessel)}<br /></>}
                 {getVesselImo(vessel) && <>IMO: {getVesselImo(vessel)}<br /></>}
                 Distance: {vessel.distanceKm ?? 'N/A'} km
                 {hasVesselType(getVesselType(vessel)) && <><br />Type: {formatVesselType(getVesselType(vessel))}</>}
