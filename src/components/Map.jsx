@@ -1112,7 +1112,8 @@ const VesselLegend = styled.aside`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  max-width: calc(100% - 70px);
+  width: fit-content;
+  max-width: calc(100% - 20px);
   padding: 9px 11px;
   border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 8px;
@@ -1138,10 +1139,13 @@ const LegendItem = styled.div`
   color: #374151;
   font-size: 14px;
   line-height: 1.2;
-  white-space: nowrap;
+  min-width: 0;
+  overflow-wrap: anywhere;
 
   span {
     font-size: 14px;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 `
 
